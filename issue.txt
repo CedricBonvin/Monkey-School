@@ -1,0 +1,10 @@
+
+------------------------------
+FRONTEND
+-----------------------------
+
+- Sur la page acceuil, je rajoute une photo si window est au-dessus de 1020px avec une fonction dans "mounted", je dois la gèrer au rezize de window et au chargement de la page, je sais pas si c'est une bonne chose... 
+
+- Comment changer les titles des pages ? 
+
+-
