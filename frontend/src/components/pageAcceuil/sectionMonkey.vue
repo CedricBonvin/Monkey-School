@@ -2,7 +2,7 @@
   <section class="sectionQui section">
             <h2 class="titleSection">Monkey-school ?</h2>
             <div class="contentQui">
-                <div class="block1">
+                <div :style="{'background-image': 'url(' + require('@/assets/images/header.jpg') + ')'}"  class="block1">
                     <div class="boxBlock1 box">
                         <p>
                             <i class="fas fa-comment-dots"></i>
@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="block2">
-                    <img  src="../assets/images/femme-boule.jpeg" alt=" femme qui grimpe sur une boule">
+                    <img  src="@/assets/images/femme-boule.jpeg" alt=" femme qui grimpe sur une boule">
                 </div>
                 <div class="block3">
                     <div class="boxBlock3 box">
@@ -33,7 +33,9 @@ export default {
 </script>
 
 <style>
-   
+   .sectionQui{
+    padding-bottom: 40px;
+   }
     .contentQui{
         display: flex;
         flex-flow: row wrap;
@@ -41,7 +43,6 @@ export default {
         padding: calc(var(--gutter));
     }
     .block1{
-        background-image: url("../assets/images/header.png");
         background-size: cover;
         background-position: center;
         padding: calc(var(--gutter)*2);

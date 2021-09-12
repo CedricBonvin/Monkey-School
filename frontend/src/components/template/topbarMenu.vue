@@ -77,5 +77,9 @@ export default {
         color: white;
         text-decoration: none;
     }
+    #burger{
+        font-size: 1.7em;  
+        margin: 0;     
+    }
  
 </style>

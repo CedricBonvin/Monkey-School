@@ -1,6 +1,6 @@
 <template>
     <div class="topBar">
-        <div class="logo">Logo</div>
+        <div class="logo">Monkey-school</div>
         <!-- menu -->
         <topbar-menu></topbar-menu>
        
@@ -34,16 +34,15 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: var(--gutter);
+        padding: 0 20px;
         width: 100%;
         height: 50px;
         background-color: black;
         color: white;
     }
-    .burger{
-        color: white;
-        font-size: 3em;
-
+    
+    .logo{
+        font-weight: bold;
     }
  
 </style>

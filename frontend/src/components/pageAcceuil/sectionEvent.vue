@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import CardEvent from './cardEvent.vue'
+import CardEvent from '../cardEvent.vue'
 export default {
  name : "sectionEvent",
  components : {CardEvent}

@@ -3,7 +3,7 @@
             <h2 class="titleSection">Escalade pour tous !</h2>
             <div class="container">
                 <div class="col1">
-                    <img class="box1" src="../assets/images/man_svg1.png" alt=" grimpeur musclée">
+                    <img class="box1" src="@/assets/images/man_svg1.png" alt=" grimpeur musclée">
                 </div>
                 <div class="box2">
                     <i class="fas fa-check-circle"></i>
@@ -14,11 +14,11 @@
                             Ce sport est ouvert et accessibe à toute personne  qui le désire !
                         </p>
                     </div>
-                    <img class="imageJordan" src="../assets/images/jordan.png" alt="enfant de 6 ans qui rigole">
-                    <img class="imageSingeCorde" src="../assets/images/singeCorde.png" alt="singe qui déscend une corde">
+                    <img class="imageJordan" src="@/assets/images/jordan.png" alt="enfant de 6 ans qui rigole">
+                    <img class="imageSingeCorde" src="@/assets/images/singeCorde.png" alt="singe qui déscend une corde">
                 </div>
                 <div class="col3" v-if="up1020px" >
-                    <img src="../assets/images/adria.png" alt="jeune fille qui grimpe sur une boule">
+                    <img src="@/assets/images/adria.png" alt="jeune fille qui grimpe sur une boule">
                 </div>
             </div>
         </section>

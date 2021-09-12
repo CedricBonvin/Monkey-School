@@ -4,7 +4,7 @@
     <!-- SECTION ENFANT /////////////////////////////////////////////-->
     <div class="col1">
         <div class="boxMael">
-            <img class="mael" src="../assets/images/Mael.png" alt="">
+            <img class="mael" src="@/assets/images/Mael.png" alt="">
         </div>
          <div class="enfantCol2">
             <div class="boxCol2">
@@ -34,13 +34,13 @@
             </div>
         </div>
         <div class="box2Adulte">
-            <img class="girlsDevers" src="../assets/images/girls-devers.png" alt="">
-            <img class="girlsAssise" src="../assets/images/girls-assise.png" alt="">
+            <img class="girlsDevers" src="@/assets/images/girls-devers.png" alt="">
+            <img class="girlsAssise" src="@/assets/images/girls-assise.png" alt="">
         </div>
     </div>
         
-    <div class="boxButtonCours">
-            <button  class=" buttonCours">Découvrez tous nos cours</button>
+    <div class=" buttonCours boxButtonCours">
+            <button  class=" buttonFull">Découvrez tous nos cours</button>
     </div>
     
 </section>
@@ -60,7 +60,8 @@ export default {
     .sectionCours{
         position: relative;
         margin-top: 230px;   
-        padding-left: var(--gutter);          
+        padding-left: var(--gutter);      
+        padding-bottom: 7vw;    
     }
     .boxMael{
         position: relative;
@@ -75,7 +76,6 @@ export default {
         flex-flow: row ;     
         justify-content: space-between;
         margin-top: 3em;
-        background: linear-gradient(131deg, rgb(43, 43, 43) 40%, rgba(99,99,99,0.9241205089820359) 96%);
     }
     .enfantCol2{
         display: flex;
@@ -121,7 +121,7 @@ export default {
         bottom: 0px;
         content: "";
         width: 90%;
-        border: 2px solid var(--color-secondary);
+        border: 2px solid var(--color-primary);
     }
     hr{
         width: 80%;
@@ -169,16 +169,8 @@ export default {
         top: 50%;
         width: 40%;
     } 
-    .buttonCours{
-        display: block;
-        margin: 100px auto 0px auto;
-        padding: 20px 30px;
-        font-size: 5vw;
-        background: var(--color-primary);
-        color: white;
-        border-radius: 30px;
-        border: none;
-        box-shadow: 0 0 1px 1px gray;
+    .buttonCours{   
+     margin-top: 30px;
     }  
 
 
