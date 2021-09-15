@@ -19,6 +19,9 @@ export default {
 </script>
 
 <style scoped>
+    .section{
+        margin: 0 10px !important;
+    }
     a{
         color: rgb(46, 46, 46);
     }
@@ -28,6 +31,7 @@ export default {
     .linkSection{
         line-height: 1.6rem;
         margin-top: 20px;
+        font-size: 16px;
     }
     section{
         padding: 20px;

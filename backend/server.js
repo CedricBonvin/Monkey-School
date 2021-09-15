@@ -1,6 +1,16 @@
 const express = require("express")
 const app = express()
+const mongoose = require("mongoose")
+require('dotenv').config()
+const RouteTest = require("./router/routeTest")
+
 const port = 3000
+
+// connection à mongo Atlas
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@clustermonkeyschool.cmsiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+{ useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
 app.use((req, res, next) => {                              
@@ -10,10 +20,12 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get("/", (req,res) => {
-    console.log("serveur écoute sur le port 3000")
-})
+// app.get("/", (req,res) => {
+//     res.status(200).json({message : "MMMMMmmmmm"})
+//     console.log("serveur écoute sur le port 3000")
+// })
 
 app.listen(port, () => {
-    console.log("voila j'écoute bien sur le port 3000")
+    console.log("serveur en écoute sur le port 3000")
 })
+app.use("/", RouteTest)

@@ -8,17 +8,18 @@
                 <p class="ageCours"> {{ cours.age }} </p>
             </div>
         </div> 
-            <div v-if="cours.displayInfo === true" class="informations">
+        <div class="informations"  v-if="cours.displayInfo === true" >
                 <h3 class="underLine">Informations..</h3>
                 <i @click="closeInfo(cours,$event)" class="close fas fa-times"></i>
                 <div class="boxMiniTitle">
-                    <div class="lieux">
-                        <p> <span class=" titleOfDescrption">Lieux : </span>{{ cours.lieux}}
-                             <a target="_blank" href="https://www.google.ch/maps/place/Salle+d'escalade+de+La+Moubra/@46.305854,7.477926,17z/data=!3m1!4b1!4m5!3m4!1s0x478ee02a2d6f2eeb:0xa4191fdc257d8cc5!8m2!3d46.305854!4d7.48012">
+                    <div class="lieux">    
+                            <p class="lieuxCol1 titleOfDescrption">Lieux : </p>
+                            <div class="lieuxCol2">
+                                {{ cours.lieux}}
+                                <a target="_blank" href="https://www.google.ch/maps/place/Salle+d'escalade+de+La+Moubra/@46.305854,7.477926,17z/data=!3m1!4b1!4m5!3m4!1s0x478ee02a2d6f2eeb:0xa4191fdc257d8cc5!8m2!3d46.305854!4d7.48012">
                                 <i class="fas fa-map-marker-alt iconeInfoPrix red"></i>
-                            </a>
-                        </p>
-                       
+                                </a>
+                            </div>  
                     </div>
                     <div>
                         <p><span class="titleOfDescrption">Age</span> : {{ cours.age}} </p>
@@ -28,29 +29,31 @@
                         <p><span class="titleOfDescrption">Heure</span> : {{ cours.heure }} </p>
                         <p><span class="titleOfDescrption">Nbr. cours</span> : {{ cours.nbrCours }} </p>
                     </div>
+
+                    <!-- SLOT date des cours -->
+                    <slot name="dateCours"></slot>
+                    
                     <div>
                         <div class="boxTitlePrice">
                             <span class="titleOfDescrption">Prix</span> : {{ cours.prix}}
-                            <span class="aboOffert"> ( Abo. annuel offert !)</span>
+
+                            <!-- SLOT Prix parenthèse -->
+                            <slot name="aboOffert"></slot>
+
                             <i @click="displayInfoPrix(cours)" class="fas fa-info-circle iconeInfoPrix red"></i>
                         </div>
-                        <div class="boxInfoPrix">
-                            <div v-if="cours.displayInfoPrix === true" class="infoPrix">
-                                <i @click="closeInfoPrix(cours,$event)" class="closeInfoPrix fas fa-times"></i>
-                                <p>
-                                    L'encadrement, le matériel, et l'entrée à la salle sont compris dans le prix du cours. 
-                                </p>
-                                <strong class="red"> Nous offrons l'abonnement annuel à la salle à chaque participant..!!</strong> . 
-                            </div>
-                        </div>
+
+                        <!-- SLOT INFORMATION PRIX -->
+                        <slot name="infoPrix"></slot>
+                      
                     </div>
                 </div>
-                <div>
-                    <h4 class="underLine">Déscription :</h4>
-                    <p> {{ cours.descriptionCour }}</p>
-                </div>
-                <button class="buttonFull">S'inscrire</button>
+            <div>
+                <h4 class="underLine">Déscription :</h4>
+                <p class="descriptionCours"> {{ cours.descriptionCour }}</p>
             </div>
+            <button class="buttonFull">S'inscrire</button>
+        </div>
     </article>
  
 </template>
@@ -62,6 +65,7 @@ export default {
     methods : {
         displayInfo(cours){
             if(cours.displayInfo === false){
+             
                 cours.displayInfo = true
             }
         },
@@ -69,17 +73,19 @@ export default {
             e.stopImmediatePropagation()
             if(cours.displayInfo === true){
                 cours.displayInfo = false
+                cours.afficheDate = false
             }
-            cours.displayInfoPrix = false
-        },
-        closeInfoPrix(cours,e){
-            e.stopImmediatePropagation()
             cours.displayInfoPrix = false
         },
         displayInfoPrix(cours){
             if(cours.displayInfoPrix === false){
                 cours.displayInfoPrix = true
             }else cours.displayInfoPrix = false
+        },
+        closeDate(cours){
+            if(cours.afficheDate === true){
+                cours.afficheDate = false
+            }else cours.afficheDate = true
         }
     }
 }
@@ -95,22 +101,25 @@ article{
     margin: 50px auto;
     cursor: pointer;
     transition: .3s;
+    overflow: hidden;
 }
 article:hover{
-    transform: scale(1.1);
-    box-shadow: 0 0 10px 5px rgb(97, 96, 96);
+    box-shadow: 0 0 10px 5px rgb(131, 131, 131);
+    transform: scale(1.01);
 }
+
 .carte{
     position: relative;
-    background: gray;
-    border-radius: 10px;
-
-    height: 200px;
+    z-index: 1;
+    height: 200px;  
 }
 img{
     width: 100%; 
     height: 100%;
     object-fit: cover;
+}
+.ageCours{
+    font-size: calc(16px + 1.2vw);
 }
 .explications{
     position: absolute;
@@ -134,13 +143,13 @@ img{
     margin-top: 50px;
 }
 .informations{
-    position: relative;
+    height: auto;
     padding: 10px;
     color: black;
     font-size: 14px;
     background: rgb(245, 245, 245);
     border: solid 1px rgb(190, 190, 190);
-    
+    animation: displayInfo .8s forwards;    
 }
 .close{
     color: black;
@@ -157,6 +166,30 @@ img{
     padding: 0;
     margin: 0;
     text-align: right;
+    display: inline-block !important;
+}
+.boxTitleDate{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+.iconeDate{
+    color: var(--color-primary);
+    display: block !important;
+    margin: 0;
+    text-align: left;
+    font-size: 2rem;
+    position: relative;
+    z-index: 11;
+}
+.closeInfoDate{
+    color: gray;
+    font-size: 1.2rem;
+    padding: 0;
+    margin: 0 0 0px 0;  
+    text-align: right;
+    display: block !important;
 }
 .titleOfDescrption{
     font-weight: bold;
@@ -173,8 +206,17 @@ img{
     margin-top: 20px;
 }
 .lieux{
+    display: flex;
+    align-items: flex-start;
     width: 100%;
     padding: 20px 0;
+}
+.lieuxCol1{
+    width: 80px;
+}
+.lieuxCol2{
+    position: relative;
+    top: 2px;
 }
 h3{
     display: inline-block;
@@ -201,12 +243,65 @@ p{
     width: 50%;
     border: solid 2px var(--color-primary);
 }
+.boxIconePrix{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
 .iconeInfoPrix{
-    display: inline-block !important;
-   
+    display: inline-block !important; 
     font-size: 1.2rem;
     margin: 0 0 0 9px;
     padding: 0;  
+    transition: .3s;
+}
+.iconeInfoPrix:hover{
+     transform: scale(1.2) !important;
+    color: blue;
+
+}
+.iconeInfo{
+    display: inline !important;
+    margin: 0 0 0 5px;
+    padding: 0;
+    text-align: left;
+    color: var(--color-primary);
+    font-size: 1.5rem;
+}
+.dateAffiche{
+    display: inline-block;
+    color: blue;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: .3s;
+    transform-origin: left;
+}
+.dateAffiche:hover{
+    
+    transform: scale(1.1);
+    color: red;
+}
+.annee{
+    text-decoration: underline;
+    font-weight: bold;
+    margin-top: 20px ;
+}
+.annee:first-child{
+    margin-top: 10px ;
+}
+
+.dateTableau{
+    border: solid 1px gray;
+    padding: 10px;
+    background: white;
+    border-radius: 5px;
+}
+.dateCours{
+    width: 100%;
+    position: relative;
+     margin-top: 10px;
+    z-index: 10;
+ 
 }
 .boxInfoPrix{
     position: relative;
@@ -235,17 +330,23 @@ p{
     border-right: none;
     z-index: 1;
 }
-.aboOffert{
-    font-size: 14px;
-    font-weight: bold;
-    font-style: italic;
-    margin-left: 5px;
-    line-height: 1.2rem;
-}
+
 .red{
     color: rgb(177, 64, 64)
 }
+.descriptionCours{
+    margin-top: 10px;
+}
 
+@keyframes displayInfo {
+
+  from{
+     transform: translateY(-100%);
+  }
+  to{
+    transform: translateY(0);
+  }  
+}
 
 
 </style>
