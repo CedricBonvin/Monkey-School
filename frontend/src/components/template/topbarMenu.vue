@@ -4,7 +4,7 @@
         <ul id="topbarMenu" >
             <li><router-link to="/">Acceuil</router-link> </li>
             <li><router-link to="/cours">Cours</router-link> </li>
-            <li><router-link to="/shop">Shop</router-link> </li>
+            <li><router-link to="/livreDor">Livre d'or</router-link> </li>
             <li><router-link to="/contact">Contact</router-link> </li>
         </ul>
     </div>

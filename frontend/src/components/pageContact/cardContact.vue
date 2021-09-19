@@ -13,7 +13,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .card{
         position: relative;
         top: -30px;

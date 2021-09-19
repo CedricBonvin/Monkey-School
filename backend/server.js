@@ -1,13 +1,18 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
-require('dotenv').config()
+require('dotenv').config();
+
+const RouteMessage = require("./router/routeMessage")
 const RouteTest = require("./router/routeTest")
+const RouteLivre = require("./router/routeLivre")
 
 const port = 3000
+//***************************************
+// CONNECTION A MONGO ATLAS   ***********
+//***************************************
 
-// connection à mongo Atlas
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@clustermonkeyschool.cmsiu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@clustermonkeyschool.cmsiu.mongodb.net/monkey-message?retryWrites=true&w=majority`,
 { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
@@ -20,12 +25,26 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.get("/", (req,res) => {
-//     res.status(200).json({message : "MMMMMmmmmm"})
-//     console.log("serveur écoute sur le port 3000")
-// })
+//***************************************
+// PARSE DU BODY REQUEST   **************
+//***************************************
+
+//  app.use(bodyParser.json())  body-parser est déprécié utiliser les 2 lignes suivantes---
+app.use(express.urlencoded({extended: true}));
+app.use(express.json()) // To parse the incoming requests with JSON payloads
+
+//***************************************
+// ECOUTE   *****************************
+//***************************************
 
 app.listen(port, () => {
     console.log("serveur en écoute sur le port 3000")
 })
+
+//***************************************
+// ROUTES UTILISES  *********************
+//***************************************
+
 app.use("/", RouteTest)
+app.use("/", RouteMessage)
+app.use("/",RouteLivre)

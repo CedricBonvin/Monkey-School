@@ -165,19 +165,18 @@
                 />
         </div>
     </div>
-
+    <button @click="api">appelle de l'api</button>
   </main>
 </template>
 
 <script>
-import CardEvent from '../components/cardEvent.vue'
 import Header from '../components/forAll/header.vue'
 import CarteCours from '../components/pageCours/carteCours.vue'
 import SectionRecherche from '../components/pageCours/sectionRecherche.vue'
 let Bdd = require("../bdd")
 
 export default {
-    components: { Header, SectionRecherche, CarteCours, CardEvent },
+    components: { Header, SectionRecherche, CarteCours },
     data(){
         return{
             regulierEnfant : Bdd.bddCours.regulierEnfant,
@@ -200,6 +199,13 @@ export default {
             fetch("http://localhost:3000/test")
             .then(response => response.json())
             .then(res => {console.log(res)})
+        },
+        api(){
+            fetch("http://localhost:3000/getMessage")
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+            })
         }
     }
 }

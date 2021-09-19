@@ -84,6 +84,20 @@ export default {
             // check de ValidForm
             if (this.validForm === true){
                 this.formMessage = "ok pour le formulaire"
+
+                const obj = {
+                    nom : nom,
+                    prenom : prenom,
+                    mail : mail,
+                    message : message
+                }
+                fetch("http://localhost:3000/postMessage",{
+                    method: "POST",
+                    body: JSON.stringify(obj),
+                    headers: {"Content-type": "application/json; charset=UTF-8",}
+                      
+                })
+                    .then(res => console.log(res))
             }
             else{
                 this.formMessage ="OUPS... Le formulaire ne semble pas bien rempli..!! "
