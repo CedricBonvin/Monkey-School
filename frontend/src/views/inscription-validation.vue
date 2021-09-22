@@ -4,23 +4,22 @@
         <div class="section">
             <h2 class="underLine">Validez vos informations :</h2>
             <div class="containerInfo">
-                <div class="cours">
-                    <p>Cours :   <span id="cours" class="eleveInfo"> {{ eleve.cours}} </span>  </p>
-                </div>
-                <p>Nom :        <span id="nom" class="eleveInfo"> {{ eleve.nom}} </span>     </p>
-                <p>Prénom :     <span id="prenom" class="eleveInfo"> {{ eleve.prenom}} </span>  </p>
-                <p>Age :        <span id="age" class="eleveInfo"> {{ eleve.age}} </span>     </p>
-                <p>NPA :        <span id="npa" class="eleveInfo"> {{ eleve.npa}} </span>     </p>
-                <p>Ville :      <span id="ville" class="eleveInfo"> {{ eleve.ville}} </span>   </p>
-                <p>adresse :     <span id="adresse" class="eleveInfo"> {{ eleve.adresse}} </span>   </p>
-                <p>Téléphonne : <span id="phonne" class="eleveInfo"> {{ eleve.phone}} </span>   </p>
-                <p>email : <span id="mail" class="eleveInfo"> {{ eleve.mail}} </span>   </p>
+               
+                <p class="cours">Cours :   <span id="cours" class="eleveInfo"> {{ infoFormulaire.nomCours}} </span></p>
+                <p>Nom :        <span id="nom" class="eleveInfo"> {{ infoFormulaire.nomEleve}} </span></p>
+                <p>Prénom :     <span id="prenom" class="eleveInfo"> {{ infoFormulaire.prenom}} </span></p>
+                <p>Age :        <span id="age" class="eleveInfo"> {{ infoFormulaire.ageEleve}} </span></p>
+                <p>NPA :        <span id="npa" class="eleveInfo"> {{ infoFormulaire.npa}} </span></p>
+                <p>Ville :      <span id="ville" class="eleveInfo"> {{ infoFormulaire.ville}} </span></p>
+                <p>adresse :    <span id="adresse" class="eleveInfo"> {{ infoFormulaire.adresse}} </span></p>
+                <p>Téléphonne : <span id="phonne" class="eleveInfo"> {{ infoFormulaire.phone}} </span></p>
+                <p>email :      <span id="mail" class="eleveInfo"> {{ infoFormulaire.mail}} </span></p>
                 <div class="boxRemarque">Remarque : 
-                    <p id="remarque" class="remarque"> {{ eleve.remarque }}</p>
+                    <p id="remarque" class="remarque"> {{ infoFormulaire.remarque }}</p>
                 </div>
             </div>
         <div class="boxButton">
-            <button class="buttonFull modifier" @click="modifierEleve(eleve)">Modifier</button>
+            <button class="buttonFull modifier" @click="modifierEleve">Modifier</button>
             <button class="buttonFull buttonInscrire">S'inscrire</button>
         </div>
         </div>
@@ -32,31 +31,16 @@ export default {
     name : "inscription-validation",
     data(){
         return{
-            eleve : {},
-         
+            infoFormulaire : {}
         }
     },
     methods : {
         modifierEleve(){
-            const eleve = {
-                cours : document.getElementById("cours").innerHTML,
-                nom : document.getElementById("nom").innerHTML,
-                prenom : document.getElementById("prenom").innerHTML,
-                age : document.getElementById("age").innerHTML,
-                npa : document.getElementById("npa").innerHTML,
-                ville : document.getElementById("ville").innerHTML,
-                adresse : document.getElementById("adresse").innerHTML,
-                mail : document.getElementById("mail").innerHTML,
-                remarque : document.getElementById("remarque").innerHTML,
-                phonne : document.getElementById("phonne").innerHTML,
-            }
-           
-              const coursComplet =   this.$route.query.cours
-            this.$router.push({path:'/inscription', query:{ eleve : eleve, cours: coursComplet }})
+            this.$router.push({path:'/inscription'})
         }
     },
-    mounted(){
-         this.eleve = this.$route.query.eleve
+    beforeMount(){
+        this.infoFormulaire = JSON.parse(localStorage.getItem("formulaireInscription")) 
     }
 }
 </script>

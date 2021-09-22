@@ -53,9 +53,7 @@
                 <p class="descriptionCours"> {{ cours.descriptionCour }}</p>
             </div>
      
-            <div class="buttonFull">
-                <router-link :to="{path:'/inscription', query:{coursNom : cours.nom, cours : cours}}"> s'inscrire</router-link>
-            </div>
+            <button class="buttonFull" @click="goInscription">S'inscrire</button>
         </div>
     </article>
  
@@ -94,6 +92,14 @@ export default {
                 cours.afficheDate = false
             }else cours.afficheDate = true
         },
+        goInscription(){
+            let obj = {
+                nomCours : this.cours.nom,
+                ageCours : this.cours.age
+            }
+            localStorage.setItem("formulaireInscription",JSON.stringify(obj))
+            this.$router.push({path : "/inscription"})
+        }
     },
 }
 </script>
