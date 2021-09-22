@@ -5,7 +5,7 @@
             <img :src="cours.image" alt="">
             <div class="explications">
                 <h3>{{ cours.nom }}</h3>
-                <p class="ageCours"> {{ cours.age }} </p>
+                <p class="ageCours"> {{ cours.age[0]}} à {{cours.age[cours.age.length -1 ] }} ans  </p>
             </div>
         </div> 
         <div class="informations"  v-if="cours.displayInfo === true" >
@@ -22,7 +22,7 @@
                             </div>  
                     </div>
                     <div>
-                        <p><span class="titleOfDescrption">Age</span> : {{ cours.age}} </p>
+                        <p><span class="titleOfDescrption">Age</span> : {{ cours.age[0]}} à {{cours.age[cours.age.length -1 ] }} ans </p>
                         <p><span class="titleOfDescrption">Jour</span> : {{ cours.jour}} </p>
                     </div>
                     <div>
@@ -52,7 +52,10 @@
                 <h4 class="underLine">Déscription :</h4>
                 <p class="descriptionCours"> {{ cours.descriptionCour }}</p>
             </div>
-            <button class="buttonFull">S'inscrire</button>
+     
+            <div class="buttonFull">
+                <router-link :to="{path:'/inscription', query:{coursNom : cours.nom, cours : cours}}"> s'inscrire</router-link>
+            </div>
         </div>
     </article>
  
@@ -62,6 +65,10 @@
 export default {
     name : "carte-cours",
     props : ["cours"],
+    data(){
+        return{
+        }
+    },
     methods : {
         displayInfo(cours){
             if(cours.displayInfo === false){
@@ -86,14 +93,16 @@ export default {
             if(cours.afficheDate === true){
                 cours.afficheDate = false
             }else cours.afficheDate = true
-        }
-    }
+        },
+    },
 }
 </script>
 
 
 <style scoped>
-
+a{
+    color: white;
+}
 article{
     margin-bottom: 50px;
     width: 95%;

@@ -33,6 +33,22 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "cours" */ '../views/livre.vue')
+  },
+  {
+    path: '/inscription',
+    name: 'inscription',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "cours" */ '../views/inscription.vue')
+  },
+  {
+    path: '/inscription-validation',
+    name: 'inscription-validation',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "cours" */ '../views/inscription-validation.vue')
   }
 ]
 

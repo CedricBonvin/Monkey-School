@@ -165,7 +165,7 @@
                 />
         </div>
     </div>
-    <button @click="api">appelle de l'api</button>
+ 
   </main>
 </template>
 
@@ -195,18 +195,6 @@ export default {
             e.stopImmediatePropagation()
             cours.displayInfoPrix = false
         },
-        download(){
-            fetch("http://localhost:3000/test")
-            .then(response => response.json())
-            .then(res => {console.log(res)})
-        },
-        api(){
-            fetch("http://localhost:3000/getMessage")
-            .then(res => res.json())
-            .then(res => {
-                console.log(res)
-            })
-        }
     }
 }
 

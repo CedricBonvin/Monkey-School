@@ -129,7 +129,7 @@ export default {
                         let cible = document.getElementById("merciMessage")
                         let pos = cible.getBoundingClientRect()
                         window.scroll({
-                        top: pos.y + 300,
+                        top: pos.y,
                         behavior: 'smooth'
                         })
                         // fin du scroll

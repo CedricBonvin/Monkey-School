@@ -31,7 +31,6 @@ export default {
                 menu.classList.add("menuSlideIn")
                 menu.dataset.displaymenu = "true"
             }else if ( menu.dataset.displaymenu === "true"){
-                console.log("yes")
                 menu.classList.remove("menuSlideIn")
                 menu.classList.add("menuSlideOut")
                 menu.dataset.displaymenu = "false"

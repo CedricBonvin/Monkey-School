@@ -7,4 +7,6 @@ FRONTEND
 
 - Comment changer les titles des pages ? 
 
--
+- Bug quand je modifie le formulaire d'inscription, impossible de faire changer la valeur des options dans 
+    le select de age... Je récupère un htmldomCollection et je ne peut pas l'itérer ou le transformer en simple array.
+    array.from(htmldomCollection) ne marche pas .. et tout le reste ???? sa soule .... 
