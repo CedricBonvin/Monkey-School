@@ -20,7 +20,7 @@
             </div>
         <div class="boxButton">
             <button class="buttonFull modifier" @click="modifierEleve">Modifier</button>
-            <button class="buttonFull buttonInscrire">S'inscrire</button>
+            <button class="buttonFull buttonInscrire" @click="send">S'inscrire</button>
         </div>
         </div>
     </div>
@@ -37,6 +37,32 @@ export default {
     methods : {
         modifierEleve(){
             this.$router.push({path:'/inscription'})
+        },
+        send(){
+            this.$router.push({path: "/panier"})
+
+             let objToPanier = JSON.parse(localStorage.getItem("formulaireInscription"))
+             let tabPanier = JSON.parse(localStorage.getItem("panier")) 
+
+             if (tabPanier) {
+                 tabPanier.push(objToPanier)
+                 localStorage.setItem("panier", JSON.stringify(tabPanier))
+             }
+             else{
+                let newTabPanier = []
+                newTabPanier.push(objToPanier)
+                localStorage.setItem("panier", JSON.stringify(newTabPanier))
+             }
+
+             localStorage.removeItem("formulaireInscription")
+             //let obj = JSON.parse(localStorage.getItem("formulaireInscription"))
+            // fetch("http://localhost:3000/new-inscription",{
+            //     method : "POST",
+            //     body : JSON.stringify(obj),
+            //     headers : {"Content-type": "application/json; charset=UTF-8",}
+            // })
+            // .then( () => console.log("ok pour l'envoie au serveur"))
+       
         }
     },
     beforeMount(){

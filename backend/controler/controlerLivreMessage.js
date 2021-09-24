@@ -1,6 +1,6 @@
 const Message = require("../model/modelLivreMessage")
 const nodemailer = require("nodemailer")
- const hbs = require("nodemailer-express-handlebars")
+const hbs = require("nodemailer-express-handlebars")
 
 exports.postMessage =  (req,res) => {
     const obj = new Message ({

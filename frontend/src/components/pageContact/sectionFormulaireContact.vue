@@ -94,8 +94,7 @@ export default {
                 fetch("http://localhost:3000/postMessage",{
                     method: "POST",
                     body: JSON.stringify(obj),
-                    headers: {"Content-type": "application/json; charset=UTF-8",}
-                      
+                    headers: {"Content-type": "application/json; charset=UTF-8",}      
                 })
                     .then(res => console.log(res))
             }

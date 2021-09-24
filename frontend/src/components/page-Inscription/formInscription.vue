@@ -102,13 +102,13 @@ export default {
                 cours : "",
                 nom : "",
                 prenom : "",
-                age : "",
                 npa : "",
                 ville : "",
                 adresse : "",
                 email : "",
                 phone : "",
-                remarque : ""
+                remarque : "",
+                ageEleve : ""
             },
             infoFormulaire : {},
           

@@ -53,7 +53,7 @@
                 <p class="descriptionCours"> {{ cours.descriptionCour }}</p>
             </div>
      
-            <button class="buttonFull" @click="goInscription">S'inscrire</button>
+            <button class="buttonFull" @click="goInscription()">S'inscrire</button>
         </div>
     </article>
  
@@ -95,8 +95,13 @@ export default {
         goInscription(){
             let obj = {
                 nomCours : this.cours.nom,
-                ageCours : this.cours.age
+                ageCours : this.cours.age,
+                prixCours : this.cours.prix,
+                jourCours : this.cours.jour,
+                heure : this.cours.heure
+
             }
+          
             localStorage.setItem("formulaireInscription",JSON.stringify(obj))
             this.$router.push({path : "/inscription"})
         }

@@ -4,8 +4,8 @@ const mongoose = require("mongoose")
 require('dotenv').config();
 
 const RouteMessage = require("./router/routeMessage")
-const RouteTest = require("./router/routeTest")
 const RouteLivre = require("./router/routeLivre")
+const RouteInscription = require("./router/routeInscription")
 
 const port = 3000
 //***************************************
@@ -45,6 +45,7 @@ app.listen(port, () => {
 // ROUTES UTILISES  *********************
 //***************************************
 
-app.use("/", RouteTest)
+
 app.use("/", RouteMessage)
-app.use("/",RouteLivre)
+app.use("/", RouteLivre)
+app.use("/", RouteInscription)
