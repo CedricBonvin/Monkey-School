@@ -1,9 +1,9 @@
 <template>
   <article>
-        <div class="containerCarte" v-for="cours in panier" :key="cours.nom">
+        <div class="containerCarte" v-for="(cours,index) in panier" :key="cours.nom">
             <div class="headerCarte">
                 <h3>Régulier: <span class="nomCours"> {{ cours.nomCours}}</span></h3>
-                <i class="fas fa-trash-alt supprimer"></i>
+                <i @click="supprimerCarte(index)" class="fas fa-trash-alt supprimer"></i>
             </div>
             
             <div class="carte">
@@ -33,19 +33,22 @@
 <script>
 export default {
     name : "sectionPanier",
-    props : ["cours"],
     data(){
         return{
             panier : []
         }
     },
+    methods : {
+        supprimerCarte(index){
+            this.panier.splice(index,1)
+            this.$emit("supprimerCarte",{ foo : this.panier})
+        }
+    },
 
     beforeMount(){
         this.panier = JSON.parse(localStorage.getItem("panier"))
+        
     },
-    mounted(){
-        console.log(this.panier)
-    }
 }
 </script>
 
@@ -69,6 +72,7 @@ export default {
         display: block;
         color: rgb(143, 143, 143);
         font-size: 20px;
+        cursor: pointer;
     }
     .containerCarte{
     margin: auto;

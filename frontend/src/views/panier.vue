@@ -3,30 +3,72 @@
         <Header 
             title="Panier"
         />
+        <!-- CARTE -->
         <section>
              <i class="fas fa-shopping-basket iconePanier"></i>
-
             <carte-panier
+                @supprimerCarte="deleteCard"
              />
         </section>
 
-
-        <section>
-                <div class="boxTotalPrix section">
-                        <p class="titlePrixTotal">TOTAL : </p>
-                    <div class="bodyTotal">
-                        <p>Sous-total : </p>
-                        <p>Rabais :</p>
-                        <p>Rabais à partir de 2 personnes</p>
+        <!-- FRATERIE -->
+        <section v-if="displaySectionFraterie" class=" section fraterie">
+            <h2 class="underLine">Y'a-t-il une fraterie ?</h2>
+            <div class="boxRadio">            
+                    <div>
+                        <input @click="yesFraterie"  type="radio" name="fraterie" id="yesFraterie" value="true" v-model="isFraterie">
+                        <label for="noFraterie">OUI</label>
                     </div>
-                    <button class="buttonPaiment">PAIEMENT</button>   
+                    <div>
+                        <input @click="noFraterie"  type="radio" name="fraterie" id="noFraterie" value="false" v-model="isFraterie">
+                        <label for="noFraterie">NON</label>
+                    </div>   
+            </div>
+           
+
+            <!-- Nom eleve  -->
+            <div v-if="isFraterie ==='true'">
+                 <hr>
+                <h3 class="titleSelectionFraterie">Qui est de la même Famille...</h3>
+                <div class="boxFraterie">
+                    <div v-for="eleve in panier" :key="eleve.nom">          
+                        <input type="checkbox" name="isEleve" :value="eleve" v-model="elevePanierChoice"   >
+                        <label for=""> {{eleve.nomEleve}} {{eleve.prenom}}</label>
+                    </div>
+                </div>
+                    <button class="buttonFull" @click="checkFraterie">Je valide la fraterie</button>
+            </div>
+            <div class="error" v-if="error.selectFraterie"> {{ error.selectFraterie }}</div>
+        </section>
+
+        <!-- PAIEMENT -->
+        <section v-if=" displayPaiment" class="sectionPaiement ">
+                <div class="boxTotalPrix">
+                        <p class="titlePrixTotal">TOTAL : </p>
+                    <div class="titleBodyTotal">
+                       <div>Eleve :</div>
+                       <div>Rabais :</div>
+                       <div>Prix :</div>
+                    </div>
+                    <div class="boxBodyTotal" >
+                        <div class="bodyTotal" v-for="eleve in panier" :key="eleve.nom">
+                            <p> {{eleve.nomEleve}} {{ eleve.prenom }}</p>
+                            <p v-if="!eleve.rabais">--</p>
+                            <p v-if="eleve.rabais">{{eleve.rabais}} %</p>
+                            <p> CHF {{ eleve.prixPaye}} .- </p>
+                        </div>
+                    </div>
+                    <div class="boxPrixTotal">
+                        <div>Prix Total :</div>
+                        <div>CHF {{ prixTotal}} .-</div>
+                    </div>
+                    <button @click="paiement" class="buttonPaiment">PAIEMENT</button>   
                     <p class="accepte">NOUS ACCEPTONS :</p>
                     <img class="carteBanquaire" src="@/assets/images/visa.jpeg" alt="carte Visa">
                     <img class="carteBanquaire" src="@/assets/images/master-card.png" alt=" logo master card">
                     <img class="carteBanquaire" src="@/assets/images/twint.png" alt=" logo twint">
                 </div>
         </section>
-        <div v-if="panier.length > 1">Attention plus que 2 cours reservé :</div>
     </div>
 </template>
 
@@ -39,15 +81,112 @@ export default {
 
     data(){
         return{
-           panier : []
+            panier : [],
+            displaySectionFraterie : false,
+            displayPaiment : true,
+            isFraterie : undefined,     
+            error : {
+                fraterie : "",
+                selectFraterie : ""
+            },
+            elevePanierChoice : [],
+            get prixTotal(){
+                let total = 0
+                for (let i in this.panier){
+                    total += this.panier[i].prixPaye
+                }
+                return total
+            }
+            
         }
     },
-    methods : {
 
+ 
+ 
+    methods : {
+        paiement(){
+            if (!this.isFraterie){
+                this.error.fraterie = "Veuillez indiquer si il y a une fraterie !"
+            }
+        },
+        noFraterie(){
+            for (let i = 0; i < this.panier.length; i++){
+                this.panier[i].rabais = null
+                this.panier[i].prixPaye = this.panier[i].prixCours
+            }
+                this.displayPaiment = true   
+        },
+        yesFraterie(){
+             this.displayPaiment = true
+             this.elevePanierChoice = []
+        },
+        checkFraterie(){
+
+            // effacer les rabais et réinitialiser le Prix à payé
+            for (let i = 0; i < this.panier.length; i++){
+                this.panier[i].rabais = null
+                this.panier[i].prixPaye = this.panier[i].prixCours
+            }
+            // ajout du rabais dans le panier 
+            if (this.elevePanierChoice.length  > 1){
+                this.error.selectFraterie = ""
+                this.displayPaiment = true
+
+                // rabais 2 élèves
+                if(this.elevePanierChoice.length === 2){  
+                    let lastEleve = this.elevePanierChoice.length
+                    let eleve = this.elevePanierChoice[lastEleve -1]
+                    eleve.rabais = 10
+                    eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
+                }
+                // rabais 3 élèves
+                if(this.elevePanierChoice.length === 3){                
+                    let lastEleve = this.elevePanierChoice.length
+                    let eleve = this.elevePanierChoice[lastEleve -1]
+                    eleve.rabais = 15
+                    eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
+                }
+                // rabais 4 élèves
+                if(this.elevePanierChoice.length === 4){                  
+                    let lastEleve = this.elevePanierChoice.length
+                    let eleve = this.elevePanierChoice[lastEleve -1]
+                    eleve.rabais = 20
+                    eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
+                }
+            }  else if ( this.elevePanierChoice.length  < 2){
+                this.error.selectFraterie = "! Veuillez sélectionner au minimum 2 élèves"
+                this.displayPaiment = false
+            }
+        },
+        deleteCard(payload){
+            this.panier = payload.foo
+            this.displayPaiment = false
+            this.isFraterie = null
+           
+            this.elevePanierChoice = []
+            for (let i in this.panier){
+                this.panier[i].rabais = null
+                this.panier[i].prixPaye = this.panier[i].prixCours
+            }
+                
+            if (this.panier.length < 2){
+                this.displaySectionFraterie = false
+                this.displayPaiment = true
+            }
+             
+        }
     },
+    
     beforeMount(){
         this.panier = JSON.parse(localStorage.getItem("panier"))
-    }
+        
+        if (this.panier.length > 1){
+            this.displaySectionFraterie = true
+            this.displayPaiment = false
+        
+        }
+    },
+  
    
 }
 </script>
@@ -55,6 +194,10 @@ export default {
 <style scoped>
     .section{
         padding-top: 0;
+    }
+    .fraterie{
+        padding: 20px;
+        margin-bottom: 0;
     }
     Header{
         background: black;
@@ -64,19 +207,65 @@ export default {
         color: black;
         margin: 0;
     }
+    .boxFraterie{
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .fraterie h2{
+        position: relative;
+        display: inline-block;
+    }
+    .boxRadio{
+        display: flex;
+        flex-flow: row;
+        justify-content: space-evenly;
+    }
+     .boxRadio label{
+        padding-left: 10px;
+    }
+    .titleSelectionFraterie{
+        font-style: italic;
+        padding: 20px 0;
+    }
     h2{
         font-size: 30px;
     }
+    .sectionPaiement{
+        background: white;
+        margin-top: 0;
+        width: 80%;
+        max-width: 500px;
+        margin: auto;
+        margin-top: 20px;
+    }
     .boxTotalPrix{
         padding: 20px;
-        border: solid 1px gray;
+        margin: auto;
         width: 100%;
-        max-width: 300px;
+        max-width: 500px;
     }
-    .bodyTotal{
+    .titleBodyTotal{
+        display: flex;
+        justify-content: space-between;
         padding: 20px 0;
         border-bottom: solid 2px  rgb(187, 187, 187);
         border-top: solid 2px rgb(187, 187, 187);
+    }
+    .boxBodyTotal{
+        border-bottom: solid;
+    }
+    .bodyTotal{
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+    
+    }
+    .boxPrixTotal{
+        padding-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 20px;
+        font-weight: bold;
     }
     .titlePrixTotal{
         margin-bottom: 10px;
@@ -102,6 +291,22 @@ export default {
         font-size: 14px;
         font-weight: bold;
         padding: 20px 0 5px 0;
+    }
+    .boxRadio{
+        padding: 20px 0;
+    }
+    .error{
+        color: red;
+        font-style: italic;
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .buttonFull{
+        font-size: 20px;
+    }
+    .buttonFull:hover{
+        font-size: 20px;
+        transform: scale(1.02);
     }
     
   

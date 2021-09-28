@@ -54,15 +54,7 @@ export default {
                 localStorage.setItem("panier", JSON.stringify(newTabPanier))
              }
 
-             localStorage.removeItem("formulaireInscription")
-             //let obj = JSON.parse(localStorage.getItem("formulaireInscription"))
-            // fetch("http://localhost:3000/new-inscription",{
-            //     method : "POST",
-            //     body : JSON.stringify(obj),
-            //     headers : {"Content-type": "application/json; charset=UTF-8",}
-            // })
-            // .then( () => console.log("ok pour l'envoie au serveur"))
-       
+             localStorage.removeItem("formulaireInscription")     
         }
     },
     beforeMount(){

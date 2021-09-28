@@ -15,7 +15,7 @@
                     <div class="lieux">    
                             <p class="lieuxCol1 titleOfDescrption">Lieux : </p>
                             <div class="lieuxCol2">
-                                {{ cours.lieux}}
+                                {{ cours.lieux }}
                                 <a target="_blank" href="https://www.google.ch/maps/place/Salle+d'escalade+de+La+Moubra/@46.305854,7.477926,17z/data=!3m1!4b1!4m5!3m4!1s0x478ee02a2d6f2eeb:0xa4191fdc257d8cc5!8m2!3d46.305854!4d7.48012">
                                 <i class="fas fa-map-marker-alt iconeInfoPrix red"></i>
                                 </a>
@@ -98,8 +98,14 @@ export default {
                 ageCours : this.cours.age,
                 prixCours : this.cours.prix,
                 jourCours : this.cours.jour,
-                heure : this.cours.heure
-
+                heure : this.cours.heure,
+                rabais : null,
+                get prixPaye(){
+                   
+                        let prixFinal = this.prixCours - ( this.prixCours * this.rabais / 100)
+                        return prixFinal
+                    
+                }
             }
           
             localStorage.setItem("formulaireInscription",JSON.stringify(obj))

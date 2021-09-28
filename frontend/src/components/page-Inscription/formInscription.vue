@@ -117,7 +117,9 @@ export default {
    
   
     beforeMount(){
-        this.infoFormulaire = JSON.parse(localStorage.getItem("formulaireInscription"))
+     
+            this.infoFormulaire = JSON.parse(localStorage.getItem("formulaireInscription"))
+        
     },
     mounted(){
          this.checkAge()
