@@ -1,22 +1,12 @@
 const Message = require("../model/modelMessage")
 
-exports.postMessage =  (req,res) => {
+exports.postMessage =  (req,res,next) => {
+
     const obj = new Message ({
         ...req.body
     })
+    console.log("exécution de controller messag...!")
     obj.save()
-    .then(response => res.json(response))
-}
-
-exports.getMessage =  (req,res) => {
-    let obj = new Message( {
-        name : "emery",
-        age : "29"
-    })
-    obj.save()
-    .then(response=> res.json(response))
-}
-
-exports.testMessage = (req,res) => {
-    res.status(200).json({ message : "Je crois que sa marche...! " })
+    .then( () => next())
+    .catch(() => res.status(500).json({ message : "impossiblre d'enregistré le message dans la base de données"}))
 }

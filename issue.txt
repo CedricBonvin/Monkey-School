@@ -17,3 +17,19 @@ FRONTEND
     ************
 
     - blinder le test formulaire inscription du frontend..
+
+
+------------------------------
+BACKEND
+-----------------------------
+
+ - Lors d'une nouvelle inscription tout se passe bien, mais j'ai une erreur terminal, il ne peut pas set the heaer après envoyer la reponse ,
+    je pense que c'est parce que je fais une boucle avec save() dedans.
+    c.f controlerInscripition.js dans le dossier controller 
+
+- mail template .. j'ai du mettre tout le css des templates dans les tags html ... c'est ce qui fonctionne le mieux.. 
+    autrement il y a des bugs en mobile surtout sur yahoo. ( vraiment c'est ce qui fonctionnne le mieux .. ) 
+
+- impossible de capturer l'exception lors de l'envoie du mail contact. c.f mail-confirm-contact => middleware
+    si je met une donnée fausse genre t : au lieu du to : => l'erreur ne se fait pas capturer dans le catch et envoie quand même la réponse de status 200 ?
+

@@ -6,23 +6,20 @@ exports.postMessage =  (req,res) => {
     const obj = new Message ({
         ...req.body
     })
-    obj.save()
-    
+    obj.save()   
     .then(()=> {
         sendMail(req)
-        res.status(200).json({message : "tout ok pour le post du message."})
+        res.status(200).json({message : "message enrengistré avec succès...!"})
     })
-    .catch(() => res.status(500).json({message : "comprend pas"}))
+    .catch( error => res.status(500).json({error : error, message : "impossible d'enregistré le message dans la base de données..!"}))
 }
 
 exports.getMessage =  (req,res) => {
    Message.find()
    .then(response => res.status(200).json(response))
+   .catch(error => res.status(500).json(error))
 }
 
-exports.testMessage = (req,res) => {
-    res.status(200).json({ message : "Je crois que sa marche...! " })
-}
 
 
 // *********************
@@ -52,22 +49,19 @@ function sendMail(req){
         })
     )
 
-   
-
     // Message object
     const messageFrom = "<testdemalade@adf.com>"
-    const messageTo = "monkeystyle.school@gmail.com"
+    const messageTo = "c.bonvin@yahoo.fr"
 
     let message = {
         from: messageFrom,
         to: messageTo,
         subject: "Livre d'or -- nouveau message",
-        template : "livre-message",
+        template : "livre-confirm-to-me",
         context: {          
                 nom : req.body.nom,                   
                 message : req.body.message,
-                date : req.body.date                       
-            }
+        },
     };
 
     transporter.sendMail(message, (err, info) => {

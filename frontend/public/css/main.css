@@ -133,8 +133,8 @@ i{
 }
 .buttonFull:hover{
   transform: scale(1.07);
-  box-shadow: 0 0 10px 5px gray;
-  background-color: rgb(158, 3, 158);
+  box-shadow: 0 0 10px 0px gray;
+  background-color: rgb(190, 89, 190);
 }
 .underLine::after{
   content: "";

@@ -79,7 +79,7 @@
                 <!-- TELEPHONNE -->
                 <div class="boxInput">
                     <label class="requis" for="phone"> Téléphonne :</label>
-                    <input type="text" id="phone" name="phone" v-model="infoFormulaire.phone"  placeholder="0041 79 312 34 27">
+                    <input type="tel" id="phone" name="phone" v-model="infoFormulaire.phone"  placeholder="0041 79 312 34 27">
                     <p v-if="error.phone" class="error">{{ error.phone }}</p>
                 </div> 
             </div>

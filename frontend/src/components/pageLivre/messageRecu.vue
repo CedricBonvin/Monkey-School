@@ -1,6 +1,10 @@
+    
+    
+    // carte des messages reçu
+
 <template>
   <article class="boxMessageRecu">
-        <div v-for="item in tabMessage" :key="item.test" class="boxCarte">
+        <div v-for="item in tabMessage" :key="item._id" class="boxCarte">
             <p class="date">Message du : {{item.date}}</p>
             <div class="carte">
                 <div class="topCard">

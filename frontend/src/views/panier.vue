@@ -32,11 +32,11 @@
                 <h3 class="titleSelectionFraterie">Qui est de la même Famille...</h3>
                 <div class="boxFraterie">
                     <div v-for="eleve in panier" :key="eleve.nom">          
-                        <input type="checkbox" name="isEleve" :value="eleve" v-model="elevePanierChoice"   >
+                        <input @change="checkForRabais" type="checkbox" name="isEleve" :value="eleve" v-model="elevePanierChoice"   >
                         <label for=""> {{eleve.nomEleve}} {{eleve.prenom}}</label>
                     </div>
                 </div>
-                    <button class="buttonFull" @click="checkFraterie">Je valide la fraterie</button>
+                    <!-- <button class="buttonFull" @click="checkFraterie">Je valide la fraterie</button> -->
             </div>
             <div class="error" v-if="error.selectFraterie"> {{ error.selectFraterie }}</div>
         </section>
@@ -62,7 +62,7 @@
                         <div>Prix Total :</div>
                         <div>CHF {{ prixTotal}} .-</div>
                     </div>
-                    <button @click="paiement" class="buttonPaiment">PAIEMENT</button>   
+                    <button @click="paiement"  class="buttonPaiment">PAIEMENT</button>   
                     <p class="accepte">NOUS ACCEPTONS :</p>
                     <img class="carteBanquaire" src="@/assets/images/visa.jpeg" alt="carte Visa">
                     <img class="carteBanquaire" src="@/assets/images/master-card.png" alt=" logo master card">
@@ -105,9 +105,35 @@ export default {
  
     methods : {
         paiement(){
-            if (!this.isFraterie){
-                this.error.fraterie = "Veuillez indiquer si il y a une fraterie !"
+
+            let sendTableau = []
+
+            for (let i in this.panier){
+                let eleve = this.panier[i]
+                let obj = {
+                    nomCours : eleve.nomCours,
+                    nomEleve : eleve.nomEleve,
+                    prenomEleve : eleve.prenom,
+                    adresseEleve : eleve.adresse,
+                    ageEleve : eleve.ageEleve,
+                    mail : eleve.mail,
+                    npa : eleve.npa,
+                    phone : eleve.phone,
+                    prixCours : eleve.prixCours,
+                    prixPaye : eleve.prixPaye,
+                    rabais : eleve.rabais,
+                    ville : eleve.ville,
+                    remarque : eleve.remarque
+                }
+                sendTableau.push(obj)
             }
+
+            fetch("http://localhost:3000/new-inscription",{
+                method : "POST",
+                body : JSON.stringify(sendTableau),
+                headers: {"Content-type": "application/json; charset=UTF-8",}
+            })
+            .then(() => console.log("tout c'est bien passé pour la nouvelle inscription"))
         },
         noFraterie(){
             for (let i = 0; i < this.panier.length; i++){
@@ -120,7 +146,7 @@ export default {
              this.displayPaiment = true
              this.elevePanierChoice = []
         },
-        checkFraterie(){
+        checkForRabais(){
 
             // effacer les rabais et réinitialiser le Prix à payé
             for (let i = 0; i < this.panier.length; i++){
@@ -153,10 +179,11 @@ export default {
                     eleve.rabais = 20
                     eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
                 }
-            }  else if ( this.elevePanierChoice.length  < 2){
-                this.error.selectFraterie = "! Veuillez sélectionner au minimum 2 élèves"
-                this.displayPaiment = false
-            }
+            }  
+            // else if ( this.elevePanierChoice.length  < 2){
+            //     this.error.selectFraterie = "! Veuillez sélectionner au minimum 2 élèves"
+            //     this.displayPaiment = false
+            // }
         },
         deleteCard(payload){
             this.panier = payload.foo
@@ -280,6 +307,12 @@ export default {
         border: none;
         padding: 10px;
         margin-top: 20px;
+        cursor: pointer;
+        transition: .3s;
+    }
+    .buttonPaiment:hover{
+        background: rgb(0, 167, 0);
+        transform: scale(1.02);
     }
     .carteBanquaire{
         width: 40px;

@@ -1,5 +1,10 @@
 <template>
-    <div>
+    <div >
+        <modal 
+            @close-modal="closeModale"
+            v-if="displayModal"
+            :text="modalText"
+        />
         <Header
             class="test"
             title="Livre d'or..!"
@@ -15,8 +20,7 @@
       
         <!--****************-->
         <!-- form Message -->
-        <!--****************-->
-        
+        <!--****************-->       
         <div class="main">  
             <div class="section">
                 <h2 id="boxMessage" class="underLine">Un petit bonjour..!</h2>
@@ -36,6 +40,13 @@
                     <a href="#merciMessage">
                         <button @click="send($event)" class="buttonFull">Envoyer</button>
                     </a>
+                    <!-- captcha -->
+                    <div class="captcha">
+                        <captcha
+                        
+                            :captcha="captcha"
+                        />
+                    </div>
                 </form>
             </div>
             
@@ -49,7 +60,7 @@
                  <i class="far fa-comment-dots"></i>
                 <div class="boxScroll">
                     <message-recu
-                      :tabMessage="this.tabMessage"
+                      :tabMessage="tabMessage"
                     />
                 </div>
             </div>
@@ -58,11 +69,13 @@
 </template>
 
 <script>
+import Captcha from '../components/forAll/captcha.vue'
 import Header from '../components/forAll/header.vue'
+import Modal from '../components/forAll/modal.vue'
 import MessageRecu from '../components/pageLivre/messageRecu.vue'
 export default {
     name : "livreOr",
-    components : { Header, MessageRecu },
+    components : { Header, MessageRecu, Modal, Captcha },
     data(){
         return {
             displayBox : false,
@@ -72,6 +85,14 @@ export default {
             },
             validForm : false,
             tabMessage : [],
+            modalText : "",
+            displayModal : false,
+            captcha : {
+                nbr1 : Math.floor(Math.random() * (10 - 1 + 1)) + 1,
+                nbr2 : Math.floor(Math.random() * (10 - 1 + 1)) + 1,
+                resultat : null,
+                error : ""
+            }
         }
     },
     methods : {
@@ -84,6 +105,7 @@ export default {
             for( let i in this.error){
                     this.error[i] = ""
             }
+            this.captcha.error = ""
 
             // RECUP EL. DU DOM. *****
             //************************
@@ -95,6 +117,7 @@ export default {
             //************************
             checkMessage(this)
             checkNom(this)
+            testCaptcha(this)
 
             // ENVOIE DU FORMULAIRE **
             //************************
@@ -117,22 +140,11 @@ export default {
                     body: JSON.stringify(obj),
                     headers: {"Content-type": "application/json; charset=UTF-8",}
                 })
-                .then(() => {
-                        // injection du nouveau message dans les datas
-                        this.tabMessage.splice(0,0,obj)
-
-                        // efface les valeur des input
-                        document.getElementById("nom").value = ""
-                        document.getElementById("message").value = ""  
-
-                        // scroll vers le nouveau message
-                        let cible = document.getElementById("merciMessage")
-                        let pos = cible.getBoundingClientRect()
-                        window.scroll({
-                        top: pos.y,
-                        behavior: 'smooth'
-                        })
-                        // fin du scroll
+                .then( response => {                    
+                    this.afterSend(response, obj)
+                })
+                .catch( response => {         
+                    this.afterSend(response,null)
                 })
             }
 
@@ -151,15 +163,52 @@ export default {
                     data.validForm = false
                 }
             }
-        }      
+            function testCaptcha(data){
+                console.log(data.captcha.resultat)
+                if (data.captcha.nbr1 + data.captcha.nbr2 != data.captcha.resultat){
+                    data.validForm = false
+                    data.captcha.error = "Résoudre le captcha"
+        
+                }
+            }
+        },
+        closeModale(){
+            this.displayModal = false
+              // scroll vers le nouveau message
+                let cible = document.getElementById("merciMessage")
+                cible.scrollIntoView({
+                    top : top,
+                    behavior : "smooth"
+                })
+        },
+        afterSend(response,obj){ 
+
+            if (response.status === 200){
+                this.displayModal = true
+                this.modalText = "Merci beaucoup pour votre message"
+                // injection du nouveau message dans les datas   
+                this.tabMessage.splice(0,0,obj)  
+                // efface les valeur des input
+                document.getElementById("nom").value = ""
+                document.getElementById("message").value = ""  
+                this.captcha.resultat = null
+                this.captcha.nbr1 = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+                this.captcha.nbr2 = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+              
+            }else if (response.status != 200){
+                this.displayModal = true
+                this.modalText = "Nous rencontrons un problème.. Veuillez réessayer !"
+            }
+        }    
     },
-    mounted(){
+    beforeMount(){
 
         fetch("http://localhost:3000/get-livre-message")
         .then(response => response.json())
         .then(result => {
             this.tabMessage = result.reverse()
         })
+        .catch(()=> {})
     }
 }
 </script>
@@ -286,6 +335,9 @@ export default {
         width: 100%;
         margin: auto;
         margin-top: 10px;
+    }
+    .captcha{
+        margin-right: 10px;
     }
 
     @media screen and (min-width: 900px){
