@@ -51,9 +51,8 @@ export default {
         position: fixed;
         padding: 20px;
         height: 100vh;
-        width: 100px;
         z-index: 3;
-        right: -100px;
+        right: -150px;
         top: 50px;
         background-color: rgb(32, 32, 32);
         list-style-type: none;
@@ -65,16 +64,26 @@ export default {
         animation: menuSlideOut 1s forwards;
     }
     li{
-        line-height: 50px;
+        padding: 15px 0;
         margin: 0 10px;
     }
  
     a.router-link-exact-active {
         color: #42b983;
+        font-size: 1.2rem;
+        font-weight: bold;
     }
     a {
         color: white;
         text-decoration: none;
+        transition: .3s;
+    }
+    a:hover{
+        display:inline-block;
+        transform: scale(1.2);
+        font-weight: bold;
+        text-decoration: underline;
+        
     }
     #burger{
         font-size: 1.7em;  

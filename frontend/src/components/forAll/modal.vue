@@ -8,9 +8,10 @@
 <script>
 export default {
     name : "modal",
-    props : ["text"],
+    props : ["text", "modal"],
     methods : {
         closeModal(){
+            this.modal.displayModal = false
             this.$emit("close-modal")
         }
     }
@@ -22,9 +23,8 @@ export default {
         position: fixed;
         z-index: 1000;
         left: 50%;
-        top: 30%;
-        transform: translateY(-50%);
-        transform: translateX(-50%);
+        top: 50%;
+        transform: translate(-50%, -50%);
         padding: 30px 20px;
         text-align: center;
         background: rgb(245, 245, 245);

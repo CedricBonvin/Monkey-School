@@ -3,24 +3,40 @@
         <h1>Tout est correct ?</h1>
         <div class="section">
             <h2 class="underLine">Validez vos informations :</h2>
+            <h3>Personne de contact :</h3>
+            <!-- CONTACT -->
             <div class="containerInfo">
+                
+                <div class="info">Nom :        <span id="nom" class="eleveInfo"> {{ info.contact.nomContact}} </span></div>
+                <div class="info">Prénom :     <span id="prenom" class="eleveInfo"> {{ info.contact.prenomContact}} </span></div>
+                <div class="info">Age :        <span id="age" class="eleveInfo"> {{ info.ageEleve}} </span></div>
+                <div class="info">NPA :        <span id="npa" class="eleveInfo"> {{ info.contact.npaContact}} </span></div>
+                <div class="info">Ville :      <span id="ville" class="eleveInfo"> {{ info.contact.villeContact}} </span></div>
+                <div class="info">adresse :    <span id="adresse" class="eleveInfo"> {{ info.contact.adresseContact}} </span></div>
+                <div class="info">Tél.: : <span id="phonne" class="eleveInfo"> {{ info.contact.phoneContact}} </span></div>
+                <div class="info">email :      <span id="mail" class="eleveInfo"> {{ info.contact.mailContact}} </span></div>
                
-                <p class="cours">Cours :   <span id="cours" class="eleveInfo"> {{ infoFormulaire.nomCours}} </span></p>
-                <p>Nom :        <span id="nom" class="eleveInfo"> {{ infoFormulaire.nomEleve}} </span></p>
-                <p>Prénom :     <span id="prenom" class="eleveInfo"> {{ infoFormulaire.prenom}} </span></p>
-                <p>Age :        <span id="age" class="eleveInfo"> {{ infoFormulaire.ageEleve}} </span></p>
-                <p>NPA :        <span id="npa" class="eleveInfo"> {{ infoFormulaire.npa}} </span></p>
-                <p>Ville :      <span id="ville" class="eleveInfo"> {{ infoFormulaire.ville}} </span></p>
-                <p>adresse :    <span id="adresse" class="eleveInfo"> {{ infoFormulaire.adresse}} </span></p>
-                <p>Téléphonne : <span id="phonne" class="eleveInfo"> {{ infoFormulaire.phone}} </span></p>
-                <p>email :      <span id="mail" class="eleveInfo"> {{ infoFormulaire.mail}} </span></p>
+            </div>
+            <!-- ELEVE -->
+            <h3>Eleve :</h3>
+            <div class="containerInfo">
+                <div class="eleve">eleve :   
+                    <div id="eleve" class="eleveInfo"> {{ info.cours.nomCours}} </div>
+                </div>
+                <div v-if="info.dateChoisie" class="eleve">Date choisi :   <div id="eleve" class="eleveInfo"> {{ new Date(info.dateChoisie).toLocaleDateString('fr-FR', { weekday :'long', day : 'numeric', month : 'long', year : "numeric"} ) }} </div></div>
+                <div class="info">Nom :        <span id="nom" class="eleveInfo"> {{ info.eleve.nomEleve}} </span></div>
+                <div class="info">Prénom :     <span id="prenom" class="eleveInfo"> {{ info.eleve.prenomEleve}} </span></div>
+                <div class="info">Age :        <span id="age" class="eleveInfo"> {{ info.ageEleve}} </span></div>
+                <div class="info">NPA :        <span id="npa" class="eleveInfo"> {{ info.eleve.npaEleve}} </span></div>
+                <div class="info">Ville :      <span id="ville" class="eleveInfo"> {{ info.eleve.villeEleve}} </span></div>
+                <div class="info">adresse :    <span id="adresse" class="eleveInfo"> {{ info.eleve.adresseEleve}} </span></div>
                 <div class="boxRemarque">Remarque : 
-                    <p id="remarque" class="remarque"> {{ infoFormulaire.remarque }}</p>
+                    <div id="remarque" class="remarque"> {{ info.remarque }}</div>
                 </div>
             </div>
         <div class="boxButton">
-            <button class="buttonFull modifier" @click="modifierEleve">Modifier</button>
-            <button class="buttonFull buttonInscrire" @click="send">S'inscrire</button>
+            <button class="buttonFull modifier" @click="modifierEleve">MODIFIER</button>
+            <button class="buttonFull buttonInscrire" @click="send">AJOUTER AU PANIER</button>
         </div>
         </div>
     </div>
@@ -31,34 +47,50 @@ export default {
     name : "inscription-validation",
     data(){
         return{
-            infoFormulaire : {}
+            info : {}
         }
     },
     methods : {
         modifierEleve(){
             this.$router.push({path:'/inscription'})
         },
-        send(){
+        send(){        
+            if(!JSON.parse(localStorage.getItem("panier"))){
+                let panier = {
+                    contact : {},
+                    eleve : [],               
+                }
+                let objToPanierCours = {
+                    ...JSON.parse(localStorage.getItem("formulaireInscription")).cours, 
+                    ...JSON.parse(localStorage.getItem("formulaireInscription")).eleve
+                }        
+                panier.contact = JSON.parse(localStorage.getItem("formulaireInscription")).contact
+                panier.eleve.push(objToPanierCours) 
+                localStorage.setItem("panier",JSON.stringify(panier))
+
+            } else { 
+                let tabCours = JSON.parse(localStorage.getItem("panier")).eleve
+                let newCours = {
+                    ...this.info.eleve,
+                    ...JSON.parse(localStorage.getItem("formulaireInscription")).cours,
+                }
+                let panier = {
+                    contact : {},
+                    eleve : [],               
+                }  
+                tabCours.push(newCours)
+                panier.contact = this.info.contact
+                panier.eleve = tabCours 
+                localStorage.setItem("panier",JSON.stringify(panier))   
+            }
+                       
+            localStorage.removeItem("formulaireInscription")     
             this.$router.push({path: "/panier"})
-
-             let objToPanier = JSON.parse(localStorage.getItem("formulaireInscription"))
-             let tabPanier = JSON.parse(localStorage.getItem("panier")) 
-
-             if (tabPanier) {
-                 tabPanier.push(objToPanier)
-                 localStorage.setItem("panier", JSON.stringify(tabPanier))
-             }
-             else{
-                let newTabPanier = []
-                newTabPanier.push(objToPanier)
-                localStorage.setItem("panier", JSON.stringify(newTabPanier))
-             }
-
-             localStorage.removeItem("formulaireInscription")     
         }
     },
     beforeMount(){
-        this.infoFormulaire = JSON.parse(localStorage.getItem("formulaireInscription")) 
+        this.info = JSON.parse(localStorage.getItem("formulaireInscription")) 
+        console.log(this.info)
     }
 }
 </script>
@@ -80,6 +112,7 @@ export default {
         padding: 20px;
     }
     .containerInfo{
+        background: rgb(231, 231, 231);
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
@@ -88,16 +121,22 @@ export default {
         padding: 10px;
         margin-top: 10px;
     }
-    .cours{
+    .eleve{
         width: 100%;
+        font-weight: bold;
+        padding: 10px 0;
     }
     .eleveInfo{
         font-weight: 300;
     }
-    p{
-        width: 50%;
-        margin: 10px 0;
-        font-weight: bold;
+    .info{
+     font-weight: bold;
+     width: 50% ;
+     min-width: 200px;
+     padding: 10px 0;
+    }
+    .eleveInfo {
+        display: inline-block;
     }
     .boxRemarque{
         width: 100%;
@@ -113,12 +152,23 @@ export default {
         display: flex;
         flex-flow: row wrap;
         justify-content: space-evenly;
+        margin-top: 50px;
+        
     }
     .buttonInscrire{
         background: green;
+        border-radius: 0;
     }
     .modifier{
         background: rgb(197, 49, 49);
+        border-radius: 0;
     }
+    h3{
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 20px;
+        font-style: italic;
+    }
+  
    
 </style>

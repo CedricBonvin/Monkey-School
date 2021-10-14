@@ -1,141 +1,208 @@
 <template>
   <div class="section sectionFormulaire">
-        <!-- ------------------------------------------------ 
-        ------**** TITRE DU FORMULAIRE *****-----------------
-         ------------------------------------------------ -->
+  
         <div class="titleForm">
             <i class="fas fa-pencil-alt"></i>
             <h2>Inscription</h2>
         </div>
-        <h3> {{ infoFormulaire.nomCours}}</h3>
+    
+         <!-- CONTACT -->
+        <h3>Personne de contact</h3>
+        <form v-if="displayContact" class="formulaire">
+            <div class="sectionContact">
+                <!-- NOM CONATACT -->
+                <div class="boxInput ">
+                    <label class="requis" for="nomContact"> Nom :</label>
+                    <input type="text" id="nomContact" name="nomContact" placeholder="Carron"  v-model="formulaire.contact.nomContact"  >
+                    <p v-if="error.nomContact" class="error">{{ error.nomContact }}</p>
+                </div>
+                <!-- PRENOM CONATACT -->
+                <div class="boxInput ">
+                    <label class="requis" for="prenomContact"> Prénom :</label>
+                    <input type="text" id="prenomContact" name="prenomContact" placeholder="Carron"  v-model="formulaire.contact.prenomContact"  >
+                    <p v-if="error.prenomContact" class="error">{{ error.prenomContact }}</p>
+                </div>               
+                <!-- NPA / VILLE -->
+                <div class="boxNpaVille">
+                        <!-- Npa -->
+                        <div class=" npa ">
+                            <label class="requis" for="npaContact"> NPA :</label>
+                            <input type="text" id="npaContact" name="npaContact" v-model="formulaire.contact.npaContact"   placeholder="3963">
+                            <p v-if="error.npaContact" class="error">{{ error.npaContact }}</p>
+                        </div>
+                        <!-- VILLE -->
+                        <div class="ville ">
+                            <label class="requis" for="villeContact"> Ville :</label>
+                            <input type="text" id="villeContact" name="villeContact" v-model="formulaire.contact.villeContact"   placeholder="Crans-Montana">
+                            <p v-if="error.villeContact" class="error">{{ error.villeContact }}</p>
+                        </div>
+                </div> 
+                <!-- ADRESSE -->
+                <div class="boxInput ">
+                    <label class="requis" for="adresseContact"> Adresse :</label>
+                    <input type="text" id="adresseContact" name="adresse" v-model="formulaire.contact.adresseContact"   placeholder="Rue de la soif 27">
+                    <p v-if="error.adresseContact" class="error">{{ error.adresseContact }}</p>
+                </div> 
+                <!-- TELEPHONNE CONTACT -->
+                <div class="boxInput">
+                    <label class="requis" for="phoneContact"> Téléphonne :</label>
+                    <input type="tel" id="phoneContact" name="phoneContact" v-model="formulaire.contact.phoneContact"  placeholder="0041 79 312 34 27">
+                    <p v-if="error.phoneContact" class="error">{{ error.phoneContact }}</p>
+                </div> 
+                <!-- E-MAIL CONTACT -->
+                <div class="boxInput">
+                    <label class="requis" for="mailContact "> E-mail :</label>
+                    <input type="email" id="mailContact" name="mailContact" v-model="formulaire.contact.mailContact"   placeholder="mon-Mail@host.com">
+                    <p v-if="error.mailContact" class="error">{{ error.mailContact }}</p>
+                </div>
+            </div>
+        </form>
 
-        <!-- ------------------------------------------------ 
-        ------**** FORMULAIRE *****--------------------------
-         ------------------------------------------------ -->
+        <!-- ELEVE -->
+        <h3>Elève</h3>
         <form class="formulaire">
-
             <div class="boxLabelAndInput">
 
-                <!-- COURS -->
+                <!-- eleve -->
                 <div class="boxInput ">
-                    <label  for="cours"> Cours :</label>
-                    <input  type="text" id="cours" name="cours" :value="infoFormulaire.nomCours"   disabled >
+                    <label  for="eleve"> eleve :</label>
+                    <input  type="text" id="eleve" name="eleve" :value="formulaire.cours.nomCours "   disabled >
                 </div>
-                 <!-- AGE -->
-                <div class="boxInput boxAge">
-                    <label class="requis labelAge" for="age "> Age <span class="eleve">( Elève )</span> :</label>
-                    <select name="age" id="age" v-model="infoFormulaire.ageEleve" >
+                 <!-- AGE  si eleve regulier--> 
+                <div 
+                    v-if="  formulaire.cours.nomCours === 'Mini-Spider' ||
+                            formulaire.cours.nomCours === 'Gecko' ||
+                            formulaire.cours.nomCours === 'Monkey' ||
+                            formulaire.cours.nomCours === 'Big-Monkey' "
+                     class="boxInput boxAge">
+                    <label class="requis labelAge" for="age "> Age :</label>
+                    <select name="age" id="age" v-model="formulaire.eleve.ageEleve" >
            
-                        <option v-for=" age in infoFormulaire.ageCours" :key="age" :value="age">{{ age }}</option>
+                        <option v-for=" age in formulaire.cours.ageCours" :key="age" :value="age">{{ age }}</option>
              
                     </select>
                     <p v-if="error.ageEleve" class="error">{{ error.ageEleve }}</p>
                 </div>
+                <!-- AGE si pas régulier -->
+                <div v-else class="boxInput  ">
+                    <label class="requis labelAge" for="age "> Age :</label>
+                    <input class="inputAge" type="text" placeholder="25" v-model="formulaire.eleve.ageEleve">
+                    <p v-if="error.ageEleve" class="error">{{ error.ageEleve }}</p>
+
+                </div>
+                <!-- CHOIX DATE DE eleve si il y en a-->
+                <div class="boxInput" 
+                    v-if="formulaire.cours.typeCours === 'initiation' ||
+                          formulaire.cours.typeCours === 'autonomie'   
+                    
+                    ">
+                    <label class="requis" for="selectCours">Date du eleve :</label>
+                    <select name="selectCours" id="selectCours" v-model="formulaire.eleve.dateChoisie">
+                            <option></option>
+                            <option
+                                v-for="date in formulaire.cours.choiceDateCours" :key="date.nomCours"                               
+                                :value="date">{{ new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
+                               
+                            </option>
+                        
+                    </select>
+                  
+                    
+                    <p v-if="error.choiceDateCours" class="error">{{ error.choiceDateCours }}</p>
+                  
+                </div>
 
                 <!-- NOM -->
                 <div class="boxInput ">
-                    <label class="requis" for="name"> Nom <span class="eleve">( Elève )</span> :</label>
-                    <input type="text" id="name" name="name" placeholder="Carron"  v-model="infoFormulaire.nomEleve"  >
-                    <p v-if="error.nom" class="error">{{ error.nom }}</p>
+                    <label class="requis" for="nomEleve"> Nom :</label>
+                    <input type="text" id="nomEleve" name="nomEleve" placeholder="Carron"  v-model="formulaire.eleve.nomEleve"  >
+                    <p v-if="error.nomEleve" class="error">{{ error.nomEleve }}</p>
                 </div>
 
                 <!-- PRENOM -->
                 <div class="boxInput">
-                    <label class="requis" for="surname "> Prénom <span class="eleve">( Elève )</span> :</label>
-                    <input type="text" id="surname" name="surname" v-model="infoFormulaire.prenom"   placeholder="Louis">
-                    <p v-if="error.prenom" class="error">{{ error.prenom }}</p>
+                    <label class="requis" for="prenomEleve "> Prénom :</label>
+                    <input type="text" id="prenomEleve" name="prenomEleve" v-model="formulaire.eleve.prenomEleve"   placeholder="Louis">
+                    <p v-if="error.prenomEleve" class="error">{{ error.prenomEleve }}</p>
                 </div>
 
-                <!-- NPA / VILLE -->
-                <div class="boxNpaVille boxInput">
+                <!-- NPA / VILLE -->             
+                <div class="boxNpaVille">
                     <!-- Npa -->
                     <div class=" npa ">
-                        <label class="requis" for="npa"> NPA :</label>
-                        <input type="text" id="npa" name="npa" v-model="infoFormulaire.npa"   placeholder="3963">
-                        <p v-if="error.npa" class="error">{{ error.npa }}</p>
+                        <label class="requis" for="npaEleve"> NPA :</label>
+                        <input type="text" id="npaEleve" name="npaEleve" v-model="formulaire.eleve.npaEleve"   placeholder="3963">
+                        <p v-if="error.npaEleve" class="error">{{ error.npaEleve }}</p>
                     </div>
                     <!-- VILLE -->
                     <div class="ville ">
-                        <label class="requis" for="ville"> Ville :</label>
-                        <input type="text" id="ville" name="ville" v-model="infoFormulaire.ville"   placeholder="Crans-Montana">
-                        <p v-if="error.ville" class="error">{{ error.ville }}</p>
+                        <label class="requis" for="villeEleve"> Ville :</label>
+                        <input type="text" id="villeEleve" name="villeEleve" v-model="formulaire.eleve.villeEleve"   placeholder="Crans-Montana">
+                        <p v-if="error.villeEleve" class="error">{{ error.villeEleve }}</p>
                     </div>
                 </div>
-
+                
                 <!-- ADRESSE -->
                 <div class="boxInput ">
-                    <label class="requis" for="adresse"> Adresse :</label>
-                    <input type="text" id="adresse" name="adresse" v-model="infoFormulaire.adresse"   placeholder="Rue de la soif 27">
-                    <p v-if="error.adresse" class="error">{{ error.adresse }}</p>
-                </div>
-
-                <!-- E-MAIL -->
-                <div class="boxInput">
-                    <label class="requis" for="email "> E-mail :</label>
-                    <input type="email" id="email" name="email" v-model="infoFormulaire.mail"   placeholder="mon-Mail@host.com">
-                    <p v-if="error.mail" class="error">{{ error.mail }}</p>
-                </div>
-
-                <!-- TELEPHONNE -->
-                <div class="boxInput">
-                    <label class="requis" for="phone"> Téléphonne :</label>
-                    <input type="tel" id="phone" name="phone" v-model="infoFormulaire.phone"  placeholder="0041 79 312 34 27">
-                    <p v-if="error.phone" class="error">{{ error.phone }}</p>
-                </div> 
+                    <label class="requis" for="adresseEleve"> Adresse :</label>
+                    <input type="text" id="adresseEleve" name="adresseEleve" v-model="formulaire.eleve.adresseEleve"   placeholder="Rue de la soif 27">
+                    <p v-if="error.adresseEleve" class="error">{{ error.adresseEleve }}</p>
+                </div>             
             </div>
 
-            <label for="remarque" class="labelRemarque">Remarque :</label>
-            <textarea name="remarque" id="remarque" v-model="infoFormulaire.remarque"  placeholder="Votre message : "> </textarea>
+            <label for="remarqueEleve" class="labelRemarque">Remarque :</label>
+            <textarea name="remarqueEleve" id="remarqueEleve" v-model="formulaire.eleve.remarqueEleve"  placeholder="Votre message : "> </textarea>
            
             <button @click="send($event)" id="sendInfo" class="buttonFull" >Envoyer</button>  
         </form>
   </div>
 </template>
-    div
+    divf
 <script>
 export default {
     name : "section-formulaire-contact",
    
-    data(){
-        return{
-            error : {
-                cours : "",
-                nom : "",
-                prenom : "",
-                npa : "",
-                ville : "",
-                adresse : "",
-                email : "",
-                phone : "",
-                remarque : "",
-                ageEleve : ""
-            },
-            infoFormulaire : {},
-          
-        }
-    },
-   
-  
-    beforeMount(){
-     
-            this.infoFormulaire = JSON.parse(localStorage.getItem("formulaireInscription"))
-        
-    },
-    mounted(){
-         this.checkAge()
-    },
+data(){
+    return{
+        formulaire : {
+         
+        },
+        displayContact : true,
+        error : {
+            
+            eleve : "",
+            nomContact : "",
+            prenomContact: "",
+            phoneContact : "",
+            npaContact : "",
+            villeContact : "",
+            adresseContact : "",
+            prenom : "",
+            npa : "",
+            ville : "",
+            adresse : "",
+            email : "",
+            remarque : "",
+            ageEleve : "",
+            choiceDateCours : "",                      
+        },
+    }
+},
    
     methods : {
         // check si il y a déja l'age de l'élève ( si il essaie de modifier le formulaire depuis validation-formulaire )
         checkAge(){
-            const select = document.querySelector('select').options
-            for (let i = 0; i < select.length; i++){
-                
-                let ageEleveParse = parseInt(this.infoFormulaire.ageEleve)
-                let ageOptionParse = parseInt(select[i].value)
-    
-                if (ageOptionParse === ageEleveParse){
-                     select[i].setAttribute("selected","selected")
+            let checkIfSelect = document.querySelector("select")
+            if (checkIfSelect){
+                let select = document.querySelector('select').options
+                for (let i = 0; i < select.length; i++){
+                    
+                    let ageEleveParse = parseInt(this.formulaire.ageEleve)
+                    let ageOptionParse = parseInt(select[i].value)
+        
+                    if (ageOptionParse === ageEleveParse){
+                            select[i].setAttribute("selected","selected")
+                    }
                 }
             }
         },
@@ -147,24 +214,31 @@ export default {
             for (let i in this.error){
                     this.error[i] =  ""
             }
-                localStorage.setItem("formulaireInscription",JSON.stringify(this.infoFormulaire))
 
             // ESSAIE ENVOIE FORMULAIRE...
-            if (testForm(this)){
+            if (!testForm(this)){
+                localStorage.setItem("formulaireInscription",JSON.stringify(this.formulaire))
                 this.$router.push({path : "/inscription-validation"})
             }
             function testForm(data){
                 
                 let valid = true
-
-                testMail()
-                testPrenom()
-                testNom()
-                testAdresse()
-                testNpa()
-                testVille()
-                testAge()
-                testPhone()
+                // contact
+                testMailContact()
+                testPrenomContact()
+                testNomContact()
+                testAdresseContact()
+                testNpaContact()
+                testVilleContact()
+                testPhoneContact()
+                // eleve
+                testNomEleve()
+                testPrenomEleve()
+                testAdresseEleve()
+                testNpaEleve()
+                testAgeEleve()
+                testChoiceDate()
+                testVilleEleve()
 
                 if (valid === true){
                     return true
@@ -174,102 +248,188 @@ export default {
                 // FUNCTION TEST FORM  *****************
                 // *************************************
 
-                function testMail() {
-                    if( data.infoFormulaire.mail){
-                        if( data.infoFormulaire.mail.length > 50){
-                            data.error.mail ="Max. 15 caractères.",
+                // CONTACT
+                function testMailContact() {
+                    if( data.formulaire.contact.mailContact){
+                        if( data.formulaire.contact.mailContact.length > 50){
+                            data.error.mailContact ="Max. 15 caractères.",
                             valid = false   
                         }
                     } else{
-                        data.error.mail = "Veuillez saisir le champ !" 
+                        data.error.mailContact = "Veuillez saisir le champ !" 
                         valid = false
                     } 
                 }            
-                function testPrenom(){
-                    if (data.infoFormulaire.prenom){
-                        if ( data.infoFormulaire.prenom.length < 2){
-                            data.error.prenom ="Min. 2 caractères.",
+                function testPrenomContact(){
+                    if (data.formulaire.contact.prenomContact){
+                        if ( data.formulaire.contact.prenomContact.length < 2){
+                            data.error.prenomContact ="Min. 2 caractères.",
                             valid = false   
                         }
-                        if( data.infoFormulaire.prenom.length > 15){
-                            data.error.prenom ="Max. 15 caractères.",
+                        if( data.formulaire.contact.prenomContact.length > 15){
+                            data.error.prenomContact ="Max. 15 caractères.",
                             valid = false   
                         }
                     } else {
-                        data.error.prenom = "Veuillez saisir le champ"
+                        data.error.prenomContact = "Veuillez saisir le champ"
                         valid = false
                     }
                 }                
-                function testNom(){
-                    if(data.infoFormulaire.nomEleve){
-                        if ( data.infoFormulaire.nomEleve.length < 2){
-                            data.error.nom ="Min. 2 caractères.",
+                function testNomContact(){
+                    if(data.formulaire.contact.nomContact){
+                        if ( data.formulaire.contact.nomContact.length < 2){
+                            data.error.nomContact ="Min. 2 caractères.",
                             valid = false   
                         }
-                        if( data.infoFormulaire.nomEleve.length > 15){
-                            data.error.nom ="Max. 15 caractères.",
-                            valid = false   
-                        }
-                    } else {
-                        data.error.nom = "Veuillez saisir le champ !"
-                        valid = false
-                    }
-                }
-                function testAdresse(){
-                    if ( data.infoFormulaire.adresse){
-                        if( data.infoFormulaire.adresse.length > 25){
-                            data.error.adresse = "Max. 25 caractères.",
-                            valid = false   
-                        }
-                    }else {
-                        data.error.adresse = "Veuillez saisir le champ!"
-                        valid = false
-                    }
-                }              
-                function testNpa(){
-                    if(data.infoFormulaire.npa){
-                        if( data.infoFormulaire.npa.length > 4){
-                            data.error.npa = "! Npa",
+                        if( data.formulaire.contact.nomContact.length > 15){
+                            data.error.nomContact ="Max. 15 caractères.",
                             valid = false   
                         }
                     } else {
-                        data.error.npa = "! Npa",
+                        data.error.nomContact = "Veuillez saisir le champ !"
+                        valid = false
+                    }
+                }                           
+                function testNpaContact(){
+                    if(data.formulaire.contact.npaContact){
+                        if( data.formulaire.contact.npaContact.length > 4){
+                            data.error.npaContact = "! Npa",
+                            valid = false   
+                        }
+                    } else {
+                        data.error.npaContact = "! Npa",
                         valid = false 
                     }
-
                 }       
-                function testVille(){
-                    if (data.infoFormulaire.ville){
-                        if( data.infoFormulaire.ville.length > 25){
-                            data.error.ville = "Max. 25 caractères.",
+                function testVilleContact(){
+                    if (data.formulaire.contact.villeContact){
+                        if( data.formulaire.contact.villeContact.length > 25){
+                            data.error.villeContact = "Max. 25 caractères.",
                             valid = false   
                         }
                     }else{
-                        data.error.ville = "Veuillez saisir le champ !",
+                        data.error.villeContact = "Veuillez saisir le champ !",
                         valid = false 
                     }
                     
                 }
-                function testAge(){
-                    if ( !data.infoFormulaire.ageEleve){
+                function testPhoneContact() {
+                    if( data.formulaire.contact.phoneContact){
+                        if( data.formulaire.contact.phoneContact.length > 50){
+                            data.error.phoneContact ="Votre numéro ne semble pas correct !",
+                            valid = false   
+                        }
+                    } else{
+                        data.error.phoneContact = "Veuillez saisir le champ !" 
+                        valid = false
+                    } 
+                }
+                function testAdresseContact(){
+                    if ( data.formulaire.contact.adresseContact){
+                        if( data.formulaire.contact.adresseContact.length > 25){
+                            data.error.adresseContact = "Max. 25 caractères.",
+                            valid = false   
+                        }
+                    }else {
+                        data.error.adresseContact = "Veuillez saisir le champ!"
+                        valid = false
+                    }
+                } 
+                 
+                // ELEVE
+                function testNomEleve(){
+                    if(data.formulaire.eleve.nomEleve){
+                        if ( data.formulaire.eleve.nomEleve.length < 2){
+                            data.error.nomEleve ="Min. 2 caractères.",
+                            valid = false   
+                        }
+                        if( data.formulaire.eleve.nomEleve.length > 15){
+                            data.error.nomEleve ="Max. 15 caractères.",
+                            valid = false   
+                        }
+                    } else {
+                        data.error.nomEleve = "Veuillez saisir le champ !"
+                        valid = false
+                    }
+                } 
+                function testPrenomEleve(){
+                    if (data.formulaire.eleve.prenomEleve){
+                        if ( data.formulaire.eleve.prenomEleve.length < 2){
+                            data.error.prenomEleve ="Min. 2 caractères.",
+                            valid = false   
+                        }
+                        if( data.formulaire.eleve.prenomEleve.length > 15){
+                            data.error.prenomEleve ="Max. 15 caractères.",
+                            valid = false   
+                        }
+                    } else {
+                        data.error.prenomEleve = "Veuillez saisir le champ"
+                        valid = false
+                    }
+                } 
+                function testAgeEleve(){
+                    if ( !data.formulaire.eleve.ageEleve){
                         data.error.ageEleve = "Choisir l'age de l'élève",
                         valid = false   
                     }
                 }
-                function testPhone() {
-                    if( data.infoFormulaire.phone){
-                        if( data.infoFormulaire.phone.length > 50){
-                            data.error.phone ="Votre numéro ne semble pas correct !",
+                function testAdresseEleve(){
+                    if ( data.formulaire.eleve.adresseEleve){
+                        if( data.formulaire.eleve.adresseEleve.length > 25){
+                            data.error.adresseEleve = "Max. 25 caractères.",
                             valid = false   
                         }
-                    } else{
-                        data.error.phone = "Veuillez saisir le champ !" 
+                    }else {
+                        data.error.adresseEleve = "Veuillez saisir le champ!"
                         valid = false
-                    } 
-                }  
+                    }
+                } 
+                function testVilleEleve(){
+                    if (data.formulaire.eleve.villeEleve){
+                        if( data.formulaire.eleve.villeEleve.length > 25){
+                            data.error.villeEleve = "Max. 25 caractères.",
+                            valid = false   
+                        }
+                    }else{
+                        data.error.villeEleve = "Veuillez saisir le champ !",
+                        valid = false 
+                    }
+                    
+                }
+                function testChoiceDate(){
+                    if(data.formulaire.dateChoisie){
+                        if(!data.formulaire.dateChoisie){
+                            data.error.choiceDateCours = "Veuillez choisir une date"
+                            valid = false
+                        }
+                    }else  data.error.choiceDateCours = "Veuillez choisir une date"
+                } 
+                function testNpaEleve(){
+                    if(data.formulaire.eleve.npaEleve){
+                        if(data.formulaire.eleve.npaEleve.length > 4){
+                            data.error.npaEleve = "! Npa",
+                            valid = false   
+                        }
+                    } else {
+                        data.error.npaEleve = "! Npa",
+                        valid = false 
+                    }
+                }
             }            
         }
-    }
+    },
+  
+    beforeMount(){            
+        this.formulaire = JSON.parse(localStorage.getItem("formulaireInscription"))  
+        if(localStorage.getItem("panier")){
+            this.displayContact = false
+        }     
+    },
+    mounted(){  
+        console.log(this.formulaire)   
+        this.checkAge()
+    },
+   
 }
 
 </script>
@@ -281,6 +441,10 @@ export default {
     }
     .section{
         padding: 20px
+    }
+    .sectionContact{
+        display: flex;
+        flex-flow: row wrap;
     }
     i{
         display: block !important;
@@ -303,11 +467,11 @@ export default {
     }
     h2{
         position: relative;
-        font-size: calc(14px + 3vw);
+        font-size: calc(16px + 3vw);
     }
     h3{
         font-size: 2rem;  
-        text-align: center; 
+        text-align: left; 
         margin-bottom: 10px;     
     }
     h2:before{
@@ -322,10 +486,12 @@ export default {
         background: lightgray;
         padding: 15px  10px;
         border-radius: 5px;
+        margin-bottom: 20px;
     }
     .boxInput{
         display: flex;
-        flex-flow: wrap;
+        padding: 0 10px;
+        flex-flow: column wrap;
         margin: 10px 0;
         width: 100%;
     }
@@ -337,8 +503,8 @@ export default {
     }
     .boxLabelAndInput{
         display: flex;
-        flex-flow: row wrap;
         justify-content: space-between;
+        flex-flow: row wrap;
         align-items: flex-start;
     }
     .requis{
@@ -362,13 +528,12 @@ export default {
         font-weight: bold;
         text-align: center;
     }
-    .cours{
+    .eleve{
         display: flex;
         flex-flow: column;
         margin-bottom: 20px;
     }
-    #cours{
-        max-width: 100%;
+    #eleve{
         background: white;
     }
     .boxAge{
@@ -379,53 +544,70 @@ export default {
        width: 50px;
        border: none;
        background: white;
+       padding: 3px 0;
+       border-radius: 5px;
+       cursor: pointer;
     }
    
     .boxNpaVille{
+        width: 100%;
+        padding: 10px;
         display: flex;
+        flex-flow: row;
         justify-content: space-between;
     }
     .npa{
-        display: inline-block;
-        width: 22%;
+        display: block;
+        width: 55px;
+        min-width: 55px;
     }
-    .ville{
-        display: inline-block;
-        width: 70%;
+    .ville {
+        display: block;
+        margin-left: 10px;
+        width: 100% !important;
     }
+   
     .labelRemarque{
         display: block;
         margin-top: 20px !important;
     }
     textarea{
         display: block;
-        width: 80%;
+        width: 100%;
         max-width: 500px;
         height: 100px;
         padding: 10px;
         border-radius: 5px;
         border: none;
     }
-    .eleve{
-        font-size: 14px;
-    }
+   .inputAge{
+       width: 55px;
+   }
+   #selectCours{
+       width: 100px;
+   }
+
+
+   
 
     
     @media screen and (min-width: 560px) {
         h2, i{
             font-size: 40px;
         }
-        .cours{
+        .eleve{
             width: 100%; 
         }
-        #cours{
-            width: 230px;
-        }
+        
         .boxInput{
-            max-width: 230px;
+            max-width: 50%;
         }
        .titleForm{
             padding-bottom: 30px;
        }
+       .boxNpaVille{
+           width: 50%;
+       }
+       
     }
 </style>

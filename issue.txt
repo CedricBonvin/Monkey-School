@@ -7,11 +7,15 @@ FRONTEND
 
 - Comment changer les titles des pages ? 
 
+- Télécharger les dates de cours depuis les cartes, ok mais de base elles sont on png et quand je les télécharges je met l'extention pdf et sa marche .. ( truc de dingue ..) COMMENT GERER LES PDF
+
 - !! ATTENTION je fais le test du formulaire d'inscription de --> formulaire d'inscription à inscription-validation.
     si il veut, il peut me baiser quand il est sur inscription-validation en changent les infos directement dans le localStorage.. 
     mais la, ca seras le backend qui prendra le relai .. 
 
-
+- bug sur les cartes de cours si je resize la fenetre
+- scrollIntoView() ne fonctionnne pas bien sur les cartes cours
+- vérifier le lien sur google Map dans la page contact et sur les cartes de cours.. ( !!!! connexion a mon compte google !!!!!!!)
     ************
     ISSUE ******
     ************
@@ -23,13 +27,9 @@ FRONTEND
 BACKEND
 -----------------------------
 
- - Lors d'une nouvelle inscription tout se passe bien, mais j'ai une erreur terminal, il ne peut pas set the heaer après envoyer la reponse ,
-    je pense que c'est parce que je fais une boucle avec save() dedans.
-    c.f controlerInscripition.js dans le dossier controller 
+
 
 - mail template .. j'ai du mettre tout le css des templates dans les tags html ... c'est ce qui fonctionne le mieux.. 
     autrement il y a des bugs en mobile surtout sur yahoo. ( vraiment c'est ce qui fonctionnne le mieux .. ) 
 
-- impossible de capturer l'exception lors de l'envoie du mail contact. c.f mail-confirm-contact => middleware
-    si je met une donnée fausse genre t : au lieu du to : => l'erreur ne se fait pas capturer dans le catch et envoie quand même la réponse de status 200 ?
 

@@ -1,16 +1,16 @@
 <template>
-  <article>
-        <div class="containerCarte" v-for="(cours,index) in panier" :key="cours.nom">
+  <article class="containerCarte" >
+        
             <div class="headerCarte">
-                <h3>Régulier: <span class="nomCours"> {{ cours.nomCours}}</span></h3>
-                <i @click="supprimerCarte(index)" class="fas fa-trash-alt supprimer"></i>
+                <h3>{{cours.typeCours}}: <span class="nomCours"> {{ cours.nomCours}}</span></h3>
+                <i @click="supprimerCarte()" class="fas fa-trash-alt supprimer"></i>
             </div>
             
             <div class="carte">
                 <!-- info Cours -->
                 <div class="infoCours">
                     <h4 >Info cours :</h4>
-                    <div class="bold">Jour : <span class="donne">{{ cours.jourCours}}</span> </div>
+                    <div class="bold">Jour : <span> {{ cours.jourCours}} </span></div>
                     <div class="bold">heure : <span class="donne">{{ cours.heure}} </span></div>
                 </div>
                 <!-- Info Eleve -->
@@ -23,31 +23,26 @@
                 <div>
                     <h4>Prix :</h4>
                     <div class="bold">CHF : <span class="donne">{{ cours.prixCours}}.-</span></div>
-                </div>
+                </div>       
             </div>
          
-        </div>
+      
   </article>
 </template>
 
 <script>
 export default {
     name : "sectionPanier",
+    props : ["cours"],
     data(){
         return{
-            panier : []
+            panier : [],         
         }
     },
     methods : {
-        supprimerCarte(index){
-            this.panier.splice(index,1)
-            this.$emit("supprimerCarte",{ foo : this.panier})
-        }
-    },
-
-    beforeMount(){
-        this.panier = JSON.parse(localStorage.getItem("panier"))
-        
+        supprimerCarte(){
+            this.$emit("supprimerCarte")
+        },
     },
 }
 </script>
@@ -116,6 +111,17 @@ export default {
     }
     .donne{
         font-weight: 300;
+    }
+
+    /* AUTRE PARTICIPANT  */
+
+    .boxAutreParticipant{
+        width: 100%;;
+    }
+    .boxEleve{
+        border: solid 1px gray;
+        padding: 10px;
+        margin: 10px;
     }
   
     
