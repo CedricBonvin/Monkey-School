@@ -19,6 +19,7 @@
             />
         </div>
     </div>
+
     <!-- Adulte -->
     <div class="section" id="regulierAdulte">
         <h2 class="titleSection">Régulier Adulte</h2>
@@ -30,12 +31,25 @@
             />
         </div>
     </div>
+
     <!-- PRIVEE -->
     <div class="section" id="privee">
         <h2 class="titleSection">Cours Privée</h2>
         <p class="phraseType">Pour ce qu'ils veulent apprendre à leur ryhtme.!</p>
         <div v-for="item in coursPrive" :key="item.nomCours">
             <carte-cours 
+                :cours="item"
+            />
+        </div>
+    </div>
+
+    <!-- NOEL -->
+    <div class="section" id="noel">
+        <h2 class="titleSection">Noël</h2>
+        <p class="phraseType">Après le ski, vebez grimper 3 heures en toutes sécurité avec un professionnel de l'escalade... </p>
+        <div class="sectionCard">
+            <carte-cours 
+                v-for="item in noel" :key="item.nomCours"
                 :cours="item"
             />
         </div>
@@ -59,6 +73,7 @@ export default {
             coursPrive : Bdd.bddCours.coursPrive,
             autonomie : Bdd.bddCours.autonomie,
             famille : Bdd.bddCours.famille,
+            noel : Bdd.bddCours.noel,
         }
     },   
 }

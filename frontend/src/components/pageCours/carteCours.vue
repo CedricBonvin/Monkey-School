@@ -43,14 +43,14 @@
                 </div>
 
                 <!-- DATE -->
-                <div v-if="cours.typeCours === 'regulier' " 
+                <div v-if="cours.typeCours === 'regulier' || cours.typeCours === 'Noel' " 
                     class="dateDesCours"><span class="clefInfoCours">Dates des cours : </span> <span @click="schowOneBox($event,cours.nomCours,'.boxDate')" class="textAfficher">Afficher</span>
                 </div>
                 <div class="containerInfoDate">
                     <div class="boxDate">
                         <i class="fas fa-calendar-alt iconeCalendrier"></i>
                         <i @click="closeOneBox($event,cours.nomCours,'.boxDate')"  class="fas fa-times iconeCloseSmall "></i>
-                        <p class="periodeScolaire">* Tous nos cours régulier suivent les périodes scolaires.</p>
+                        <p v-if="cours.typeCours === 'regulier'" class="periodeScolaire">* Tous nos cours régulier suivent les périodes scolaires.</p>
                         <div class="boxDateDeCours">
                             <h4>2020</h4>
                             <div>{{ cours.datesCours2020}}</div>
@@ -85,6 +85,8 @@
                             <i @click="closeOneBox($event,cours.nomCours,'.boxPrix')"  class="fas fa-times iconeCloseSmall "></i>
                             <p>L'encadrement, le matériel et l'entrée à la salle sont compris dans le prix du cours !</p>
                             <p v-if="cours.typeCous === 'regulier'" class="PrixAboOffert"> * L'abonnement annuel d'une valeur de {{cours.valeurAbo}} est offert !!</p>
+                           
+                           <!-- RABAIS -->
                             <h4 class="titleRabais">Rabais :</h4>
 
                             <!-- Si Regulier -->
@@ -100,6 +102,12 @@
                                 <p class="paraRabais">* CHF. 10.- / heure par personne supplémentaire.</p>
                                 
                             </div>
+
+                            <!-- si Noël -->
+                            <div v-if="cours.typeCours === 'Noel'">
+                                <p class="paraRabais">* Pour l'instant pas de rabais en vue !!!</p>           
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -135,7 +143,7 @@ export default {
             let obj = {
                 contact : {},
                 eleve : {},
-                cours : {...cours}
+                infoCours : {...cours}
             }
 
             if (cours.typeCours === "prive"){

@@ -1,88 +1,89 @@
-<template>
-    <div>
-        <loader v-if="displayLoader" />
-        <modal v-if="displayModal"
-            :text="modalText"
-            @close-modal="closeModal"
-         />
-        <Header 
-            title="Panier"
-        />
-        <!-- CARTE -->
-        <section>
-             <i class="fas fa-shopping-basket iconePanier"></i>
-            <carte-panier
-                v-for="(item , index ) in panier.cours" :key="item.id"
-                :cours="panier.cours[index]"
-                @supprimerCarte="deleteCard(index)"
+<template>     
+        <div>
+            <loader v-if="displayLoader" />
+            <modal v-if="displayModal"
+                :text="modalText"
+                @close-modal="closeModal"
              />
-        </section>
-
-        <button class="buttonAjouter">
-            <router-link to="/cours"> AJOUTER UN COURS...</router-link>
-        </button>
-
-        <!-- FRATERIE -->
-        <section v-if="displaySectionFraterie" class=" section fraterie">
-            <h2 class="underLine">Y'a-t-il une fraterie ?</h2>
-            <div class="boxRadio">            
-                <div>
-                    <input @click="yesFraterie"  type="radio" name="fraterie" id="yesFraterie" value="true" v-model="isFraterie">
-                    <label for="noFraterie">OUI</label>
-                </div>
-                <div>
-                    <input @click="noFraterie"  type="radio" name="fraterie" id="noFraterie" value="false" v-model="isFraterie">
-                    <label for="noFraterie">NON</label>
-                </div>   
-            </div>
-           
-
-            <!-- Nom eleve  -->
-            <div v-if="isFraterie ==='true'">
-                 <hr>
-                <h3 class="titleSelectionFraterie">Qui est de la même Famille...</h3>
-                <div class="boxFraterie">
-                    <div v-for="eleve in panier.cours" :key="eleve.nom" >          
-                        <div v-if="eleve.typeCours === 'regulier'">
-                            <input @change="checkForRabais" type="checkbox" name="isEleve" :value="eleve" v-model="elevePanierChoice"   >
-                            <label for=""> {{eleve.nomEleve}} {{eleve.prenom}}</label>
-                        </div>
+            <Header
+                title="Panier"
+            />
+            
+            <!-- CARTE -->
+            <section>
+                 <i class="fas fa-shopping-basket iconePanier"></i>
+                <carte-panier
+                    v-for="(item , index ) in panier" :key="item.id"
+                    :cours="panier[index]"
+                    @supprimerCarte="deleteCard(index)"
+                 />
+            </section>
+            <button class="buttonAjouter">
+                <router-link to="/cours"> AJOUTER UN COURS...</router-link>
+            </button>
+            <!-- FRATERIE -->
+            <section v-if="displaySectionFraterie" class=" section fraterie">
+                <h2 class="underLine">Y'a-t-il une fraterie ?</h2>
+                <div class="boxRadio">
+                    <div>
+                        <input @click="yesFraterie"  type="radio" name="fraterie" id="yesFraterie" value="true" v-model="isFraterie">
+                        <label for="noFraterie">OUI</label>
+                    </div>
+                    <div>
+                        <input @click="noFraterie"  type="radio" name="fraterie" id="noFraterie" value="false" v-model="isFraterie">
+                        <label for="noFraterie">NON</label>
                     </div>
                 </div>
-                    <!-- <button class="buttonFull" @click="checkFraterie">Je valide la fraterie</button> -->
-            </div>
-            <div class="error" v-if="error.selectFraterie"> {{ error.selectFraterie }}</div>
-        </section>
         
-        <!-- PAIEMENT -->
-        <section v-if=" displayPaiment" class="sectionPaiement ">
+                <!-- Nom eleve  -->
+                <div v-if="isFraterie ==='true'">
+                     <hr>
+                    <h3 class="titleSelectionFraterie">Qui est de la même Famille...</h3>
+                    <div class="boxFraterie">
+                        <div v-for="eleve in panier" :key="eleve.id" >
+                            <div v-if="eleve.infoCours.typeCours === 'regulier'">
+                                <input @change="checkForRabais" type="checkbox" name="isEleve" :value="eleve" v-model="fraterie"   >
+                                <label for=""> {{eleve.eleve.nomEleve}} {{eleve.eleve.prenomEleve}}</label>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- <button class="buttonFull" @click="checkFraterie">Je valide la fraterie</button> -->
+                </div>
+                <div class="error" v-if="error.selectFraterie"> {{ error.selectFraterie }}</div>
+            </section>
+        
+            <!-- PAIEMENT -->
+            <section v-if=" displayPaiment" class="sectionPaiement ">
                 <div class="boxTotalPrix">
                         <p class="titlePrixTotal">TOTAL : </p>
                     <div class="titleBodyTotal">
-                       <div>Eleve :</div>
-                       <div>Rabais :</div>
-                       <div>Prix :</div>
+                        <div class="headerTotal">Elève :</div>
+                        <div class="headerTotal">Rabais :</div>
+                        <div class="headerTotal">Prix :</div>
                     </div>
                     <div class="boxBodyTotal" >
-                        <div class="bodyTotal" v-for="eleve in panier.cours" :key="eleve.nom">
-                            <p> {{eleve.nomEleve}} {{ eleve.prenom }}</p>
-                            <p v-if="!eleve.rabais">--</p>
-                            <p v-if="eleve.rabais">{{eleve.rabais}} %</p>
-                            <p> CHF {{ eleve.prixPaye}} .- </p>
+                        <div class="bodyTotal" v-for="cours in panier" :key="cours.id">
+                            <div >
+                                <p> {{cours.eleve.nomEleve}} </p>
+                                <p>{{ cours.eleve.prenomEleve }}</p>
+                            </div>
+                            <p v-if="!cours.infoCours.rabais">--</p>
+                            <p v-if="cours.infoCours.rabais">{{cours.infoCours.rabais}} %</p>
+                            <p> CHF {{ cours.infoCours.prixAPaye }} .- </p>
                         </div>
                     </div>
                     <div class="boxPrixTotal">
                         <div>Prix Total :</div>
-                        <div>CHF {{ prixTotal }} .-</div>
+                        <div class="prixTotal">CHF. {{ prixTotal }} .-</div>
                     </div>
-                    <button @click="paiement"  class="buttonPaiment">INSCRIPTION</button>   
+                    <button @click="paiement"  class="buttonPaiment">INSCRIPTION</button>
                     <p class="accepte">NOUS ACCEPTONS :</p>
                     <img class="carteBanquaire" src="@/assets/images/visa.jpeg" alt="carte Visa">
                     <img class="carteBanquaire" src="@/assets/images/master-card.png" alt=" logo master card">
                     <img class="carteBanquaire" src="@/assets/images/twint.png" alt=" logo twint">
                 </div>
-        </section>
-    </div>
+            </section>
+        </div>
 </template>
 
 <script>
@@ -96,7 +97,7 @@ export default {
 
     data(){
         return{
-            panier :  {},
+            panier :  [],
             displaySectionFraterie : false,
             displayPaiment : true,
             isFraterie : undefined,     
@@ -104,92 +105,102 @@ export default {
                 fraterie : "",
                 selectFraterie : ""
             },
-            elevePanierChoice : [],
+            fraterie : [],
             get prixTotal(){
                 let total = 0
-                for (let i in this.panier.cours){
-                    total += this.panier.cours[i].prixPaye
+                for (let i in this.panier){
+                    total += this.panier[i].infoCours.prixAPaye
                 }
                 return total
             },
             displayModal : false,
             modalText : "",
-            displayLoader : false      
+            displayLoader : false,
+            panierVide : false     
         }
     },
     methods : {
         paiement(){
             localStorage.setItem("panier", JSON.stringify(this.panier))
-            this.$router.push({path : "/paiement"})
-            // this.displayLoader = true
-            // let sendTableau = []
-            // // preparation des objets à envoyer
-            // for (let i in this.panier){
-            //     let eleve = this.panier[i]
-            //     let obj = {
-            //         typeCours : eleve.typeCours,
-            //         nomCours : eleve.nomCours,
-            //         nomEleve : eleve.nomEleve,
-            //         prenomEleve : eleve.prenom,
-            //         adresseEleve : eleve.adresse,
-            //         ageEleve : eleve.ageEleve,
-            //         mail : eleve.mail,
-            //         npa : eleve.npa,
-            //         phone : eleve.phone,
-            //         prixCours : eleve.prixCours,
-            //         prixPaye : eleve.prixPaye,
-            //         rabais : eleve.rabais,
-            //         ville : eleve.ville,
-            //         remarque : eleve.remarque
-            //     }
-            //     sendTableau.push(obj)
-            // }
-            // // ENVOIE
-            // fetch("http://localhost:3000/new-inscription",{
-            //     method : "POST",
-            //     body : JSON.stringify(sendTableau),
-            //     headers: {"Content-type": "application/json; charset=UTF-8",}
-            // })
-            // .then( response => {
-            //     this.displayLoader = false
-            //     this.displayModal = true
-            //     if (response.status === 200){
-            //         this.modalText = "Merci beaucoup votre inscription, nous vous avons envoyé un mail de confirmation..!!"
-            //     } else this.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+            // this.$router.push({path : "/paiement"})
+            //  this.displayLoader = true
 
-
-            // })
-            // .catch(() => {
-            //     this.displayLoader = false
-            //     this.displayModal = true
-            //     this.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
-            // })
+            // ajout de la clef fraterie et de la date d'inscription dans les items du panier
+            for (let item in this.panier){
+                this.panier[item].eleve.fraterie = []
+                this.panier[item].infoCours.dateInscription = Date.now()
+            }
+            // INJECTION DE LA FRATERIE DANS LES ITEMS DU PANIER
+            for (let item in this.panier){
+                for(let i in this.fraterie){
+                    if ( this.fraterie[i].eleve.nomEleve === this.panier[item].eleve.nomEleve){
+                        for (let b in this.fraterie){
+                            let frereSoeur = {
+                                nom : this.fraterie[b].eleve.nomEleve,
+                                prenom : this.fraterie[b].eleve.prenomEleve
+                            }
+                            this.panier[item].eleve.fraterie.push(frereSoeur)
+                        }
+                    }
+                }
+            }
+                
+             // ENVOIE       
+            fetch("http://localhost:3000/new-inscription",{
+                method : "POST",
+                body : JSON.stringify(this.panier),
+                headers: {"Content-type": "application/json; charset=UTF-8",}
+            })
+            .then( response => {
+                this.displayLoader = false
+                this.displayModal = true
+                if (response.status === 200){
+                    this.modalText = "Merci beaucoup pour votre inscription, nous vous avons envoyé un mail de confirmation..!!"
+                } else this.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+            })
+            .catch(() => {
+                this.displayLoader = false
+                this.displayModal = true
+                this.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+            })
         },
         noFraterie(){
-            for (let i = 0; i < this.panier.cours.length; i++){
-                this.panier.cours[i].rabais = null
-                this.panier.cours[i].prixPaye = this.panier.cours[i].prixCours
+            for (let i = 0; i < this.panier.length; i++){
+                this.panier[i].infoCours.rabais = null
+                this.panier[i].infoCours.prixAPaye = this.panier[i].infoCours.prix
             }
                 this.displayPaiment = true   
         },
         yesFraterie(){
-             this.displayPaiment = true
-             this.elevePanierChoice = []
+            
+            for (let i = 0; i < this.panier.length; i++){
+                this.panier[i].infoCours.rabais = null
+                this.panier[i].infoCours.prixAPaye = this.panier[i].infoCours.prix
+            }
+            this.displayPaiment = true
+            this.fraterie = []
+             
         },      
         deleteCard(index){
-            this.panier.cours.splice(index,1)
+            this.panier.splice(index,1)
            
-            this.elevePanierChoice = []
+            this.fraterie = []
 
-            for (let i in this.panier.cours){
-                this.panier.cours[i].rabais = null
-                this.panier.cours[i].prixPaye = this.panier.cours[i].prixCours
+            for (let i in this.panier){
+                this.panier[i].infoCours.rabais = null
+                this.panier[i].infoCours.prixAPaye = this.panier[i].infoCours.prix
             }
                 
-            if (this.panier.cours.length < 2){
+            if (this.panier.length < 2){
                 this.displaySectionFraterie = false
                 this.displayPaiment = true
-            }            
+            } 
+
+            if (this.panier.length === 0){
+                localStorage.removeItem("panier")
+            }else{
+                localStorage.setItem("panier",JSON.stringify(this.panier))          
+            }
         },
         closeModal(){
             this.displayModal = false
@@ -197,8 +208,8 @@ export default {
         // affiche section fraterie si plusieurs régulier
         checkTypeCours(){
             let nbrCoursRegulier = 0
-            for(let i in this.panier.cours){
-                if (this.panier.cours[i].typeCours === "regulier"){
+            for(let i in this.panier){
+                if (this.panier[i].infoCours.typeCours === "regulier"){
                     nbrCoursRegulier ++     
                 }
             }
@@ -208,53 +219,66 @@ export default {
             } 
         },
         checkForRabais(){
-
             // effacer les rabais et réinitialiser le Prix à payé
-            for (let i = 0; i < this.panier.cours.length; i++){
-                this.panier.cours[i].rabais = null
-                this.panier.cours[i].prixPaye = this.panier.cours[i].prixCours
+            for (let i = 0; i < this.panier.length; i++){
+                this.panier[i].infoCours.rabais = null
+                 this.panier[i].infoCours.prixAPaye = this.panier[i].infoCours.prix
             }
             // ajout du rabais dans le panier 
-            if (this.panier.cours.length  > 1){
+            if (this.panier.length  > 1){
                 this.error.selectFraterie = ""
                 this.displayPaiment = true
 
                 // rabais 2 élèves
-                if(this.elevePanierChoice.length === 2){  
-                    console.log(this.elevePanierChoice)
-                    let lastEleve = this.elevePanierChoice.length
-                    let eleve = this.elevePanierChoice[lastEleve -1]
-                    eleve.rabais = 10
-                    eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
+                if(this.fraterie.length === 2){  
+                    let nomFirstFraterie = this.fraterie[0].eleve.nomEleve
+                    let prenomFirstFraterie = this.fraterie[0].eleve.prenomEleve
+
+                    for(let item in this.panier){
+                       let cours = this.panier[item] 
+                        if (cours.eleve.nomEleve === nomFirstFraterie && cours.eleve.prenomEleve === prenomFirstFraterie){
+                            cours.infoCours.rabais = 10
+                            cours.infoCours.prixAPaye = cours.infoCours.prix - ( cours.infoCours.prix * cours.infoCours.rabais / 100)
+                        }
+                    }
                 }
                 // rabais 3 élèves
-                // if(this.panier.cours.length === 3){                
-                //     let lastEleve = this.elevePanierChoice.length
-                //     let eleve = this.elevePanierChoice[lastEleve -1]
-                //     eleve.rabais = 15
-                //     eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
-                // }
-                // // rabais 4 élèves
-                // if(this.panier.cours.length === 4){                  
-                //     let lastEleve = this.elevePanierChoice.length
-                //     let eleve = this.elevePanierChoice[lastEleve -1]
-                //     eleve.rabais = 20
-                //     eleve.prixPaye =  eleve.prixCours  - (eleve.prixCours * eleve.rabais / 100)
-                // }
+                if(this.fraterie.length === 3){  
+                    let nomFirstFraterie = this.fraterie[0].eleve.nomEleve
+                    let prenomFirstFraterie = this.fraterie[0].eleve.prenomEleve
+
+                    for(let item in this.panier){
+                       let cours = this.panier[item] 
+                        if (cours.eleve.nomEleve === nomFirstFraterie && cours.eleve.prenomEleve === prenomFirstFraterie){
+                            cours.infoCours.rabais = 15
+                            cours.infoCours.prixAPaye = cours.infoCours.prix - ( cours.infoCours.prix * cours.infoCours.rabais / 100)
+                        }
+                    }
+                }
+                // rabais 4 élèves
+                if(this.fraterie.length === 4){  
+                    let nomFirstFraterie = this.fraterie[0].eleve.nomEleve
+                    let prenomFirstFraterie = this.fraterie[0].eleve.prenomEleve
+
+                    for(let item in this.panier){
+                       let cours = this.panier[item] 
+                        if (cours.eleve.nomEleve === nomFirstFraterie && cours.eleve.prenomEleve === prenomFirstFraterie){
+                            cours.infoCours.rabais = 20
+                            cours.infoCours.prixAPaye = cours.infoCours.prix - ( cours.infoCours.prix * cours.infoCours.rabais / 100)
+                        }
+                    }
+                }
             }  
-            // else if ( this.elevePanierChoice.length  < 2){
-            //     this.error.selectFraterie = "! Veuillez sélectionner au minimum 2 élèves"
-            //     this.displayPaiment = false
-            // }
+            else if ( this.fraterie.length  < 2){
+                this.error.selectFraterie = "! Veuillez sélectionner au minimum 2 élèves"
+                this.displayPaiment = false
+            }
         },
     },
     beforeMount(){
         this.panier = JSON.parse(localStorage.getItem("panier"))     
-        this.checkTypeCours()
+        this.checkTypeCours()       
     },
-    mounted(){
-        console.log(this.panier)
-    }
 }
 </script>
 
@@ -305,6 +329,7 @@ export default {
         max-width: 500px;
         margin: auto;
         margin-top: 20px;
+        margin-bottom: 50px;
     }
     .boxTotalPrix{
         padding: 20px;
@@ -326,6 +351,8 @@ export default {
         display: flex;
         justify-content: space-between;
         padding-top: 10px;
+        border-bottom: solid 1px lightgray;
+        padding-bottom: 10px;
     
     }
     .boxPrixTotal{
@@ -339,6 +366,7 @@ export default {
         margin-bottom: 10px;
         font-weight:bold;
         padding-bottom: 1px;
+        font-size: 20px;
     }
     .buttonPaiment{
         background: green;
@@ -402,12 +430,39 @@ export default {
         font-weight: bold;
      
     }
-    a{
+    .item{
         color: white;
         font-weight: 800;
         letter-spacing: 1px;
     }
-    
+    a{
+        color: white;
+        font-weight: bold;
+    }
+    .modalPanierVide{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 90%;
+        text-align: center;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background: white;
+        font-size: 30px;
+    }
+    .prixTotal{
+        font-weight: 400;
+    }
+    .headerTotal{
+        font-weight: 400;
+        font-size: 20px;
+    }
+
+    @media screen and (max-width : 500px){
+        .fraterie h2{
+            font-size: 25px;
+        }
+    }
   
 
 </style>>

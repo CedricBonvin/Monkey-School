@@ -62,24 +62,21 @@
         <h3>Elève</h3>
         <form class="formulaire">
             <div class="boxLabelAndInput">
-
-                <!-- eleve -->
+                <!-- type de cours -->
                 <div class="boxInput ">
-                    <label  for="eleve"> eleve :</label>
-                    <input  type="text" id="eleve" name="eleve" :value="formulaire.cours.nomCours "   disabled >
+                    <label  for="eleve"> Cours :</label>
+                    <input  type="text" id="eleve" name="eleve" :value="formulaire.infoCours.nomCours "   disabled >
                 </div>
                  <!-- AGE  si eleve regulier--> 
                 <div 
-                    v-if="  formulaire.cours.nomCours === 'Mini-Spider' ||
-                            formulaire.cours.nomCours === 'Gecko' ||
-                            formulaire.cours.nomCours === 'Monkey' ||
-                            formulaire.cours.nomCours === 'Big-Monkey' "
+                    v-if="  formulaire.infoCours.nomCours === 'Mini-Spider' ||
+                            formulaire.infoCours.nomCours === 'Gecko' ||
+                            formulaire.infoCours.nomCours === 'Monkey' ||
+                            formulaire.infoCours.nomCours === 'Big-Monkey' "
                      class="boxInput boxAge">
                     <label class="requis labelAge" for="age "> Age :</label>
                     <select name="age" id="age" v-model="formulaire.eleve.ageEleve" >
-           
-                        <option v-for=" age in formulaire.cours.ageCours" :key="age" :value="age">{{ age }}</option>
-             
+                        <option v-for=" age in formulaire.infoCours.ageCours" :key="age" :value="age">{{ age }}</option>  
                     </select>
                     <p v-if="error.ageEleve" class="error">{{ error.ageEleve }}</p>
                 </div>
@@ -90,26 +87,20 @@
                     <p v-if="error.ageEleve" class="error">{{ error.ageEleve }}</p>
 
                 </div>
-                <!-- CHOIX DATE DE eleve si il y en a-->
+
+                <!-- CHOIX DATE DE eleve si il y en a -->
                 <div class="boxInput" 
-                    v-if="formulaire.cours.typeCours === 'initiation' ||
-                          formulaire.cours.typeCours === 'autonomie'   
-                    
-                    ">
+                    v-if="formulaire.infoCours.typeCours === 'initiation' ||
+                          formulaire.infoCours.typeCours === 'autonomie'">
                     <label class="requis" for="selectCours">Date du eleve :</label>
                     <select name="selectCours" id="selectCours" v-model="formulaire.eleve.dateChoisie">
                             <option></option>
                             <option
                                 v-for="date in formulaire.cours.choiceDateCours" :key="date.nomCours"                               
-                                :value="date">{{ new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
-                               
-                            </option>
-                        
-                    </select>
-                  
-                    
-                    <p v-if="error.choiceDateCours" class="error">{{ error.choiceDateCours }}</p>
-                  
+                                :value="date">{{ new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}                   
+                            </option>                   
+                    </select>        
+                    <p v-if="error.choiceDateCours" class="error">{{ error.choiceDateCours }}</p>                 
                 </div>
 
                 <!-- NOM -->
@@ -153,7 +144,11 @@
             <label for="remarqueEleve" class="labelRemarque">Remarque :</label>
             <textarea name="remarqueEleve" id="remarqueEleve" v-model="formulaire.eleve.remarqueEleve"  placeholder="Votre message : "> </textarea>
            
-            <button @click="send($event)" id="sendInfo" class="buttonFull" >Envoyer</button>  
+            <p class="errorForm" v-if="error.form" >! Veuillez vérifier les données du formulaire.!</p>
+            <div class="boxbuton">
+                 <router-link class="buttonFull goCours" to="/cours">RETOUR AUX COURS..</router-link>
+                <button @click="send($event)" id="sendInfo" class="buttonFull valid" > CONFIRMER</button>              
+            </div> 
         </form>
   </div>
 </template>
@@ -164,27 +159,25 @@ export default {
    
 data(){
     return{
-        formulaire : {
-         
-        },
+        formulaire : {},
         displayContact : true,
-        error : {
-            
-            eleve : "",
+        error : {    
             nomContact : "",
             prenomContact: "",
             phoneContact : "",
             npaContact : "",
             villeContact : "",
             adresseContact : "",
-            prenom : "",
-            npa : "",
-            ville : "",
-            adresse : "",
-            email : "",
-            remarque : "",
+            mailContact : "",
+
+            nomEleve : "",
+            prenomEleve : "",
+            npaEleve : "",
+            villeEleve : "",
+            adresseEleve : "",
             ageEleve : "",
-            choiceDateCours : "",                      
+            choiceDateCours : "",  
+            form : false                    
         },
     }
 },
@@ -216,7 +209,7 @@ data(){
             }
 
             // ESSAIE ENVOIE FORMULAIRE...
-            if (!testForm(this)){
+            if (testForm(this)){
                 localStorage.setItem("formulaireInscription",JSON.stringify(this.formulaire))
                 this.$router.push({path : "/inscription-validation"})
             }
@@ -242,13 +235,15 @@ data(){
 
                 if (valid === true){
                     return true
-                } else return false
+                } else {
+                    data.error.form = true
+                    return false
+                }
 
                 // *************************************
                 // FUNCTION TEST FORM  *****************
                 // *************************************
 
-                // CONTACT
                 function testMailContact() {
                     if( data.formulaire.contact.mailContact){
                         if( data.formulaire.contact.mailContact.length > 50){
@@ -420,13 +415,16 @@ data(){
     },
   
     beforeMount(){            
-        this.formulaire = JSON.parse(localStorage.getItem("formulaireInscription"))  
-        if(localStorage.getItem("panier")){
-            this.displayContact = false
-        }     
+        this.formulaire = JSON.parse(localStorage.getItem("formulaireInscription")) 
+        
+        // si déja panier 
+        let panier = JSON.parse(localStorage.getItem("panier")) 
+        if (panier){
+            this.formulaire.contact = {...panier[0].contact}
+        }
+       
     },
     mounted(){  
-        console.log(this.formulaire)   
         this.checkAge()
     },
    
@@ -586,6 +584,27 @@ data(){
    #selectCours{
        width: 100px;
    }
+   .buttonFull{
+        border-radius: 2px;
+    }
+    .goCours{
+        background: rgb(230, 53, 53);
+    }
+    .boxbuton{
+        margin-top: 50px;
+        display: flex;
+        flex-flow: row wrap;      
+    }
+    .valid{
+        background: green;
+    }
+    .errorForm{
+           font-size: 30px;
+           text-align: center;
+           font-weight: bold;
+           color: red;
+           margin-top: 30px;
+       }
 
 
    
@@ -608,6 +627,10 @@ data(){
        .boxNpaVille{
            width: 50%;
        }
+       
+       
+       
+       
        
     }
 </style>

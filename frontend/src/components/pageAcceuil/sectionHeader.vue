@@ -1,6 +1,6 @@
 <template>
   <section class="header">
-            <img class="headerImage" src="@/assets/images/header.png" alt="image singe ">
+            <img class="headerImage" src="@/assets/images/header.jpg" alt="image singe ">
             <div class="headerTitleBox">
                 <h1>Monkey-school</h1>
             </div>

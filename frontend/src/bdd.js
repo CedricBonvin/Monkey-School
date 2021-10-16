@@ -32,7 +32,7 @@ const bddCours = {
         }
     ],
     regulierEnfant : [
-
+        
         //  MINI-SPIDER 
         {   
             typeCours : "regulier",
@@ -48,6 +48,13 @@ const bddCours = {
             dureeCours : "1h30",
             lieux : "Crans-Montana, salle d'escalade de la Moubra ",
             prix : 840,
+            rabais : null,
+            get prixAPaye(){
+                if (this.rabais){
+                    return this.prix - (this.prix * this.rabais / 100)
+                }
+                else return this.prix
+            },
             valeurAbo : "CHF 290.-",
             datesCours2020 : "06-09 / 13-09 / 20-09 / 27-09 / 04-10 / 11-10 / 25-10 / 08-11 / 15-11 / 22-11 / 29-11 / 06-12 / 13-12 / 20-12",
             datesCours2021 : "10-01 / 17-01 / 24-01 / 31-01 / 07-02 / 14-02 / 21-02 / 07-03 / 14-03 / 21-03 / 28-03 / 04-04 / 11-04 / 25-04 / 02-05 / 09-05",
@@ -70,6 +77,13 @@ const bddCours = {
             dureeCours : "1h30",
             lieux : "Crans-Montana, salle d'escalade de la Moubra ",
             prix : 840,
+            rabais : null,
+            get prixAPaye(){
+                if (this.rabais){
+                    return this.prix - (this.prix * this.rabais / 100)
+                }
+                else return this.prix
+            },
             valeurAbo : "CHF 290.-",
             datesCours2020 : "07-09 / 14-09 / 21-09 / 28-09 / 05-10  / 12-10 / 26-10 / 02-11 / 09-11 / 16-11 / 23-11 / 30-11 / 07-12 / 14-12 / 21-12",
             datesCours2021 : "11-01 / 18-01 / 25-01 / 01-02 / 08-02 / 15-02 / 22-02 / 08-03 / 15-03 / 22-03 / 29-03 / 05-04 / 12-04 / 26-04 / 03-05",
@@ -92,6 +106,13 @@ const bddCours = {
             dureeCours : "1h30",
             lieux : "Crans-Montana, salle d'escalade de la Moubra ",
             prix : 840,
+            rabais : null,
+            get prixAPaye(){
+                if (this.rabais){
+                    return this.prix - (this.prix * this.rabais / 100)
+                }
+                else return this.prix
+            },
             valeurAbo : "CHF 290.-",
             datesCours2020 : "02-09 / 09-09 / 16-09 / 23-09 / 30-09 / 07-10 / 28-10 / 04-11 / 11-11 / 18-11 / 25-11 / 02-12 / 09-12 / 16-12 / 23-12",
             datesCours2021 : "13-01 / 20-01 / 27-01 / 03-02 / 10-02 / 17-02 / 24-02 / 10-03 / 17-03 / 24-03 / 31-03 / 07-04 / 14-04 / 28-04 / 05-05",
@@ -201,6 +222,27 @@ const bddCours = {
             descriptionCour : "Ceci est le cours famille",
             isDateCours : false,
      
+        },
+    ],
+    noel : [
+        {
+            typeCours : "Noel",
+            nomCours : "Noel",
+            image : require("@/assets/images/header.jpg"),
+            ageCours  : "4 à 16 ans",
+            ageString : "4 à 16 ans",
+            infoCarte : " 4 à 16 ans",
+            jour : "Période de Noël",
+            datesCours2021 : "01.01 / 02.02 / 03.01 / 04.01 / 05.01 / 06.01 / 07.01",
+            datesCours2020 : "23.12 / 24.12 / 25.12 / 26.12 / 27.12 / 28.12 / 29.12 / 30.12 / 31.12",
+            heure : "15 à 18h",
+            nbrCours : "1",
+            dureeCours : "3 heures",
+            lieux : "Crans-Montana, salle d'escalade de la Moubra ",
+            prix : "80.- / 3 heures",
+            descriptionCour : "Durant la périodes de Noël un professeur d'escalade est à disposition",
+            isDateCours : false,
+           
         },
     ],
 

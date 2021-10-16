@@ -5,17 +5,24 @@
 
 
 exports.newInscription = (req, res ) => {
-
+    
+    // let newEleve = new Regulier({
+    //     ...req.body[0]
+    // })
+    // console.log(newEleve)
+    // newEleve.save()
+    // .then(() => res.status(200).json({ message : "ok pour l'inscription"}))
+    // .catch(() => res.status(500).json( {message : "Impossible d'enregistré le dernier élève...!"} ))
     for (let i = 0; i <req.body.length; i++){
         let cours = req.body[i]
 
         // REGULIER
-        if (cours.typeCours === "regulier"){
+        if (cours.infoCours.typeCours === "regulier"){
              registerBDD(req, res, Regulier, cours, i)
         } 
 
         // INITIATION
-        else if (cours.typeCours === "initiation"){
+        else if (cours.infoCours.typeCours === "initiation"){
             registerBDD(req , res, Inititation, cours, i)
         }
     }    
@@ -48,14 +55,8 @@ function registerBDD(req, res, ModelUse, cours, i){
     .catch( error => res.status(500).json( { message : "impossible d'enregistré l'élève dans la base de donnée", err : error } ))
 
     // envoie la *** REPONSE *** au dernier index
-    if (req.body[lastIndex] === req.body[i]){
-        let cours = req.body[i]
-        let newEleve = new ModelUse({
-            ...cours
-        })
-        newEleve.save()
-        .then(() => res.status(200).json({message : "les élèves ont à bien été enregistré...!"})) 
-        .catch(() => res.status(500).json( {message : "Impossible d'enregistré le dernier élève...!"} ))
+    if (req.body[lastIndex] === req.body[i]){ 
+        res.status(200).json({message : "les élèves ont à bien été enregistré...!"})
     }
  }
 

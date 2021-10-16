@@ -8,6 +8,7 @@
             <h4 @click="scrollCible('privee')"><a class="linkSection" >3.- Privée</a></h4>
             <h4 @click="scrollCible('autonomie')"><a class="linkSection" >4.- Autonomie en salle</a></h4>
             <h4 @click="scrollCible('familles')"><a class="linkSection" >5.- Famille</a></h4>
+            <h4 @click="scrollCible('noel')"><a class="linkSection" >6.- Noël</a></h4>
         </div>
   </section>
 </template>

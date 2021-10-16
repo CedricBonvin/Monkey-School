@@ -9,7 +9,6 @@
                 
                 <div class="info">Nom :        <span id="nom" class="eleveInfo"> {{ info.contact.nomContact}} </span></div>
                 <div class="info">Prénom :     <span id="prenom" class="eleveInfo"> {{ info.contact.prenomContact}} </span></div>
-                <div class="info">Age :        <span id="age" class="eleveInfo"> {{ info.ageEleve}} </span></div>
                 <div class="info">NPA :        <span id="npa" class="eleveInfo"> {{ info.contact.npaContact}} </span></div>
                 <div class="info">Ville :      <span id="ville" class="eleveInfo"> {{ info.contact.villeContact}} </span></div>
                 <div class="info">adresse :    <span id="adresse" class="eleveInfo"> {{ info.contact.adresseContact}} </span></div>
@@ -21,17 +20,17 @@
             <h3>Eleve :</h3>
             <div class="containerInfo">
                 <div class="eleve">eleve :   
-                    <div id="eleve" class="eleveInfo"> {{ info.cours.nomCours}} </div>
+                    <div id="eleve" class="eleveInfo"> {{ info.infoCours.nomCours}} </div>
                 </div>
                 <div v-if="info.dateChoisie" class="eleve">Date choisi :   <div id="eleve" class="eleveInfo"> {{ new Date(info.dateChoisie).toLocaleDateString('fr-FR', { weekday :'long', day : 'numeric', month : 'long', year : "numeric"} ) }} </div></div>
                 <div class="info">Nom :        <span id="nom" class="eleveInfo"> {{ info.eleve.nomEleve}} </span></div>
                 <div class="info">Prénom :     <span id="prenom" class="eleveInfo"> {{ info.eleve.prenomEleve}} </span></div>
-                <div class="info">Age :        <span id="age" class="eleveInfo"> {{ info.ageEleve}} </span></div>
+                <div class="info">Age :        <span id="age" class="eleveInfo"> {{ info.eleve.ageEleve}} </span></div>
                 <div class="info">NPA :        <span id="npa" class="eleveInfo"> {{ info.eleve.npaEleve}} </span></div>
                 <div class="info">Ville :      <span id="ville" class="eleveInfo"> {{ info.eleve.villeEleve}} </span></div>
                 <div class="info">adresse :    <span id="adresse" class="eleveInfo"> {{ info.eleve.adresseEleve}} </span></div>
                 <div class="boxRemarque">Remarque : 
-                    <div id="remarque" class="remarque"> {{ info.remarque }}</div>
+                    <div id="remarque" class="remarque"> {{ info.eleve.remarqueEleve }}</div>
                 </div>
             </div>
         <div class="boxButton">
@@ -56,31 +55,18 @@ export default {
         },
         send(){        
             if(!JSON.parse(localStorage.getItem("panier"))){
-                let panier = {
-                    contact : {},
-                    eleve : [],               
-                }
-                let objToPanierCours = {
-                    ...JSON.parse(localStorage.getItem("formulaireInscription")).cours, 
-                    ...JSON.parse(localStorage.getItem("formulaireInscription")).eleve
-                }        
-                panier.contact = JSON.parse(localStorage.getItem("formulaireInscription")).contact
-                panier.eleve.push(objToPanierCours) 
+                let panier =[ 
+                    {
+                        contact : {...JSON.parse(localStorage.getItem("formulaireInscription")).contact},
+                        eleve : {...JSON.parse(localStorage.getItem("formulaireInscription")).eleve},  
+                        infoCours : {...JSON.parse(localStorage.getItem("formulaireInscription")).infoCours}             
+                    },
+                ]        
                 localStorage.setItem("panier",JSON.stringify(panier))
 
             } else { 
-                let tabCours = JSON.parse(localStorage.getItem("panier")).eleve
-                let newCours = {
-                    ...this.info.eleve,
-                    ...JSON.parse(localStorage.getItem("formulaireInscription")).cours,
-                }
-                let panier = {
-                    contact : {},
-                    eleve : [],               
-                }  
-                tabCours.push(newCours)
-                panier.contact = this.info.contact
-                panier.eleve = tabCours 
+                let panier = JSON.parse(localStorage.getItem("panier"))
+                panier.push(JSON.parse(localStorage.getItem("formulaireInscription")))
                 localStorage.setItem("panier",JSON.stringify(panier))   
             }
                        
@@ -90,7 +76,6 @@ export default {
     },
     beforeMount(){
         this.info = JSON.parse(localStorage.getItem("formulaireInscription")) 
-        console.log(this.info)
     }
 }
 </script>

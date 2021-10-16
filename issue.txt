@@ -14,13 +14,14 @@ FRONTEND
     mais la, ca seras le backend qui prendra le relai .. 
 
 - bug sur les cartes de cours si je resize la fenetre
-- scrollIntoView() ne fonctionnne pas bien sur les cartes cours
 - vérifier le lien sur google Map dans la page contact et sur les cartes de cours.. ( !!!! connexion a mon compte google !!!!!!!)
     ************
     ISSUE ******
     ************
 
     - blinder le test formulaire inscription du frontend..
+
+-si panier vide afficher une modal => aussi quand je supprime toute les cartes 
 
 
 ------------------------------

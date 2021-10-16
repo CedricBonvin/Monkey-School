@@ -11,7 +11,7 @@ export default {
     props : ["text", "modal"],
     methods : {
         closeModal(){
-            this.modal.displayModal = false
+           
             this.$emit("close-modal")
         }
     }

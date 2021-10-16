@@ -2,7 +2,7 @@
   <article class="containerCarte" >
         
             <div class="headerCarte">
-                <h3>{{cours.typeCours}}: <span class="nomCours"> {{ cours.nomCours}}</span></h3>
+                <h3>{{cours.infoCours.typeCours}}: <span class="nomCours"> {{ cours.infoCours.nomCours}}</span></h3>
                 <i @click="supprimerCarte()" class="fas fa-trash-alt supprimer"></i>
             </div>
             
@@ -10,19 +10,19 @@
                 <!-- info Cours -->
                 <div class="infoCours">
                     <h4 >Info cours :</h4>
-                    <div class="bold">Jour : <span> {{ cours.jourCours}} </span></div>
-                    <div class="bold">heure : <span class="donne">{{ cours.heure}} </span></div>
+                    <div class="bold">Jour : <span> {{ cours.infoCours.jour}} </span></div>
+                    <div class="bold">heure : <span class="donne">{{ cours.infoCours.heure}} </span></div>
                 </div>
                 <!-- Info Eleve -->
                 <div class="infoEleve">
                     <h4>Info élève :</h4>
-                    <div class="bold">Nom : <span class="donne">{{ cours.nomEleve}}</span></div>
-                    <div class="bold">Penom : <span class="donne">{{ cours.prenom}}</span></div>
-                    <div class="bold">Age : <span class="donne">{{cours.ageEleve}} ans</span> </div>
+                    <div class="bold">Nom : <span class="donne">{{ cours.eleve.nomEleve}}</span></div>
+                    <div class="bold">Penom : <span class="donne">{{ cours.eleve.prenomEleve}}</span></div>
+                    <div class="bold">Age : <span class="donne">{{cours.eleve.ageEleve}} ans</span> </div>
                 </div>
                 <div>
                     <h4>Prix :</h4>
-                    <div class="bold">CHF : <span class="donne">{{ cours.prixCours}}.-</span></div>
+                    <div class="bold">CHF : <span class="donne">{{ cours.infoCours.prix}}.-</span></div>
                 </div>       
             </div>
          
@@ -70,7 +70,7 @@ export default {
         cursor: pointer;
     }
     .containerCarte{
-    margin: auto;
+        margin: auto;
         margin-top: 50px;
         background: white;
         padding: 20px;
@@ -122,6 +122,19 @@ export default {
         border: solid 1px gray;
         padding: 10px;
         margin: 10px;
+    }
+
+    @media screen and (max-width : 400px){
+        .carte{
+            display: block;
+        }
+        h4{
+            margin: 0;
+            padding: 0;
+        }
+        .infoEleve{
+            margin: 20px 0;
+        }
     }
   
     
