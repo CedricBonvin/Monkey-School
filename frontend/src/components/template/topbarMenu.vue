@@ -87,7 +87,8 @@ export default {
     }
     #burger{
         font-size: 1.7em;  
-        margin: 0;     
+        margin: 0;  
+        padding: 0;   
     }
  
 </style>

@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <h1>Tout est correct ?</h1>
+    <div class="body">
+        
         <div class="section">
             <h2 class="underLine">Validez vos informations :</h2>
-            <h3>Personne de contact :</h3>
+            <h3>PERSONNE DE CONTACT :</h3>
             <!-- CONTACT -->
             <div class="containerInfo">
                 
@@ -17,12 +17,24 @@
                
             </div>
             <!-- ELEVE -->
-            <h3>Eleve :</h3>
+            <h3>ELEVE :</h3>
             <div class="containerInfo">
-                <div class="eleve">eleve :   
+                <div class="eleve">Cours :   
                     <div id="eleve" class="eleveInfo"> {{ info.infoCours.nomCours}} </div>
+                    <div v-if="info.infoCours.dateChoisie" class="eleve">Date du cours: </div>
+                    
+                    <!-- date si Noel -->
+                     <div v-if="info.infoCours.typeCours === 'Event'" class="sectionDateNoel">
+                         <p class="info">Vos dates de cours :</p>
+                            <div class="boxDatesNoel" >
+                                <div v-for="item in info.infoCours.dateChoisie" :key="item.id">
+                                    <div>{{new Date(item).toLocaleDateString("fr-FR",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }} </div>
+                                </div>
+                            </div>
+                     </div>
+
+
                 </div>
-                <div v-if="info.dateChoisie" class="eleve">Date choisi :   <div id="eleve" class="eleveInfo"> {{ new Date(info.dateChoisie).toLocaleDateString('fr-FR', { weekday :'long', day : 'numeric', month : 'long', year : "numeric"} ) }} </div></div>
                 <div class="info">Nom :        <span id="nom" class="eleveInfo"> {{ info.eleve.nomEleve}} </span></div>
                 <div class="info">Prénom :     <span id="prenom" class="eleveInfo"> {{ info.eleve.prenomEleve}} </span></div>
                 <div class="info">Age :        <span id="age" class="eleveInfo"> {{ info.eleve.ageEleve}} </span></div>
@@ -76,7 +88,8 @@ export default {
     },
     beforeMount(){
         this.info = JSON.parse(localStorage.getItem("formulaireInscription")) 
-    }
+    },
+    
 }
 </script>
 
@@ -95,9 +108,14 @@ export default {
     }
     .section{
         padding: 20px;
+        margin: auto;
+        max-width: 800px;
+    }
+    .body{
+        padding-top: 100px;
     }
     .containerInfo{
-        background: rgb(231, 231, 231);
+        background: rgb(247, 244, 244);
         display: flex;
         flex-flow: row wrap;
         justify-content: space-between;
@@ -151,8 +169,16 @@ export default {
     h3{
         margin-top: 30px;
         font-weight: bold;
+        opacity: 60%;
         font-size: 20px;
         font-style: italic;
+    }
+    .sectionDateNoel{
+        margin-top: 10px;
+    }
+    .boxDatesNoel{
+        background: white;
+        padding: 10px;
     }
   
    

@@ -1,48 +1,106 @@
 <template>
   <article class="containerCarte" >
         
-            <div class="headerCarte">
-                <h3>{{cours.infoCours.typeCours}}: <span class="nomCours"> {{ cours.infoCours.nomCours}}</span></h3>
-                <i @click="supprimerCarte()" class="fas fa-trash-alt supprimer"></i>
+        <div class="headerCarte">
+            <h3>{{cours.infoCours.typeCours}}: <span class="nomCours"> {{ cours.infoCours.nomCours}}</span></h3>
+            <i @click="supprimerCarte()" class="fas fa-trash-alt supprimer"></i>
+        </div>
+        
+        <div class="carte">
+            <!-- info Cours -->
+            <div class="infoCours">
+                <h4 >Info cours :</h4>
+                <div class="bold">Jour : <span> {{ cours.infoCours.jour}} </span></div>
+                <div class="bold">heure : <span class="donne">{{ cours.infoCours.heure}} </span></div>
             </div>
-            
-            <div class="carte">
-                <!-- info Cours -->
-                <div class="infoCours">
-                    <h4 >Info cours :</h4>
-                    <div class="bold">Jour : <span> {{ cours.infoCours.jour}} </span></div>
-                    <div class="bold">heure : <span class="donne">{{ cours.infoCours.heure}} </span></div>
-                </div>
-                <!-- Info Eleve -->
-                <div class="infoEleve">
-                    <h4>Info élève :</h4>
-                    <div class="bold">Nom : <span class="donne">{{ cours.eleve.nomEleve}}</span></div>
-                    <div class="bold">Penom : <span class="donne">{{ cours.eleve.prenomEleve}}</span></div>
-                    <div class="bold">Age : <span class="donne">{{cours.eleve.ageEleve}} ans</span> </div>
-                </div>
-                <div>
-                    <h4>Prix :</h4>
-                    <div class="bold">CHF : <span class="donne">{{ cours.infoCours.prix}}.-</span></div>
-                </div>       
+            <!-- Info Eleve -->
+            <div class="infoEleve">
+                <h4>Info élève :</h4>
+                <div class="bold">Nom : <span class="donne">{{ cours.eleve.nomEleve}}</span></div>
+                <div class="bold">Penom : <span class="donne">{{ cours.eleve.prenomEleve}}</span></div>
+                <div class="bold">Age : <span class="donne">{{cours.eleve.ageEleve}} ans</span> </div>
             </div>
-         
-      
+            <div>
+                <h4>Prix :</h4>
+                <div class="bold">CHF : <span class="donne">{{ cours.infoCours.prix}}.-</span></div>
+            </div> 
+        </div>
+
+
+        <!-- SI NOEL -->
+        <div v-if="cours.infoCours.typeCours === 'Event'">
+            <p> {{cours.infoCours.dateChoisie.length}} cours <span @click="afficherDateNoel" class="afficherCours">afficher</span></p>
+            <div class="boxDate" v-if="afficheDate">
+                <i @click="afficherDateNoel" class="fas fa-times iconeClose"></i>
+                <h4 class="titleDateChoisie">Vos dates de cours :</h4>
+                <div class="date" v-for="date in cours.infoCours.dateChoisie" :key="date.id">
+                    {{ new Date(date).toLocaleDateString('fr-FR', {weekday : 'long', day: 'numeric', month : 'long', year : 'numeric'})}}
+                </div>
+            </div>
+            <button @click="displayAjoutEleve" class="button ajouterEleve" v-if="cours.infoCours.typeCours === 'Event' ">AJOUTER UN ELEVE</button>  
+            <div v-if="displayBoxAjoutEleve" class="boxAjouterEleve">
+                <h5 class="titleBoxAjouterCours">J'ajoute un élève au cours</h5>
+                    <p class="paraInfo">* ! Nous garderons les mêmes informations de contact ainsi que les mêmes dates de cours choisie. </p>
+                <div class="boxInfoNewEleve">
+                    <div class="col">
+                        <label for="nomNewEleve"> Nom :</label>
+                        <input type="text" id="nomNewEleve" v-model="NewEleveNoel.nomEleve">
+                    </div>
+                    <div class="col">
+                        <label for="prenomNewEleve"> Prénom :</label>
+                        <input type="text" id="prenomNewEleve" v-model="NewEleveNoel.prenomEleve">
+                    </div>
+                </div>
+                <div class="boxButton">
+                    <button @click="displayAjoutEleve" class="button danger">ANNULER</button>
+                    <button @click="ajouterNewEleveNoel(cours)" class="button">AJOUTER L'ELEVE</button>
+                </div>
+            </div>   
+        </div>  
   </article>
 </template>
 
 <script>
 export default {
     name : "sectionPanier",
-    props : ["cours"],
+    props : ["cours","panier"],
     data(){
-        return{
-            panier : [],         
+        return{   
+            nbrCours : null,
+            afficheDate : false,
+            displayBoxAjoutEleve :false,
+            NewEleveNoel : {
+                nomEleve : "",
+                prenomEleve : ""
+            } 
         }
     },
     methods : {
         supprimerCarte(){
             this.$emit("supprimerCarte")
         },
+        afficherDateNoel(){
+            if (this.afficheDate){
+                this.afficheDate = false
+            }else this.afficheDate = true
+        },
+        displayAjoutEleve(){
+            if (this.displayBoxAjoutEleve ===false){
+                this.displayBoxAjoutEleve = true
+            }else this.displayBoxAjoutEleve = false
+        },
+        ajouterNewEleveNoel(cours){
+            let newEleve = {
+                ...cours,
+            }
+            newEleve.eleve = {
+                ...cours.eleve,
+                ...this.NewEleveNoel
+            }
+            this.panier.push(newEleve)
+            localStorage.setItem("panier",JSON.stringify(this.panier))
+            this.displayBoxAjoutEleve = false
+        }    
     },
 }
 </script>
@@ -57,7 +115,7 @@ export default {
     .headerCarte{
         display: flex;
         justify-content: space-between;
-        border-bottom: solid 2px var(--color-primary);
+        border-bottom: solid 2px lightgray;
         padding-bottom: 10px;
         margin-bottom: 10px;
     }
@@ -71,11 +129,12 @@ export default {
     }
     .containerCarte{
         margin: auto;
-        margin-top: 50px;
-        background: white;
+        background: rgb(245, 245, 245);
         padding: 20px;
         width: 80%;
         max-width: 800px;
+        margin-bottom: 30px;
+        border: solid 1px lightgray;
     }
     h3{
         font-size: 25px;
@@ -113,18 +172,103 @@ export default {
         font-weight: 300;
     }
 
-    /* AUTRE PARTICIPANT  */
-
-    .boxAutreParticipant{
-        width: 100%;;
+    .afficherCours{
+        color: blue;
+        text-decoration: underline;
+        font-weight: 400;
+        cursor: pointer;
+        transition: .3s;
     }
-    .boxEleve{
-        border: solid 1px gray;
-        padding: 10px;
-        margin: 10px;
+    .afficherCours:hover{
+        color: rgb(101, 101, 247);
+        font-size: 18px;
+    }
+    .button{
+        cursor: pointer;
+        padding: 10px 20px;
+        background: green;
+        color: white;
+        border: none;
+        border-radius: 2px;
+        font-weight: bold;
+        margin-top: 20px;
+        transition: .3s;
+    }
+    .button:hover{
+        transform: scale(1.1);
+        box-shadow: 0 0 10px 1px lightgray;
+    }
+    .boxDate{
+        position: relative;
+        border: solid 1px lightgray;
+        padding : 10px;
+        background: rgb(247, 244, 244);
+        margin-top: 10px;
+    }
+    .date{
+        margin: 3px;
+        font-size: 14px;
+    }
+    .boxAjouterEleve{
+        padding: 20px;
+        background: rgb(255, 255, 255);
+    }
+    .boxInfoNewEleve{
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-evenly;
+    }
+    .col{
+        display: flex;
+        flex-flow: column;
+        margin-top: 10px;
+    }
+    .ajouterEleve{
+        background: var(--color-primary);
+    }
+    .danger{
+        background: rgb(212, 66, 66);
+        margin-right: 20px;
+    }
+    .boxButton{
+        display: flex;
+        flex-flow: wrap;
+        justify-content:right;
+        margin-top: 20px;
+    }
+    .paraInfo{
+        font-size: 14px;
+        font-weight: 400;
+        margin-bottom: 10px;
+        font-style: italic;
+    }
+    .iconeClose{
+        color: rgb(177, 177, 177);
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 30px;
+        cursor: pointer;
+    }
+    .titleDateChoisie{
+        display: inline-block;
+        font-weight: bold;
+        font-size: 18px;
+        opacity: 80%;
+    }
+    .titleBoxAjouterCours{
+        font-size: 20px;
+        font-weight: bold;
+        opacity: 80%;
+        padding-bottom: 20px;
     }
 
-    @media screen and (max-width : 400px){
+
+
+
+
+    @media screen and (max-width : 450px){
+        
         .carte{
             display: block;
         }
@@ -135,7 +279,22 @@ export default {
         .infoEleve{
             margin: 20px 0;
         }
+        .containerCarte{
+            width: 98%;
+        }
+        .sectionCarte{
+            width: 100%;
+        }
+        .iconeClose{
+            font-size: 20px;
+        }
+        .titleDateChoisie{
+            margin-bottom: 10px;
+        }
     }
   
     
 </style>
+
+
+

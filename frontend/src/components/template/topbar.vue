@@ -1,8 +1,12 @@
 <template>
     <div class="topBar">
-        <div class="logo">Monkey-school</div>
-        <!-- menu -->
-        <topbar-menu></topbar-menu>
+        <router-link to="/"> <div class="logo">Monkey-school</div></router-link>
+       
+       
+        <div class="itemRight">
+            <router-link class="panier" to="/panier"><i class="fas fa-shopping-cart iconePanier"></i></router-link>
+            <topbar-menu></topbar-menu>
+        </div>
        
     </div>
 </template>
@@ -39,10 +43,27 @@ export default {
         height: 50px;
         background-color: black;
         color: white;
-    }
-    
+    } 
     .logo{
         font-weight: bold;
+    }
+    .itemRight{
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+    }
+    .panier{
+        margin-right: 30px;
+    }
+    .iconePanier{
+        font-size: 25px;
+        padding: 0;
+        margin: 0;
+    }
+    a{
+        color: white;
+        padding: 0;
+        margin: 0;
     }
  
 </style>

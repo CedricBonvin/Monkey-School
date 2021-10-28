@@ -67,16 +67,41 @@
                     <label  for="eleve"> Cours :</label>
                     <input  type="text" id="eleve" name="eleve" :value="formulaire.infoCours.nomCours "   disabled >
                 </div>
+
+
+
+                <!-- DATE SI EEVENT -->
+                <div class=" containerNoel" v-if="formulaire.infoCours.typeCours === 'Event'">
+                    <div class="paraChoisirDate">Choisissez vos dates : <span class="afficheDateNoel" @click="afficheDateNoel">afficher</span>
+                        <p class="error" v-if="error.dateNoel">{{error.dateNoel}}</p>
+                    </div>
+                    <div class="boxNoel" v-if="displayDateNoel">
+                        <div  v-for="date in formulaire.infoCours.choiceDateCours" :key="date.id">
+                            <div  :id="date" class="ligneInputNoel" v-if="new Date(date) < Date.now()">
+                                <input  class="noelInput"  type="checkbox" :value="date" disabled>
+                                <s :for="date">{{new Date(date).toLocaleDateString("fr-FR",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}</s>
+                            </div>
+                            <div :id="date" class="ligneInputNoel" v-if="new Date(date) > Date.now()">
+                                <input  class="noelInput allDate"  type="checkbox" :value="date" v-model="formulaire.infoCours.dateChoisie">
+                                <label class="labelDate" :for="date">{{new Date(date).toLocaleDateString("fr-FR",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }} </label>
+                                <span class="nbrCoursRestant validDate"></span><span class="textPlaceRestant"> place restante/s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
                  <!-- AGE  si eleve regulier--> 
                 <div 
                     v-if="  formulaire.infoCours.nomCours === 'Mini-Spider' ||
                             formulaire.infoCours.nomCours === 'Gecko' ||
                             formulaire.infoCours.nomCours === 'Monkey' ||
-                            formulaire.infoCours.nomCours === 'Big-Monkey' "
+                            formulaire.infoCours.nomCours === 'Big-Monkey'"
                      class="boxInput boxAge">
                     <label class="requis labelAge" for="age "> Age :</label>
                     <select name="age" id="age" v-model="formulaire.eleve.ageEleve" >
-                        <option v-for=" age in formulaire.infoCours.ageCours" :key="age" :value="age">{{ age }}</option>  
+                        <option v-for=" age in formulaire.infoCours.ageCours" :key="age.id" :value="age">{{ age }}</option>  
                     </select>
                     <p v-if="error.ageEleve" class="error">{{ error.ageEleve }}</p>
                 </div>
@@ -88,15 +113,16 @@
 
                 </div>
 
-                <!-- CHOIX DATE DE eleve si il y en a -->
+                <!-- CHOIX DATE DE eleve si il y en a // SAUF NOEL -->
                 <div class="boxInput" 
                     v-if="formulaire.infoCours.typeCours === 'initiation' ||
                           formulaire.infoCours.typeCours === 'autonomie'">
-                    <label class="requis" for="selectCours">Date du eleve :</label>
-                    <select name="selectCours" id="selectCours" v-model="formulaire.eleve.dateChoisie">
+
+                    <label class="requis" for="selectCours">Date du cours :</label>
+                    <select name="selectCours" id="selectCours" v-model="formulaire.infoCours.dateChoisie">
                             <option></option>
                             <option
-                                v-for="date in formulaire.cours.choiceDateCours" :key="date.nomCours"                               
+                                v-for="date in formulaire.infoCours.choiceDateCours" :key="date.nomCours"                               
                                 :value="date">{{ new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}                   
                             </option>                   
                     </select>        
@@ -152,7 +178,9 @@
         </form>
   </div>
 </template>
-    divf
+    
+
+
 <script>
 export default {
     name : "section-formulaire-contact",
@@ -177,8 +205,11 @@ data(){
             adresseEleve : "",
             ageEleve : "",
             choiceDateCours : "",  
-            form : false                    
+            form : false,
+            dateNoel : ""                  
         },
+        displayDateNoel : true,
+
     }
 },
    
@@ -202,12 +233,11 @@ data(){
         send(e){
             e.stopImmediatePropagation()
             e.preventDefault()
-            
+
             //  CLEAN ERROR
             for (let i in this.error){
                     this.error[i] =  ""
             }
-
             // ESSAIE ENVOIE FORMULAIRE...
             if (testForm(this)){
                 localStorage.setItem("formulaireInscription",JSON.stringify(this.formulaire))
@@ -230,8 +260,9 @@ data(){
                 testAdresseEleve()
                 testNpaEleve()
                 testAgeEleve()
-                testChoiceDate()
                 testVilleEleve()
+                // si
+                testDateNoel()
 
                 if (valid === true){
                     return true
@@ -390,15 +421,7 @@ data(){
                         valid = false 
                     }
                     
-                }
-                function testChoiceDate(){
-                    if(data.formulaire.dateChoisie){
-                        if(!data.formulaire.dateChoisie){
-                            data.error.choiceDateCours = "Veuillez choisir une date"
-                            valid = false
-                        }
-                    }else  data.error.choiceDateCours = "Veuillez choisir une date"
-                } 
+                }             
                 function testNpaEleve(){
                     if(data.formulaire.eleve.npaEleve){
                         if(data.formulaire.eleve.npaEleve.length > 4){
@@ -410,23 +433,75 @@ data(){
                         valid = false 
                     }
                 }
-            }            
-        }
+
+                function testDateNoel(){
+                    if(data.formulaire.infoCours.typeCours === 'Noel'){
+                        if(data.formulaire.infoCours.dateChoisieNoel.length === 0){
+                            data.error.dateNoel = "Veuillez choisir une date.",
+                            valid = false   
+                        } 
+                    }
+                }
+            }           
+        },
+        afficheDateNoel(){
+            if (this.displayDateNoel){
+                this.displayDateNoel = false
+            }else{
+                this.displayDateNoel = true
+            //this.getAllNoel()
+            }
+        },
+        getAllNoel(){
+            fetch("http://localhost:3000/all-noel")
+            .then(res => res.json())
+            .then(response => {
+                let tabDate = document.querySelectorAll(".allDate")
+                for (let input of tabDate){
+                    let idElement = input.getAttribute("id").toString()                  
+                    let placeRestant = 8
+                    for (let item of response){
+                        for (let date of item.infoCours.dateChoisieNoel){
+                            if (idElement === date){
+                                placeRestant -= 1
+                            }
+                        }
+                    }
+                    // injection
+                    let parent = input.parentNode
+                    let cible = parent.querySelector(".nbrCoursRestant")
+
+                    //  si 0 place restante
+                    if (placeRestant < 1){
+                        placeRestant = 0
+                        cible.classList.remove("validDate")
+                        cible.classList.add("invalidDate")
+                        parent.classList.add("invalidDate")
+                       let caseInput = parent.querySelector("input")
+                       caseInput.setAttribute("disabled", true)
+                    }
+                    cible.innerHTML = placeRestant
+                }
+            })
+            .catch(err => console.log(err))
+        }     
     },
   
-    beforeMount(){            
+    beforeMount(){  
         this.formulaire = JSON.parse(localStorage.getItem("formulaireInscription")) 
-        
-        // si déja panier 
+
+        // si déja panier injecte le contact dans this.fomulaire
         let panier = JSON.parse(localStorage.getItem("panier")) 
         if (panier){
             this.formulaire.contact = {...panier[0].contact}
         }
-       
     },
     mounted(){  
         this.checkAge()
     },
+    created(){
+        
+    }
    
 }
 
@@ -454,7 +529,6 @@ data(){
     }
     .sectionFormulaire{
         margin: auto;
-        margin-top: 6vmin;
         max-width: 700px;
     }
     .titleForm{
@@ -599,12 +673,68 @@ data(){
         background: green;
     }
     .errorForm{
-           font-size: 30px;
-           text-align: center;
-           font-weight: bold;
-           color: red;
-           margin-top: 30px;
-       }
+        font-size: 30px;
+        text-align: center;
+        font-weight: bold;
+        color: red;
+        margin-top: 30px;
+    }
+    .containerNoel{
+        width: 100% ;
+    }
+    .containerNoel label {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        display: block;
+    }
+    .boxNoel{
+        background: white;
+        padding: 10px;
+    }
+    .ligneInputNoel{
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+    }
+    .ligneInputNoel label{
+        cursor: pointer;
+    }
+    
+    .noelInput{
+        width: 20px;  
+        margin: 7px 0;   
+        margin-right: 5px;  
+        cursor: pointer;
+        
+    }
+    .afficheDateNoel{
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    .paraChoisirDate{
+        font-weight: 400;
+        font-size: 18px;
+        margin: 20px 0;
+        margin-left: 10px;
+    }
+    .nbrCoursRestant{
+        padding-left: 30px;
+        padding-right: 4px;
+        color: green;
+        font-weight: bold;
+    }
+    .validDate{
+        color: green;
+    }
+    .invalidDate{
+        color: red;
+    }
+    .textPlaceRestant{
+        color: green;
+    }
+ 
 
 
    

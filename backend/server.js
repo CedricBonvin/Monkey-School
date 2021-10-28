@@ -5,7 +5,9 @@ require('dotenv').config();
 
 const RouteMessage = require("./router/routeMessage")
 const RouteLivre = require("./router/routeLivre")
-const RouteInscription = require("./router/routeInscription")
+const RouteInscription = require("./router/routeNewInscription")
+const RoutePlaceRestante = require("./router/routePlaceRestante")
+
 
 const port = 3000
 //***************************************
@@ -14,7 +16,9 @@ const port = 3000
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@clustermonkeyschool.cmsiu.mongodb.net/monkey-message?retryWrites=true&w=majority`,
 { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .then(() => {
+    console.log('Connexion à MongoDB réussie !')
+  })
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
@@ -49,3 +53,5 @@ app.listen(port, () => {
 app.use("/", RouteMessage)
 app.use("/", RouteLivre)
 app.use("/", RouteInscription)
+app.use("/", RoutePlaceRestante)
+

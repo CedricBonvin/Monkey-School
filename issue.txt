@@ -6,31 +6,30 @@ FRONTEND
 - Sur la page acceuil, je rajoute une photo si window est au-dessus de 1020px avec une fonction dans "mounted", je dois la gèrer au rezize de window et au chargement de la page, je sais pas si c'est une bonne chose... 
 
 - Comment changer les titles des pages ? 
+- mette la photo sur l'onglet du google... 
 
 - Télécharger les dates de cours depuis les cartes, ok mais de base elles sont on png et quand je les télécharges je met l'extention pdf et sa marche .. ( truc de dingue ..) COMMENT GERER LES PDF
 
-- !! ATTENTION je fais le test du formulaire d'inscription de --> formulaire d'inscription à inscription-validation.
-    si il veut, il peut me baiser quand il est sur inscription-validation en changent les infos directement dans le localStorage.. 
-    mais la, ca seras le backend qui prendra le relai .. 
-
 - bug sur les cartes de cours si je resize la fenetre
 - vérifier le lien sur google Map dans la page contact et sur les cartes de cours.. ( !!!! connexion a mon compte google !!!!!!!)
-    ************
-    ISSUE ******
-    ************
+ 
 
+    -locale storage faille (possibilité de me niquer le truc en rentrant directement les infos dedans)
     - blinder le test formulaire inscription du frontend..
 
+
+- ajouter acces au panier deupuis le menu... 
 -si panier vide afficher une modal => aussi quand je supprime toute les cartes 
 
+-gèrer le retour a la page inscription validation depuis le panier si le panier est vide... ( vérifier le panier dans la page validation et push vers la page de cours si pas de panier !!!...pareil pour le bulletin d'inscription ... !)
+
+--VUEX 13 vulnerbility hight
 
 ------------------------------
 BACKEND
 -----------------------------
 
 
+TEMPLATE inscription
 
-- mail template .. j'ai du mettre tout le css des templates dans les tags html ... c'est ce qui fonctionne le mieux.. 
-    autrement il y a des bugs en mobile surtout sur yahoo. ( vraiment c'est ce qui fonctionnne le mieux .. ) 
-
-
+-mettre le css dans les balises 

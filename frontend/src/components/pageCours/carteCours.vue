@@ -8,7 +8,7 @@
        
         <article :id="cours.nomCours" >  
             <div class="carte" @click="schowOneBox($event,cours.nomCours,'.containerInformation',true)"  >
-                <img class="imgCarte" :src="cours.image" alt="">     
+                <img class="imgCarte" src='@/assets/images/header.jpg' alt="">     
                 <div class="col2Carte">
                     <div class="titleNomCours"> {{ cours.nomCours}}</div>
                     <div class="ageCarte">{{cours.ageString}}</div>
@@ -43,7 +43,7 @@
                 </div>
 
                 <!-- DATE -->
-                <div v-if="cours.typeCours === 'regulier' || cours.typeCours === 'Noel' " 
+                <div v-if="cours.typeCours === 'regulier' || cours.typeCours === 'Event' " 
                     class="dateDesCours"><span class="clefInfoCours">Dates des cours : </span> <span @click="schowOneBox($event,cours.nomCours,'.boxDate')" class="textAfficher">Afficher</span>
                 </div>
                 <div class="containerInfoDate">
@@ -115,7 +115,7 @@
                 <!-- information -->
                 <div class="boxDescription">
                     <h3 class="titleBoxInfo">Déscription :</h3>
-                    <p class="paraDescription">{{ cours.descriptionCour }}</p>
+                    <p class="paraDescription">{{ cours.descriptionCours }}</p>
                 </div>
 
                 <button @click="send(cours)" class="buttonFull">s'inscrire</button>
@@ -143,11 +143,28 @@ export default {
             let obj = {
                 contact : {},
                 eleve : {},
-                infoCours : {...cours}
+                infoCours : {
+                    typeCours : cours.typeCours,
+                    nomCours : cours.nomCours,
+                    ageCours : cours.ageCours,
+                    ageString : cours.ageString,
+                    jour : cours.jour,
+                    heure : cours.heure,
+                    nbrCours : cours.nbrCours,
+                    dureeCours : cours.dureeCours,
+                    lieux : cours.lieux,
+                    valeurAbo : cours.valeurAbo,
+                    datesCours2020 : cours.datesCours2020,
+                    datesCours2021 :cours.datesCours2021,
+                    prix : null,
+                    rabais : null,
+                    prixAPaye : 0,
+                    choiceDateCours : cours.choiceDateCours,
+                    dateChoisie : [],
+                },
             }
 
             if (cours.typeCours === "prive"){
-                console.log("salut")
                 this.displayInscriptionPrive = true
             }else {
                 localStorage.setItem("formulaireInscription",JSON.stringify(obj))
@@ -166,9 +183,7 @@ export default {
                 })
             }
             cible.style.marginTop= "0" 
-            cible.style.transition= ".6s" 
-
-             
+            cible.style.transition= ".6s"      
         },
         closeOneBox(e,id,target){
             e.stopImmediatePropagation()
@@ -188,11 +203,13 @@ export default {
         },
     }, 
     mounted(){
-        this.hideBoxMounted(".containerInformation")
+        
         this.hideBoxMounted(".boxPrix")
         this.hideBoxMounted(".boxDate")
+        this.hideBoxMounted(".containerInformation")
 
-    }
+    },
+    
 }
 </script>
 

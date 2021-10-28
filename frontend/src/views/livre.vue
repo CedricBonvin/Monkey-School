@@ -164,7 +164,6 @@ export default {
                 }
             }
             function testCaptcha(data){
-                console.log(data.captcha.resultat)
                 if (data.captcha.nbr1 + data.captcha.nbr2 != data.captcha.resultat){
                     data.validForm = false
                     data.captcha.error = "Résoudre le captcha"

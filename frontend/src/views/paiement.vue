@@ -1,62 +1,85 @@
 <template>
     
-    <div>
+    <div class="body">
+        <loader v-if="displayLoader"/>
         <modal 
             v-if="modal.displayModal"
             :text="modal.modalText"
             :modal="modal"
+            @close-modal="closemodal"
         />
         <div class="sectionPaiement">
-            <h1 class="underLine">RECAPITULATIF / PAIEMENT..</h1>
+
+            <!-- RECAPITULATIF -->
+            <h1 class=" titleSection">RECAPITULATIF // PAIEMENT..</h1>
             <section class="containerRecapitulatif">
-                <h2>RECAPITULATIF : </h2>
-                <div class="boxRecapitulatif">
-                    <div class="header">
-                        <p class="col">Eleve</p>
-                        <p class="col">Cours</p>
-                        <p class="col">Rabais</p>
-                        <p class=" colPrix">Prix</p>
-                    </div>
-                    <div class="recapNom">
-                        <div v-for="item in this.panier" :key="item._id" class="recapitulatifBody">
-                            <p class="col">{{item.nomEleve}} {{ item.prenom}}</p>
-                            <p class="col"> {{ item.nomCours}}</p>
-                            <p class="col"> {{item.rabais}} %</p>
-                            <p class="colPrix"> CHF. {{ item.prixPaye}}.-</p>
+                <div class="recap">
+                    <h2>RECAPITULATIF : </h2>
+                    <div class="boxRecapitulatif">
+                        <div class="header">
+                            <p class="col recapTitle">ELEVE</p>
+                            <p class="col recapTitle">COURS</p>
+                            <p class="col recapTitle">RABAIS</p>
+                            <p class=" colPrix recapTitle">PRIX</p>
+                        </div>
+                        <div class="recapNom">
+                            <div v-for="item in this.panier" :key="item._id" class="recapitulatifBody">
+                                <p class="col">{{item.eleve.nomEleve}} {{ item.eleve.prenom}}</p>
+                                <p class="col"> {{ item.infoCours.nomCours}}</p>
+                                <p v-if="item.infoCours.rabais" class="col"> {{item.infoCours.rabais}} %</p>
+                                <p v-if="item.infoCours.rabais < 1" class="col">-</p>
+                                <p class="colPrix"> CHF. {{ item.infoCours.prixAPaye}}.-</p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <div class="boxTotal">
                     <div class="total">MONTANT A REGLER : <span class="montantTotal">CHF. {{totalPrice}}.-</span></div>
                 </div>
-            </section>
-            <section class="containerPaiement" >
-                <h2>PAIEMENT :</h2>
-                <div class="boxPaiement">
-                    <div class="virement">
-                        <p>Virement banquaire</p>
-                        <i class="fas fa-university"></i>
-                        <input class="inputCheckPaiement" type="radio" value="virement" name="paiement" v-model="paiementChoice">
-                    </div>
-                    <div class="boxCarte">
-                        <p>carte</p>
-                        <i class="fas fa-money-check-alt"></i>
-                        <input class="inputCheckPaiement" type="radio" value="carte" name="paiement" v-model="paiementChoice">
-                    </div>
                 </div>
-                    <p class="error" v-if="error.choicePaiement"> {{error.choicePaiement }}</p>
             </section>
-        
-             <button @click="validation" class="buttonValider">VALIDER L'INSCRIPTION !</button>
-        </div>
-        
+
+            <!-- PAIEMENT -->
+            <div class="paiement">
+                <section class="containerPaiement" >
+                    <h2>PAIEMENT :</h2>
+                    <div class="boxPaiement">
+                        <p class="modePaiement">Mode de paiement :</p>
+                        <div class="virement">
+                            <i class="fas fa-university"></i>
+                            <label for="banque" class="titleCarte">Virement  banquaire</label>
+                            <input id="banque" class="inputCheckPaiement" type="radio" value="virement" name="paiement" v-model="paiementChoice">
+                        </div>
+                        <div class="virement">
+                            <i class="fas fa-money-check-alt"></i>
+                            <label for="carte" class="titleCarte">carte</label>
+                            <input id="carte" class="inputCheckPaiement" type="radio" value="carte" name="paiement" v-model="paiementChoice">
+                        </div>
+                    </div>
+                        <p class="error" v-if="error.choicePaiement"> {{error.choicePaiement }}</p>
+                </section>
+                <!-- VIREMENT -->
+                <section v-if="paiementChoice === 'virement'">
+                    <sectionvirement
+                        :coordonneePaiement="coordonneePaiement"
+                        :formError="formError"
+                
+                    />
+                </section>
+             <div class="boxButton">
+                 <router-link class="rouerLink" to="/panier"><button class="button backPanier" >RETOUR PANIER</button></router-link>
+                 <button @click="validation" class="button">VALIDER L'INSCRIPTION !</button>
+             </div>
+            </div>
+        </div> 
     </div>
 </template>
 
 <script>
+import Loader from '../components/forAll/loader.vue'
 import modal from '../components/forAll/modal.vue'
+import sectionvirement from '../components/pagePaiement/sectionVirement.vue'
 export default {
-  components: { modal },
+  components: { modal, sectionvirement, Loader },
     name : "paiement",
     data(){
         return{
@@ -70,31 +93,113 @@ export default {
                 modalText : ""
 
             },
-            totalPrice : 0
+            totalPrice : 0,    
+            formError : {
+                nom : "",
+                prennom : "",
+                npa : "",
+                ville : "",
+                adresse : "",
+                mail : "",
+                phone : "",
+            },
+            coordonneePaiement :{},
+            displayLoader : false
         }
     },
     methods : {
-        validation(){
-            console.log(this.paiementChoice)
-            for (let i in this.error){
-                this.error[i] = ""
+        validation(){          
+            if (this.testFormulaire()){
+                for ( let item of this.panier){
+                    item.paiement = { ...this.coordonneePaiement, modePaiement : this.paiementChoice, totalAPaye : this.totalPrice}
+                    if (item.infoCours.typeCours === "Event"){
+                        item.infoCours.dateChoisieString = []
+                        for (let date of item.infoCours.dateChoisie){
+                            console.log(date)
+                            let dateString = new Date(date).toLocaleDateString("fr-FR",{day : "numeric", month : "long"})
+                            item.infoCours.dateChoisieString.push(dateString)
+                        }
+                    }
+                }
+                 // ENVOIE  
+                this.displayLoader = true     
+                fetch("http://localhost:3000/new-inscription",{
+                    method : "POST",
+                    body : JSON.stringify(this.panier),
+                    headers: {"Content-type": "application/json; charset=UTF-8",}
+                })
+                .then( response => {
+                    if (response.status === 200){
+                        this.displayLoader = false
+                        this.modal.displayModal = true
+                        this.modal.modalText = "Merci beaucoup pour votre inscription, nous vous avons envoyé un mail de confirmation..!!"
+                    } else {
+                        this.displayLoader = false
+                        this.modal.displayModal = true
+                        this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+                    }
+                })
+                .catch(() => {
+                    this.modal.displayModal = true
+                    this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+                })
             }
-            if(!this.paiementChoice){
-                this.error.choicePaiement = "Veuillez choisir un mode de paiement"
-            } if(this.paiementChoice === "virement") {
-                this.modal.displayModal = true
-                this.modal.modalText = "Merci pour votre inscription !! Nous vous avons envoyé un mail de confirmation avec les coordonées de paiement"
-            } else if( this.paiementChoice === "carte") {
-                this.modal.displayModal = true
-                this.modal.modalText = "Et tranquille ..... le mode de paiment par carte n'est pas encore actif...!!"
-
-            }
-
+            console.log(this.panier)
         },
         totalAmount(){
             for (let item of this.panier){
-                this.totalPrice += item.prixPaye
+                this.totalPrice += item.infoCours.prixAPaye
             }   
+        },
+        testFormulaire(){
+            let valid = true
+
+            for (let item in this.formError){
+                this.formError[item] = ""
+            }
+
+            // NOM
+            if (!this.coordonneePaiement.nom){
+                valid = false
+                this.formError.nom = " ! Veuillez saisir le champ"
+            }
+            // PRENOM
+            if (!this.coordonneePaiement.prenom){
+                valid = false
+                this.formError.prenom = " ! Veuillez saisir le champ"
+            }
+            // NPA
+            if (!this.coordonneePaiement.npa){
+                valid = false
+                this.formError.npa = " ! NPA"
+            }
+            // VILLE
+            if (!this.coordonneePaiement.ville){
+                valid = false
+                this.formError.ville = " ! Veuillez saisir le champ"
+            }
+            // ADRESSE
+            if (!this.coordonneePaiement.adresse){
+                valid = false
+                this.formError.adresse = " ! Veuillez saisir le champ"
+            }
+            // MAIL
+            if (!this.coordonneePaiement.mail){
+                valid = false
+                this.formError.mail = " ! Veuillez saisir le champ"
+            }
+            // PHONE
+            if (!this.coordonneePaiement.phone){
+                valid = false
+                this.formError.phone = " ! Veuillez saisir le champ"
+            }
+
+            if(valid){
+                return true
+            }else return false
+        },
+        closemodal(){
+            this.modal.displayModal = false
         }
     },
     beforeMount(){
@@ -106,27 +211,54 @@ export default {
 </script>
 
 <style scoped>
+    .body{
+        padding: 150px 20px;
+        padding-bottom: 100px;
+    }
     .sectionPaiement{
-        padding: 100px 20px;
-        background: white;
+        position: relative;
+        padding: 10px 20px;
+        background: white;  
+        padding-bottom: 50px;  
     }
    h1{
        display: inline-block;
-       position: relative;
        padding: 20px 0;
+       position: absolute;
+       top: 0;
+       transform: translateY(-50%);
+       padding-left: 10px;
+
+   }
+   h2{
+       position: relative;
+       display: inline-block;
+       font-weight: bold;
+       opacity: 70%;
+       font-style: italic;
+       margin-bottom: 10px;
+       padding-bottom: 5px;
+   }
+   h2:after{
+       content: "";
+       position: absolute;
+       width: 50%;
+       bottom: 0;
+       left: 0;
+       border-bottom: solid 3px var(--color-primary);
    }
    .containerRecapitulatif{
-       margin-top: 50px;
+       margin-top: 80px;
    }
    .boxRecapitulatif{
-       border: solid 1px lightgray;
-        padding: 10px;
+        background: rgb(240, 240, 240);
 
    }
    .recapitulatifBody{
        display: flex;
        justify-content: space-between;
-       padding: 5px 0;
+       padding: 10px 10px;
+       border-bottom: solid 1px lightgray;
    }
    .recapNom{
        padding: 20px 0;
@@ -136,7 +268,9 @@ export default {
        flex-flow: row wrap;
        justify-content: space-between;
        border-bottom: solid 1px lightgray;
-       padding: 5px 0;
+       background:var(--color-primary);
+       color: white;
+       padding: 10px 10px;
    }
    .col{
        width: 25%;
@@ -147,19 +281,20 @@ export default {
   
    .containerPaiement{
        margin-top: 50px;
+       
    }
    .boxPaiement{
        display: flex;
+       flex-flow: wrap;
        justify-content: space-evenly;
-       border: solid 1px lightgray;
        padding: 20px;
+       background: rgb(238, 237, 237);
    }
    i{
        color: var(--color-primary);
    }
-   .buttonValider{
-       display: block;
-       margin: auto;
+   .button{
+        display: inline-block;
         background: green;
         width: 100%;
         max-width: 300px;
@@ -167,13 +302,14 @@ export default {
         color: white;
         border: none;
         padding: 20px;
-        margin-top: 50px;
+        margin-top: 80px;
+        border-radius: 3px;
         cursor: pointer;
         transition: .3s;
         font-weight: 500;
         font-size: 1.2rem;
     }
-    .buttonValider:hover{
+    .button:hover{
         background: rgb(0, 167, 0);
         transform: scale(1.02);
     }
@@ -184,22 +320,83 @@ export default {
     .total{
         display: inline-block;
         padding: 20px;
-        border: solid 1px lightgray;
-        border-top: none;
+        border-top: rgb(211, 211, 211) 1px solid;
         position: relative;
         right: 0;
+        background: rgb(240, 240, 240);
     }
     .montantTotal{
         font-weight: bold;
         font-size: 1.2rem;
     }
-    .inputCheckPaiement{
-        display: block;
-        margin: auto;    
-    }
+  
     .error{
         font-size: 1.3rem;
         color: red;
         font-weight: bold;
+    }
+    .titleCarte{
+        font-weight: bold;
+        opacity: 70%;
+        font-size: 20px;
+        text-align: center;
+        padding: 0 10px;
+    }
+    .virement{
+        display: flex;
+        align-items: center;
+    }
+    i{
+        font-size: 30px;
+        margin: 0;
+        padding: 0;
+    }
+    label, input{
+        cursor: pointer;
+    }
+    .modePaiement{
+        width: 100%;
+        font-size: 20px;
+        padding-bottom: 30px;
+        text-decoration: underline rgb(190, 190, 190);
+    }
+    .recapTitle{
+        font-weight: 500;
+    }
+    .backPanier{
+        background: rgb(204, 10, 10);
+        color: white;
+    }
+    .backPanier:hover{
+        background: rgb(228, 36, 36);    
+    }
+    a{
+        color: white;
+        font-weight: bold;
+    }
+    .boxButton{
+        display: flex;
+        justify-content: space-between;
+        flex-flow: wrap;
+    }
+    .rouerLink{
+        display: inline-block;
+    }
+    
+   
+
+    @media  screen and (min-width : 800px) {
+        .sectionPaiement{
+            margin: auto;
+        }
+        .recap, .paiement{
+            width: 70%;
+            margin: auto;
+            max-width: 800px;
+        }
+        .recap{
+            margin-top: 120px;
+        }
+        
     }
 </style>

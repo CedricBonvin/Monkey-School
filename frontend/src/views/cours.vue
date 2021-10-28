@@ -3,79 +3,83 @@
     <Header 
         title="Nos cours"
         :image="require('@/assets/images/header-cours.jpg')"
-    /> -->
+    />
     <!-- RECHERCHE -->
     <section-recherche />   
 
    <!-- REGULIER -->
-    <!-- enfant -->
-    <div class="section" id="regulierEnfant">
+    <!-- enfant  -->
+  <div class="section" id="regulierEnfant">
         <h2 class="titleSection">Régulier Enfant</h2>
         <p class="phraseType">Cours régulier pour les Jeunes et les enfants .!</p>
         <div class="sectionCard">
-            <carte-cours 
-                v-for="item in regulierEnfant" :key="item.nomCours"
-                :cours="item"
-            />
+            <carte-cours :cours="miniSpider" />
+            <carte-cours :cours="gecko" />
+            <carte-cours :cours="monkey" />
         </div>
-    </div>
+    </div> 
 
     <!-- Adulte -->
     <div class="section" id="regulierAdulte">
         <h2 class="titleSection">Régulier Adulte</h2>
         <p class="phraseType">Cours régulier pour Adultes.!</p>
-
-        <div v-for="item in regulierAdulte" :key="item.nomCours">
-            <carte-cours 
-                :cours="item"
-            />
-        </div>
-    </div>
+         <carte-cours :cours="superMonkey" /> 
+    </div> 
 
     <!-- PRIVEE -->
     <div class="section" id="privee">
         <h2 class="titleSection">Cours Privée</h2>
         <p class="phraseType">Pour ce qu'ils veulent apprendre à leur ryhtme.!</p>
-        <div v-for="item in coursPrive" :key="item.nomCours">
-            <carte-cours 
-                :cours="item"
-            />
-        </div>
+        <carte-cours :cours="privee" />
     </div>
 
     <!-- NOEL -->
     <div class="section" id="noel">
         <h2 class="titleSection">Noël</h2>
         <p class="phraseType">Après le ski, vebez grimper 3 heures en toutes sécurité avec un professionnel de l'escalade... </p>
-        <div class="sectionCard">
-            <carte-cours 
-                v-for="item in noel" :key="item.nomCours"
-                :cours="item"
-            />
-        </div>
-    </div>
+        <carte-cours :cours="noel" />
+    </div> 
   </main>
 </template>
 
 <script>
- import Header from '../components/forAll/header.vue'
-import CarteCours from '../components/pageCours/carteCours.vue'
+  import Header from '../components/forAll/header.vue'
+ import CarteCours from '../components/pageCours/carteCours.vue'
  import SectionRecherche from '../components/pageCours/sectionRecherche.vue'
-let Bdd = require("../bdd")
+ const BDDimport = require("../bdd")
+ const BDD = BDDimport.bddCours
 
 export default {
-    components: { Header, SectionRecherche,CarteCours },
+     components: { Header, SectionRecherche,CarteCours },
     data(){
         return{
-            initiation : Bdd.bddCours.initiation,
-            regulierEnfant : Bdd.bddCours.regulierEnfant,
-            regulierAdulte : Bdd.bddCours.regulierAdulte,
-            coursPrive : Bdd.bddCours.coursPrive,
-            autonomie : Bdd.bddCours.autonomie,
-            famille : Bdd.bddCours.famille,
-            noel : Bdd.bddCours.noel,
+            // initiation : Bdd.bddCours.initiation,
+               miniSpider : BDD.miniSpider,
+               gecko : BDD.gecko,
+               monkey : BDD.monkey,
+               superMonkey : BDD.superMonkey,
+               privee : BDD.privee,
+               noel : BDD.noel,
         }
-    },   
+    },
+    methods : {
+        callBDD(){
+            fetch("http://localhost:3000/call-bdd")
+            .then(res => res.json())
+            .then(response => {
+                for (let item of response){
+                    // console.log(item)
+                    // this.regulierEnfant.push(item)
+                     item.nomCours === 'Mini-Spider' ? this.regulierEnfant = {...item }: null
+                     console.log(this.regulierEnfant)
+                }
+            })
+            .catch(err => console.log(err))
+        }
+    }, 
+    beforeMount(){
+        // this.callBDD()
+    }  
 }
 
   
