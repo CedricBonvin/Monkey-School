@@ -17,8 +17,6 @@ export default {
             fetch("http://localhost:3000/check-place-restante")
                 .then(res => res.json())
                 .then( response => {
-                     console.log(response)
-                    //  const tabDate = document.querySelectorAll()
                      for (let item of response){
                          let parent = document.getElementById(item.dateTypeDate)
                          parent.querySelector(".nbrCoursRestant").innerHTML = item.nbr_participants
@@ -29,6 +27,7 @@ export default {
     },
     mounted(){
         this.placeRestante()
+        document.title = "Inscription"
     }   
 }
 </script>

@@ -1,5 +1,6 @@
 <template>     
         <div >
+            
             <loader v-if="displayLoader" />
             <modal v-if="displayModal"
                 :text="modalText"
@@ -18,6 +19,7 @@
                             @supprimerCarte="deleteCard(index)"
                         />
                      </div>
+                        <panier-vide v-if="this.$store.state.nbrItemPanier === 0" />
                     <button class="buttonAjouter">
                         <router-link to="/cours"> AJOUTER UN COURS...</router-link>
                     </button>
@@ -93,8 +95,9 @@
 import Loader from '../components/forAll/loader.vue'
 import Modal from '../components/forAll/modal.vue'
 import CartePanier from '../components/pagePanier/cartePanier.vue'
+import PanierVide from '../components/pagePanier/panierVide.vue'
 export default {
-  components: { CartePanier, Modal, Loader},
+  components: { CartePanier, Modal, Loader, PanierVide},
     name : "panier",
 
     data(){
@@ -123,31 +126,33 @@ export default {
     },
     methods : {
         paiement(){
-            // ajout de la clef fraterie et de la date d'inscription dans les items du panier si REGULIER
-            for (let item of this.panier){
-                if (item.infoCours.typeCours === 'regulier'){
-                    item.infoCours.fraterie = []
-                    item.infoCours.dateInscription = new Date(Date.now()).toLocaleDateString("fr-FR",{day: "numeric", month: "long", year: "numeric" })      
-                }else item.infoCours.dateInscription = new Date(Date.now()).toLocaleDateString("fr-FR",{day: "numeric", month: "long", year: "numeric" })      
-            }
-            // INJECTION DE LA FRATERIE DANS LES ITEMS DU PANIER
-            if (this.fraterie.length > 1){
+            if (this.panier.length > 0){
                 for (let item of this.panier){
-                    for(let frere of this.fraterie){
-                        if ( frere.eleve.nomEleve === item.eleve.nomEleve){
-                            for (let b of this.fraterie){
-                                let frereSoeur = {
-                                    nom : b.eleve.nomEleve,
-                                    prenom : b.eleve.prenomEleve
+                    if (item.infoCours.typeCours === 'regulier'){
+                        item.infoCours.fraterie = []
+                        item.infoCours.dateInscription = new Date(Date.now()).toLocaleDateString("fr-FR",{day: "numeric", month: "long", year: "numeric" })      
+                    }else item.infoCours.dateInscription = new Date(Date.now()).toLocaleDateString("fr-FR",{day: "numeric", month: "long", year: "numeric" })      
+                }
+                // INJECTION DE LA FRATERIE DANS LES ITEMS DU PANIER
+                if (this.fraterie.length > 1){
+                    for (let item of this.panier){
+                        for(let frere of this.fraterie){
+                            if ( frere.eleve.nomEleve === item.eleve.nomEleve){
+                                for (let b of this.fraterie){
+                                    let frereSoeur = {
+                                        nom : b.eleve.nomEleve,
+                                        prenom : b.eleve.prenomEleve
+                                    }
+                                    item.infoCours.fraterie.push(frereSoeur)
                                 }
-                                item.infoCours.fraterie.push(frereSoeur)
                             }
                         }
                     }
                 }
+                localStorage.setItem("panier", JSON.stringify(this.panier))
+                this.$router.push({path : "/paiement"})
             }
-            localStorage.setItem("panier", JSON.stringify(this.panier))
-            this.$router.push({path : "/paiement"})
+            // ajout de la clef fraterie et de la date d'inscription dans les items du panier si REGULIER
         },
         noFraterie(){
             for (let item of this.panier){
@@ -241,7 +246,11 @@ export default {
         this.panier = JSON.parse(localStorage.getItem("panier"))  
         this.getterPrixAPaye()   
         this.checkTypeCours() 
+        this.$store.commit('checkPanier')
     },
+    mounted(){
+        document.title = "Panier"
+    }
 }
 </script>
 

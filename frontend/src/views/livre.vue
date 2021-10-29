@@ -42,8 +42,7 @@
                     </a>
                     <!-- captcha -->
                     <div class="captcha">
-                        <captcha
-                        
+                        <captcha                     
                             :captcha="captcha"
                         />
                     </div>
@@ -164,7 +163,7 @@ export default {
                 }
             }
             function testCaptcha(data){
-                if (data.captcha.nbr1 + data.captcha.nbr2 != data.captcha.resultat){
+                if (data.captcha.nbr1 + data.captcha.nbr2 !== data.captcha.resultat){
                     data.validForm = false
                     data.captcha.error = "Résoudre le captcha"
         
@@ -208,7 +207,11 @@ export default {
             this.tabMessage = result.reverse()
         })
         .catch(()=> {})
+    },
+    mounted(){
+        document.title = "Livre-d'or"
     }
+
 }
 </script>
 

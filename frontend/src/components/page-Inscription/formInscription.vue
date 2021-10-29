@@ -70,7 +70,7 @@
 
 
 
-                <!-- DATE SI EEVENT -->
+                <!-- DATE SI EVENT -->
                 <div class=" containerNoel" v-if="formulaire.infoCours.typeCours === 'Event'">
                     <div class="paraChoisirDate">Choisissez vos dates : <span class="afficheDateNoel" @click="afficheDateNoel">afficher</span>
                         <p class="error" v-if="error.dateNoel">{{error.dateNoel}}</p>
@@ -84,7 +84,7 @@
                             <div :id="date" class="ligneInputNoel" v-if="new Date(date) > Date.now()">
                                 <input  class="noelInput allDate"  type="checkbox" :value="date" v-model="formulaire.infoCours.dateChoisie">
                                 <label class="labelDate" :for="date">{{new Date(date).toLocaleDateString("fr-FR",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }} </label>
-                                <span class="nbrCoursRestant validDate"></span><span class="textPlaceRestant"> place restante/s</span>
+                                <span class="nbrCoursRestant validDate">8</span><span class="textPlaceRestant"> place restante/s</span>
                             </div>
                         </div>
                     </div>
@@ -488,21 +488,23 @@ data(){
     },
   
     beforeMount(){  
-        this.formulaire = JSON.parse(localStorage.getItem("formulaireInscription")) 
+
+        // ! a voir je suis fatigué
+        let form = JSON.parse(localStorage.getItem("formulaireInscription"))
+        if (form && form.length !== 0){
+            this.formulaire = form
+        } 
 
         // si déja panier injecte le contact dans this.fomulaire
         let panier = JSON.parse(localStorage.getItem("panier")) 
-        if (panier){
+        if (panier && panier.length !== 0){
             this.formulaire.contact = {...panier[0].contact}
         }
     },
     mounted(){  
         this.checkAge()
+        console.log(this.formulaire)
     },
-    created(){
-        
-    }
-   
 }
 
 </script>

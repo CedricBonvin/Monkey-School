@@ -77,9 +77,10 @@ export default {
             .catch(err => console.log(err))
         }
     }, 
-    beforeMount(){
-        // this.callBDD()
-    }  
+    mounted(){
+        document.title = "Cours"
+    }
+    
 }
 
   

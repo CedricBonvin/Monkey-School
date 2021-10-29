@@ -308,7 +308,7 @@
     }
     .boxCaptcha{
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
         align-items: center;
         padding-top: 20px;
         padding: 5PX;

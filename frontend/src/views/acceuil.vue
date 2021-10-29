@@ -20,6 +20,9 @@ import SectionHeader from '../components/pageAcceuil/sectionHeader.vue'
 export default {
     name : "acceuil",
     components : { SectionCours, SectionEscaladePourTous, SectionEvent,sectionLaSalle, SectionMonkey, SectionHeader},
+    mounted(){
+        document.title = "Accueil"
+    }
 }    
 
 </script>

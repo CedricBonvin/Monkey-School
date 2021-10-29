@@ -4,7 +4,7 @@
        
        
         <div class="itemRight">
-            <router-link class="panier" to="/panier"><i class="fas fa-shopping-cart iconePanier"></i></router-link>
+            <router-link class="panier" to="/panier"><span class="nbrItem" v-if="this.$store.state.nbrItemPanier > 0">{{this.$store.state.nbrItemPanier}}</span><i class="fas fa-shopping-cart iconePanier"></i></router-link>
             <topbar-menu></topbar-menu>
         </div>
        
@@ -53,8 +53,23 @@ export default {
         margin-right: 15px;
     }
     .panier{
+        position: relative;
         margin-right: 30px;
     }
+    .nbrItem{
+        position: absolute;
+        top: -10px;
+        left: -25px;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        text-align: center;
+        background: var(--color-primary);
+        color: white;
+        border-radius: 50%;
+        font-weight: 900;
+    }
+    
     .iconePanier{
         font-size: 25px;
         padding: 0;

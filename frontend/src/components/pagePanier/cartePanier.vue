@@ -78,6 +78,8 @@ export default {
     methods : {
         supprimerCarte(){
             this.$emit("supprimerCarte")
+            localStorage.setItem("panier",JSON.stringify(this.panier))
+            this.$store.commit('checkPanier')
         },
         afficherDateNoel(){
             if (this.afficheDate){
@@ -99,6 +101,7 @@ export default {
             }
             this.panier.push(newEleve)
             localStorage.setItem("panier",JSON.stringify(this.panier))
+            this.$store.commit('checkPanier')
             this.displayBoxAjoutEleve = false
         }    
     },

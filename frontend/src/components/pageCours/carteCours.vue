@@ -207,7 +207,6 @@ export default {
         this.hideBoxMounted(".boxPrix")
         this.hideBoxMounted(".boxDate")
         this.hideBoxMounted(".containerInformation")
-
     },
     
 }
@@ -219,12 +218,6 @@ export default {
         margin: 20px 0;
         overflow: hidden;
     }
-    .imgCarte{
-        position: relative;
-        z-index: 1;
-        width: 100%;
-        object-fit: cover;
-    }
     .carte{   
         position: relative;     
         width: 95%;
@@ -233,6 +226,13 @@ export default {
         margin: auto;
         cursor: pointer; 
         overflow: hidden;         
+    }
+    .imgCarte{
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
     }
     .col2Carte{
         position: absolute;

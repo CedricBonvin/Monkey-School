@@ -46,12 +46,12 @@
                         <p class="modePaiement">Mode de paiement :</p>
                         <div class="virement">
                             <i class="fas fa-university"></i>
-                            <label for="banque" class="titleCarte">Virement  banquaire</label>
+                            <label for="banque" class="titleCarte">Virement bancaire</label>
                             <input id="banque" class="inputCheckPaiement" type="radio" value="virement" name="paiement" v-model="paiementChoice">
                         </div>
                         <div class="virement">
                             <i class="fas fa-money-check-alt"></i>
-                            <label for="carte" class="titleCarte">carte</label>
+                            <label for="carte" class="titleCarte">Carte</label>
                             <input id="carte" class="inputCheckPaiement" type="radio" value="carte" name="paiement" v-model="paiementChoice">
                         </div>
                     </div>
@@ -205,7 +205,9 @@ export default {
     beforeMount(){
         this.panier = JSON.parse(localStorage.getItem("panier"))
         this.totalAmount()
-
+    },
+    mounted(){
+        document.title = "Paiement"
     }
 }
 </script>
@@ -382,9 +384,32 @@ export default {
     .rouerLink{
         display: inline-block;
     }
-    
-   
 
+
+
+    @media  screen and (max-width : 500px) {
+     
+        .titleCarte{
+            font-size: 16px;
+        }
+        .virement{
+            margin-top: 10px;
+            padding: 0 10px;
+        }
+    }
+
+    @media  screen and (max-width : 600px) {
+        .boxButton{
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .button{
+            margin: 20px 0;
+        }
+    }
+    
     @media  screen and (min-width : 800px) {
         .sectionPaiement{
             margin: auto;

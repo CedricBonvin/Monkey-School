@@ -52,6 +52,9 @@ export default {
         closeModal(){
             this.modalMessage = ""
         }
+    },
+    mounted(){
+        document.title = "Contact"
     }
 }
 

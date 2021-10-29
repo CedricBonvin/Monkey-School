@@ -2,8 +2,9 @@
 const Regulier = require("../model/modelRegulier")
 const Events = require("../model/modelEvent")
 const mongoose = require("mongoose")
+const { deleteOne } = require("../model/modelEvent")
 
-
+// ! pour l'envoie du mail activer next() et désactiver la réponse...!
 exports.inscription =  (req,res,next) => {
     
     for (let item of req.body){
@@ -24,28 +25,24 @@ exports.inscription =  (req,res,next) => {
         }
 
         // EVENT 
-        if (item.infoCours.typeCours ==='Event'){
-           
-            console.log(item.infoCours.dateChoisie)
-            for (let date of item.infoCours.dateChoisie){
-                let key = item.infoCours.nomCours
-                let dateChoisie = ""
-                // NOEL
-                date === '2021-12-23T05:00:00.000Z' ? dateChoisie = "23/12" : null
-                date === '2021-12-24T05:00:00.000Z' ? dateChoisie = "24/12" : null
-                date === '2021-12-25T05:00:00.000Z' ? dateChoisie = "25/12" : null
-
-                Events.updateOne({ clef : key,  date : dateChoisie },
+        if (item.infoCours.typeCours ==='Event'){        
+            for (let date of item.infoCours.dateChoisie){ 
+                Events.updateOne(
+                    { clef : item.infoCours.nomCours,  dateTypeDate : date },
                     {   
-                       $inc : { nbr_participants : +1},
-                       $push : { participants : item},                      
-                    },     
+                        $inc : { nbr_participants : +1},
+                        $push : { participants : item},                      
+                    },
+                    // {$set : { nbr_participants : 201}},
+                    {upsert : true}
                 )
-                .catch(err => console.log(err))                   
-            }  
+                .then(() => console.log("Le cours à bien été updater ou créer"))
+                .catch(err => res.status(500).json(err))
+             }  
         }
     }
-    next()
-    // res.status(200).json({ message : "ok pour la route inscription..."})  
+    // ! attention a changer pour envoyer le mail...
+   // next()
+     res.status(200).json({ message : "ok pour la route inscription..."})  
    
 }

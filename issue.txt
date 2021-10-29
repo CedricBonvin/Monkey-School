@@ -5,7 +5,6 @@ FRONTEND
 
 - Sur la page acceuil, je rajoute une photo si window est au-dessus de 1020px avec une fonction dans "mounted", je dois la gèrer au rezize de window et au chargement de la page, je sais pas si c'est une bonne chose... 
 
-- Comment changer les titles des pages ? 
 - mette la photo sur l'onglet du google... 
 
 - Télécharger les dates de cours depuis les cartes, ok mais de base elles sont on png et quand je les télécharges je met l'extention pdf et sa marche .. ( truc de dingue ..) COMMENT GERER LES PDF
@@ -17,13 +16,9 @@ FRONTEND
     -locale storage faille (possibilité de me niquer le truc en rentrant directement les infos dedans)
     - blinder le test formulaire inscription du frontend..
 
-
-- ajouter acces au panier deupuis le menu... 
--si panier vide afficher une modal => aussi quand je supprime toute les cartes 
-
--gèrer le retour a la page inscription validation depuis le panier si le panier est vide... ( vérifier le panier dans la page validation et push vers la page de cours si pas de panier !!!...pareil pour le bulletin d'inscription ... !)
-
 --VUEX 13 vulnerbility hight
+
+chsnger les hosts en variable d'environnement
 
 ------------------------------
 BACKEND
@@ -33,3 +28,5 @@ BACKEND
 TEMPLATE inscription
 
 -mettre le css dans les balises 
+
+-checker la structure de la base de donnée.... ( ma bdd vient du front et pas de la BD ) => si elle vient de la BD j'ai un probleme sur les cartes, les données sont injectées après avoir calculé la hauteur des infos donc les infos ne sont pas totalement cachée !!!

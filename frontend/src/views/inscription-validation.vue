@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div v-if="validPage" class="body">
         
         <div class="section">
             <h2 class="underLine">Validez vos informations :</h2>
@@ -58,14 +58,16 @@ export default {
     name : "inscription-validation",
     data(){
         return{
-            info : {}
+            info : {},
+            validPage : true
         }
     },
     methods : {
         modifierEleve(){
             this.$router.push({path:'/inscription'})
         },
-        send(){        
+        send(){  
+                 
             if(!JSON.parse(localStorage.getItem("panier"))){
                 let panier =[ 
                     {
@@ -87,8 +89,18 @@ export default {
         }
     },
     beforeMount(){
-        this.info = JSON.parse(localStorage.getItem("formulaireInscription")) 
+        const info = JSON.parse(localStorage.getItem("formulaireInscription")) 
+        if(info){
+            this.info = info
+        }else {
+            this.validPage = false
+            this.$router.push({ path : "/cours"})
+
+        } 
     },
+    mounted(){
+        document.title = "Inscription-validation"
+    }
     
 }
 </script>
