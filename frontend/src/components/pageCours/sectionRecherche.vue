@@ -33,22 +33,22 @@ export default {
 
 <style scoped>
     section{
-        margin: 50px 10px !important;
-        padding-top: 0 !important;
+        margin: 50px 10px;
+        padding-top: 0;
     }
     a{
         color: rgb(46, 46, 46);
-        display: inline-block !important;
+        display: inline-block;
         transform-origin: left;
         transition: .3s;
-        padding: 0 !important;
-        margin: 0 !important;
+        padding: 0;
+        margin: 0;
     } 
     h4 a:hover{
-        display: inline-block !important;
+        display: inline-block;
         transform: scale(1.1);
         font-weight: 500;
-        color: rgb(155, 64, 150) !important;
+        color: rgb(155, 64, 150);
         padding-left: 0;
         text-decoration: underline ;
     }

@@ -5,7 +5,7 @@ FRONTEND
 
 - Sur la page acceuil, je rajoute une photo si window est au-dessus de 1020px avec une fonction dans "mounted", je dois la gèrer au rezize de window et au chargement de la page, je sais pas si c'est une bonne chose... 
 
-- mette la photo sur l'onglet du google... 
+- mette la photo sur l'onglet de google... 
 
 - Télécharger les dates de cours depuis les cartes, ok mais de base elles sont on png et quand je les télécharges je met l'extention pdf et sa marche .. ( truc de dingue ..) COMMENT GERER LES PDF
 
@@ -20,13 +20,14 @@ FRONTEND
 
 chsnger les hosts en variable d'environnement
 
+- finir les places restantes dans le formulaire et vérifier les place lors du rajout d'un élève dans le panier ...
+
 ------------------------------
 BACKEND
 -----------------------------
 
 
-TEMPLATE inscription
 
--mettre le css dans les balises 
+-mettre le css dans les balises pour les template de mail
 
 -checker la structure de la base de donnée.... ( ma bdd vient du front et pas de la BD ) => si elle vient de la BD j'ai un probleme sur les cartes, les données sont injectées après avoir calculé la hauteur des infos donc les infos ne sont pas totalement cachée !!!

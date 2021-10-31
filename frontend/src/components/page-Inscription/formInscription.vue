@@ -208,8 +208,7 @@ data(){
             form : false,
             dateNoel : ""                  
         },
-        displayDateNoel : true,
-
+        displayDateNoel : false,
     }
 },
    
@@ -449,42 +448,34 @@ data(){
                 this.displayDateNoel = false
             }else{
                 this.displayDateNoel = true
-            //this.getAllNoel()
+                this.placeRestante()
             }
         },
-        getAllNoel(){
-            fetch("http://localhost:3000/all-noel")
-            .then(res => res.json())
-            .then(response => {
-                let tabDate = document.querySelectorAll(".allDate")
-                for (let input of tabDate){
-                    let idElement = input.getAttribute("id").toString()                  
-                    let placeRestant = 8
-                    for (let item of response){
-                        for (let date of item.infoCours.dateChoisieNoel){
-                            if (idElement === date){
-                                placeRestant -= 1
-                            }
-                        }
-                    }
-                    // injection
-                    let parent = input.parentNode
-                    let cible = parent.querySelector(".nbrCoursRestant")
-
-                    //  si 0 place restante
-                    if (placeRestant < 1){
-                        placeRestant = 0
-                        cible.classList.remove("validDate")
-                        cible.classList.add("invalidDate")
-                        parent.classList.add("invalidDate")
-                       let caseInput = parent.querySelector("input")
-                       caseInput.setAttribute("disabled", true)
-                    }
-                    cible.innerHTML = placeRestant
-                }
+        placeRestante(){
+            let obj = {
+                nomCours : this.formulaire.infoCours.nomCours 
+            }
+            fetch(`${this.$store.state.HOST}/check-place-restante`, {
+                method : "post",
+                body : JSON.stringify(obj),
+                headers: {"Content-type": "application/json; charset=UTF-8",}
             })
-            .catch(err => console.log(err))
-        }     
+                .then(res => res.json())
+                .then( response => {
+                     for (let item of response){
+                         let parent = document.getElementById(item.dateTypeDate)
+                         parent.querySelector(".nbrCoursRestant").innerHTML = item.nbr_participants
+
+                         if (item.nbr_participants === 3){
+                             parent.style.color = "red",
+                             parent.querySelector(".validDate").style.color = "red"
+                             parent.querySelector(".textPlaceRestant").style.color = "red"
+                             parent.querySelector("input").setAttribute("disabled", true)
+                         }
+                     }                    
+                })
+                .catch(err => { console.log(err)})
+        }  
     },
   
     beforeMount(){  
@@ -503,7 +494,6 @@ data(){
     },
     mounted(){  
         this.checkAge()
-        console.log(this.formulaire)
     },
 }
 

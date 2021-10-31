@@ -134,7 +134,7 @@ export default {
                     date : dateString
                 }
 
-                fetch("http://localhost:3000/post-livre-message",{
+                fetch(`${this.$store.state.HOST}/post-livre-message`,{
                     method : "POST",
                     body: JSON.stringify(obj),
                     headers: {"Content-type": "application/json; charset=UTF-8",}
@@ -163,10 +163,10 @@ export default {
                 }
             }
             function testCaptcha(data){
-                if (data.captcha.nbr1 + data.captcha.nbr2 !== data.captcha.resultat){
+                let result = data.captcha.nbr1 + data.captcha.nbr2
+                if (result != data.captcha.resultat){
                     data.validForm = false
                     data.captcha.error = "Résoudre le captcha"
-        
                 }
             }
         },
@@ -201,7 +201,7 @@ export default {
     },
     beforeMount(){
 
-        fetch("http://localhost:3000/get-livre-message")
+        fetch(`${this.$store.state.HOST}/get-livre-message`)
         .then(response => response.json())
         .then(result => {
             this.tabMessage = result.reverse()
@@ -210,6 +210,7 @@ export default {
     },
     mounted(){
         document.title = "Livre-d'or"
+        console.log(this.$store.state.HOST)
     }
 
 }

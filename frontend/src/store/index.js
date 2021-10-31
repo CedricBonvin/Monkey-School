@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    nbrItemPanier : 0
+    nbrItemPanier : 0,
+    HOST : "http://localhost:3000"
   },
   mutations: {
     checkPanier(state){

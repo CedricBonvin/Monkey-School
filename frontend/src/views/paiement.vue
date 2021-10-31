@@ -123,7 +123,7 @@ export default {
                 }
                  // ENVOIE  
                 this.displayLoader = true     
-                fetch("http://localhost:3000/new-inscription",{
+                fetch(`${this.$store.state.HOST}/new-inscription`,{
                     method : "POST",
                     body : JSON.stringify(this.panier),
                     headers: {"Content-type": "application/json; charset=UTF-8",}
@@ -200,7 +200,7 @@ export default {
         },
         closemodal(){
             this.modal.displayModal = false
-        }
+        },
     },
     beforeMount(){
         this.panier = JSON.parse(localStorage.getItem("panier"))

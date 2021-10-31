@@ -63,19 +63,6 @@ export default {
         }
     },
     methods : {
-        callBDD(){
-            fetch("http://localhost:3000/call-bdd")
-            .then(res => res.json())
-            .then(response => {
-                for (let item of response){
-                    // console.log(item)
-                    // this.regulierEnfant.push(item)
-                     item.nomCours === 'Mini-Spider' ? this.regulierEnfant = {...item }: null
-                     console.log(this.regulierEnfant)
-                }
-            })
-            .catch(err => console.log(err))
-        }
     }, 
     mounted(){
         document.title = "Cours"
