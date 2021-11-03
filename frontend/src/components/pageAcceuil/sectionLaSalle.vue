@@ -4,13 +4,12 @@
     ------------------------ -->
   <section class="section sectionLaSalle">
     <h2 class="titleSection">La salle</h2>
-    <p>
+    <p class="paraTousNosCours">
         Tous nos cours intérieurs sont donnés<br> dans la salle d’escalade la ...
     </p>
     <div class="sectionMur">
         <div class="paraTitre">
             <h3 class="titleMoubra">Moubra</h3>
-            <p>Plus de 100 voies <br>Jusqu'a 13.5m de hauteur..!</p>
         </div>
         <img class="imageMur" src="@/assets/images/mur.png" alt="mur de grimpe de la moubra">
     </div>
@@ -27,13 +26,12 @@
         </div>
         <div  class="colEnfant col2">
             <img  src="@/assets/images/bloc-enfant.png" alt="">
-            <p class="titleBlocEnfant">Bloc Enfant</p>
         </div>
     </div>
-    <div>
-        <a href="#">
-            <button class="buttonFull"> Découvrez la Salle..!</button>
-        </a>
+    <div class="boxButton">
+        <button>
+            <router-link to="#" class="buttonFull">DECOUVREZ LA SALLE..</router-link>
+        </button>
     </div>
   </section>
 </template>
@@ -48,9 +46,18 @@ export default {
 .section{
     margin-top: 200px;
 }
+button{
+    display: block;
+    margin: auto;
+    border: none;
+}
+.buttonFull{
+    margin: 0;
+}
 .sectionLaSalle{
     margin-bottom: 0;
     padding-bottom: 50px;
+  
 }
 .sectionMur{
     position: relative;
@@ -76,9 +83,9 @@ export default {
 }
 .paraTitre p {
     position: relative;
-    left: 5vw;
-    top: 0;
-    font-size: 2.4vw;
+    left: .5vw;
+    top: 50px;
+  
 }
 .paraTitre h3{
     position: relative;
@@ -109,7 +116,10 @@ export default {
 p{
     margin: 7vw 0;
     margin-left: 20px;
-    font-size: 3vw;
+    font-size: calc(14px);
+}
+.paraTousNosCours{
+    margin-top: 0;
 }
 .imageMur{
     width: 100%;
@@ -117,6 +127,7 @@ p{
 hr{
 margin: 10vw 30%;
 }
+
 /*------------------------------------------------*/
 /* Section ENFANT --------------------------------*/
 /*------------------------------------------------*/
@@ -172,6 +183,16 @@ margin: 10vw 30%;
 }
 .sectionEnfant img{
     width: 80%;
+}
+.boxButton{
+    margin-top: 50px;
+}
+
+@media screen and (min-width : 500px){
+    p{
+        font-size: calc(14px + 1vw);
+        margin-top: 50px !important;
+    }
 }
 
 

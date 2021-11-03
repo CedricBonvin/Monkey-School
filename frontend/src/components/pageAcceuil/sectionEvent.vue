@@ -2,22 +2,27 @@
    <section class="SectionEvent">
             <div class="boxEvent">
                 <h2 class="tiltleSectionEvent">Evènement</h2>
-                <card-event class="cardEvent"
-                    titleEvent="Cours régulier 2021-2022 :"
-                    text="Les insrciptions pour les cours réguliers enfants sont ouvert !!! Venez Grimpez dans une 
-                            ambiance chaleureuse et décontracté..!! "
-                 />
-                 <card-event class="cardEvent"
-                    titleEvent="Camp d'été :"
-                    text="Les insrciptions pour les camps d'exétérieur sont ouvertes !!! ATTENTION !! Place limité !"
 
-                 />
+                <card-event class="cardEvent"             
+                    titleEvent="NOEL :"
+                    text="Durant la période de Noël, de 15h à 18h, un prof d'escalade est à votre disposition  !! "     
+                    >
+                    <template v-slot:imageEvent >
+                         <img :src="require('@/assets/images/chapeau-Noel.png')" alt="chapeau-Noel" class="chapeau">
+                    </template>
+                </card-event>
+
+                <card-event class="cardEvent"
+                    titleEvent="REGULIER ADULTE :"
+                    text="Début 2022, Monkey-school ouvre une classe Régulier Adulte, tous les Jeudis de 19h30 à 21h."
+                />
+
             </div>
         </section>
 </template>
 
 <script>
-import CardEvent from '../cardEvent.vue'
+import CardEvent from './cardEvent.vue'
 export default {
  name : "sectionEvent",
  components : {CardEvent}
@@ -61,6 +66,17 @@ export default {
     }
     .cardEvent:last-child{
         margin-bottom: 0px;
+    }
+    .imageEvent{
+        position: absolute;
+        top: 0;
+    }
+    .chapeau{
+        width: 90px;
+        position: absolute;
+        top: -40px;
+        right: 20px;
+    
     }
 
      @media only screen and (min-width: 600px) {

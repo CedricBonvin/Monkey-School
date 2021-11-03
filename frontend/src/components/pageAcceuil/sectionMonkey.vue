@@ -149,6 +149,12 @@ export default {
        
     } 
 
+    @media screen and (max-width : 500px){
+        .block1, .block3{
+            padding: 15px
+        }
+    }
+
     
 
 

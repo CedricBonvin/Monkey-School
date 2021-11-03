@@ -13,13 +13,10 @@
                     <li>- De 4 à 18 ans</li>
                     <li>- En groupe ou en privée</li>
                 </ul>
-                <a href="#" class="plusInfo">Plus d'info..</a>
             </div>
-        </div>
-       
+        </div>   
     </div>
     
-
     <!-- SECTION ADULTE ///////////////////////////////////////////////// -->
 
     <div class="col2">
@@ -30,7 +27,6 @@
                     <li>- De 18 à 172 ans</li>
                     <li>- En groupe ou en privée</li>
                 </ul>
-                <a href="#" class="plusInfo">Plus d'info..</a>
             </div>
         </div>
         <div class="box2Adulte">
@@ -39,8 +35,10 @@
         </div>
     </div>
         
-    <div class=" buttonCours boxButtonCours">
-            <button  class=" buttonFull">Découvrez tous nos cours</button>
+    <div class=" boxButtonCours">         
+         <button >
+             <router-link to="/cours" class="buttonFull">DECOUVREZ TOUS NOS COURS..</router-link>  
+         </button>      
     </div>
     
 </section>
@@ -59,7 +57,6 @@ export default {
     /*-----------------------------------------------------------------------*/
     .sectionCours{
         position: relative;
-        margin-top: 230px;   
         padding-left: var(--gutter);      
         padding-bottom: 7vw;    
     }
@@ -68,14 +65,30 @@ export default {
         background: var(--color-primary);
         width: 40%;
         max-width: 400px;
+        margin: auto;
     }
+   
     .col1, .col2{
         color: white;
         position:relative;
         display: flex; 
         flex-flow: row ;     
         justify-content: space-between;
-        margin-top: 3em;
+        margin-top: 3em;  
+    }
+    button{
+        padding: 0 !important ;
+        border: none;
+        display: block;
+        margin: auto;
+        height: auto !important;
+        background: red;
+    }
+    .buttonFull{
+        margin: 0;
+    }
+    a{
+     color: white;
     }
     .enfantCol2{
         display: flex;
@@ -86,9 +99,10 @@ export default {
         position: relative;
         display: flex;
         flex-flow: column;
-        justify-content: space-around;
+        justify-content: center;
         align-items: flex-start;
         height: 80%;
+        max-height: 300px;
         width: 100%;
         background: rgb(255, 255, 255);
         padding-left: 7vw;
@@ -109,12 +123,14 @@ export default {
     }
    
     li, .box1Adulte li {
-        font-size: 3vw;
-     
+        font-size: calc(14px + 1vw);  
     }
     .titleColCours{
         position: relative;
         font-size: 7vw;
+        margin : 20px 0;
+        font-weight: 400;
+        color: rgb(102, 102, 102);
     }
     .titleColCours::before{
         position: absolute;
@@ -145,10 +161,11 @@ export default {
     .boxAdulte{
         width: 100%;
         height: 80%;
+        max-height: 300px;
         background: red;
         display: flex;
         flex-flow: column;
-        justify-content: space-around;
+        justify-content: center;
         align-items: flex-start;
         background: white;
         color: rgb(43, 43, 43);
@@ -169,31 +186,48 @@ export default {
         top: 50%;
         width: 40%;
     } 
-    .buttonCours{   
-     margin-top: 30px;
-    }  
+    
 
 
     /*-----------------------------------------------------------------------*/
     /* MEDIA QUERIES ///////////////////////////////////////////////////////*/
     /*-----------------------------------------------------------------------*/
 
+  @media screen and (max-width:600px){ 
+       .sectionCours{
+           width: 100%;
+       }
+       li, .boxAdulte li{
+           line-height: 1.4;
+           font-size: 16px;
+       }
+      
+       .boxAdulte{
+           padding: 0;
+       }
+       button{
+           margin-top: 50px;
+       }
+    } 
+
     @media screen and (min-width:600px){
         .box1Adulte{
             min-height: 350px;
-        }      
+
+        } 
+        .buttonFull{
+            font-size: 30px !important;
+        }     
     }
     @media screen and (min-width:1020px){
-        .box1Adulte h3, .box2 h3 {
+        /* .box1Adulte h3, .box2 h3 {
             font-size: 5em;
-        }
+        } */
         li {
             font-size: 2em;   
         }
         .basicButton{
             font-size: 3em;
-        }
-      
-    
+        } 
     }
 </style>

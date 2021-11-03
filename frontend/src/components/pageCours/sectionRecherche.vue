@@ -60,7 +60,7 @@ export default {
         margin-top: 20px;
         font-size: 18px;
         font-weight: 400;
-        opacity: 85%;
+        opacity: 0.85;
     }   
     h2{
        
@@ -81,7 +81,7 @@ export default {
         text-decoration: underline;
         letter-spacing: 2px;
         color: rgb(10, 10, 10);
-        opacity: 65%;
+        opacity: 0.65;
     }
     h4{
         transform-origin: left;

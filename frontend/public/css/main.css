@@ -3,7 +3,7 @@
     /* VARIABLES ///////////////////////////////////////////////////////*/
     /*-----------------------------------------------------------------------*/
 :root{
-    --color-primary : #BD62B4;
+    --color-primary : #b94daf;
     --color-secondary : #D99A3B;
     --gutter : 15px;
     --top-bar-height : 50px;
@@ -66,6 +66,7 @@ ul{
 .section{
   width: calc(100% - (var(--gutter)*2));
   margin: 100px auto;
+  margin-top: calc(100px + 5vw);
   background-color: var(--bcgSection);
 }
 .titleSection {
@@ -122,13 +123,12 @@ i{
 .buttonFull{
   display: block;
   margin: 20px auto;
-  padding: 10px 20px;
+  padding: 15px 20px;
   font-size: 18px;
   background: var(--color-primary);
   color: white;
-  border-radius: 10px;
+  border-radius: 3px;
   border: none;
-  box-shadow: 0 0 1px 1px gray;
   transition: .3s;
   cursor: pointer;
 }
@@ -155,10 +155,13 @@ i{
     /*-----------------------------------------------------------------------*/
 
 @media screen and (min-width : 650px){
-  
- 
   .basicButton{
     padding: 20px 30px;
+  }
+}
+@media screen and (min-width : 1000px){
+  .buttonFull{
+    font-size: 30px;
   }
 }
 

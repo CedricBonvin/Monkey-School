@@ -1,6 +1,5 @@
 <template>
-    <main>
-          
+    <main>    
         <section-header />
         <section-event />
         <section-monkey />

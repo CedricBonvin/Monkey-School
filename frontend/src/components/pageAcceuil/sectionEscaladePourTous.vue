@@ -13,9 +13,7 @@
                             Travailler sa condition phiysique, ou juste regarder les copains grimper ! <br>
                             Ce sport est ouvert et accessibe à toute personne  qui le désire !
                         </p>
-                    </div>
-                    <img class="imageJordan" src="@/assets/images/jordan.png" alt="enfant de 6 ans qui rigole">
-                    <img class="imageSingeCorde" src="@/assets/images/singeCorde.png" alt="singe qui déscend une corde">
+                    </div>   
                 </div>
                 <div class="col3" v-if="up1020px" >
                     <img src="@/assets/images/adria.png" alt="jeune fille qui grimpe sur une boule">
@@ -61,21 +59,14 @@ export default {
     .sectionPourTous{
         padding: var(--gutter);
         padding-bottom: 50px;
+
     }
     .sectionPourTous .box2 {
         position: relative;
         background: var(--color-primary);
         padding: calc(var(--gutter)*2);
     }
-    .sectionPourTous .box2:before {
-         content: "";
-         position: absolute;
-         z-index: -1;
-         bottom: -80px;
-         width: 71%;
-         height: 100px;
-         border: solid 5px var(--color-secondary);
-    }
+    
     .sectionPourTous .box {
         background: blue;
     }
@@ -125,6 +116,12 @@ export default {
         }
     }
 
+    @media screen and (max-width : 500px){
+         .sectionPourTous .box2 { 
+            padding: 20px 15px;
+        }
+    }
+
     @media screen and (min-width:1020px){
         .container{
             position: relative;
@@ -149,7 +146,6 @@ export default {
         }
         .col3 img{
             width: 70%;;
-        }
-       
+        }   
     }
 </style>
