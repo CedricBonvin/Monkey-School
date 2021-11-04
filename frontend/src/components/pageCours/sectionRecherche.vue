@@ -3,12 +3,14 @@
         <h2 >Navigation :</h2>
         <h3><i class="fas fa-search loupe"></i>Recherchez vos cours..</h3>
         <div class="boxLink">
-            <h4 @click="scrollCible('regulierEnfant')"><a class="linkSection" >1.- Régulier Enfant ( Septembre à Mai )</a></h4>
-            <h4 @click="scrollCible('regulierAdulte')"><a class="linkSection" >2.- Régulier Adulte ( Septembre à Mai )</a></h4>
-            <h4 @click="scrollCible('privee')"><a class="linkSection" >3.- Privée</a></h4>
-            <h4 @click="scrollCible('autonomie')"><a class="linkSection" >4.- Autonomie en salle</a></h4>
-            <h4 @click="scrollCible('familles')"><a class="linkSection" >5.- Famille</a></h4>
-            <h4 @click="scrollCible('noel')"><a class="linkSection" >6.- Noël</a></h4>
+            <h4 @click="scrollCible('noel')">
+                <a class="linkSection noel" >1.- Noël</a>  
+                <img class="chapeau-Noel" src="@/assets/images/chapeau-Noel.png" alt="chapeau noel">
+            </h4>
+            <h4 @click="scrollCible('regulierEnfant')"><a class="linkSection" >2.- Régulier Enfant ( Septembre à Mai )</a></h4>
+            <h4 @click="scrollCible('regulierAdulte')"><a class="linkSection" >3.- Régulier Adulte ( Janvier à Mai )</a></h4>
+            <h4 @click="scrollCible('privee')"><a class="linkSection" >4.- Privée</a></h4>
+            <h4 @click="scrollCible('familles')"><a class="linkSection" >6.- Famille</a></h4>
         </div>
   </section>
 </template>
@@ -36,6 +38,10 @@ export default {
         margin: 50px 10px;
         padding-top: 0;
     }
+    .chapeau-Noel{
+        width: 50px;
+        margin-left: 10px;
+    }
     a{
         color: rgb(46, 46, 46);
         display: inline-block;
@@ -56,9 +62,9 @@ export default {
         padding: 20px;
     }
     .linkSection{
-        line-height: 1.6rem;
+        line-height: 1rem;
         margin-top: 20px;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: 400;
         opacity: 0.85;
     }   

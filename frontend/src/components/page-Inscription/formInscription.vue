@@ -460,21 +460,21 @@ data(){
                 body : JSON.stringify(obj),
                 headers: {"Content-type": "application/json; charset=UTF-8",}
             })
-                .then(res => res.json())
-                .then( response => {
-                     for (let item of response){
-                         let parent = document.getElementById(item.dateTypeDate)
-                         parent.querySelector(".nbrCoursRestant").innerHTML = item.nbr_participants
+            .then(res => res.json())
+            .then( response => {
+                    for (let item of response){
+                        let parent = document.getElementById(item.dateTypeDate)
+                        parent.querySelector(".nbrCoursRestant").innerHTML = 8 - item.nbr_participants
 
-                         if (item.nbr_participants === 3){
-                             parent.style.color = "red",
-                             parent.querySelector(".validDate").style.color = "red"
-                             parent.querySelector(".textPlaceRestant").style.color = "red"
-                             parent.querySelector("input").setAttribute("disabled", true)
-                         }
-                     }                    
-                })
-                .catch(err => { console.log(err)})
+                        if (item.nbr_participants > 7){
+                            parent.style.color = "red",
+                            parent.querySelector(".validDate").style.color = "red"
+                            parent.querySelector(".textPlaceRestant").style.color = "red"
+                            parent.querySelector("input").setAttribute("disabled", true)
+                        }
+                    }                    
+            })
+            .catch(err => { console.log(err)})
         }  
     },
   

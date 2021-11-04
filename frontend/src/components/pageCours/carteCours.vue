@@ -5,9 +5,11 @@
             v-if="displayInscriptionPrive"
             :data="this"
          />
-       
-        <article :id="cours.nomCours" >  
-            <div class="carte" @click="schowOneBox($event,cours.nomCours,'.containerInformation',true)"  >
+
+
+        <article :id="cours.nomCours" > 
+            <div class="carte" @click="schowOneBox($event,cours.nomCours,'.containerInformation',true)"  >  
+                <img v-if="cours.nomCours === 'Noel'" class="chapeau-noel"  src='@/assets/images/chapeau-Noel.png' alt="">     
                 <img class="imgCarte" src='@/assets/images/header.jpg' alt="">     
                 <div class="col2Carte">
                     <div class="titleNomCours"> {{ cours.nomCours}}</div>
@@ -115,7 +117,7 @@
                 <!-- information -->
                 <div class="boxDescription">
                     <h3 class="titleBoxInfo">Déscription :</h3>
-                    <p class="paraDescription">{{ cours.descriptionCours }}</p>
+                    <p class="paraDescription">{{ cours.descriptionCour }}</p>
                 </div>
 
                 <button @click="send(cours)" class="buttonFull">s'inscrire</button>
@@ -217,6 +219,15 @@ export default {
     article{      
         margin: 20px 0;
         overflow: hidden;
+        position: relative;
+    }
+    .chapeau-noel{
+        width: 50px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+       
     }
     .carte{   
         position: relative;     

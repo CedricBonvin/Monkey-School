@@ -115,7 +115,6 @@ export default {
                     if (item.infoCours.typeCours === "Event"){
                         item.infoCours.dateChoisieString = []
                         for (let date of item.infoCours.dateChoisie){
-                            console.log(date)
                             let dateString = new Date(date).toLocaleDateString("fr-FR",{day : "numeric", month : "long"})
                             item.infoCours.dateChoisieString.push(dateString)
                         }
@@ -138,13 +137,20 @@ export default {
                         this.modal.displayModal = true
                         this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
                     }
+                    return response.json()
                 })
+                .then(res => {
+                    if (res.error === "nbrPlaceRestante"){
+                         this.modal.modalText = res.messageError
+                    }
+                })
+                
+              
                 .catch(() => {
                     this.modal.displayModal = true
-                    this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+                    this.modal.modalText = " Veuillez réeassayer !"
                 })
             }
-            console.log(this.panier)
         },
         totalAmount(){
             for (let item of this.panier){
