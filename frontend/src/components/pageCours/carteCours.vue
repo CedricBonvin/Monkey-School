@@ -63,7 +63,7 @@
                         <div>
                             <a v-if="cours.nomCours === 'Mini-Spider'" :href="require('@/assets/fichier/date-Mini-Spider.png')" download= "date-MiniSpider.pdf">Télécharger les dates de cours</a>
                             <a v-if="cours.nomCours === 'Gecko'" :href="require('@/assets/fichier/date-Gecko.png')" download= "date-Gecko.pdf">Télécharger les dates de cours</a>
-                            <a v-if="cours.nomCours === 'Monkey'" :href="require('@/assets/fichier/date-Monkey.png')" download= "date-Monkey.pdf">Télécharger les dates de cours</a>
+                            <a v-if="cours.nomCours === 'Big-Monkey'" :href="require('@/assets/fichier/date-Big-Monkey.png')" download= "date-Monkey.pdf">Télécharger les dates de cours</a>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,12 @@
                         <div class="infoLignePrixCol1">
                             <div class="clefInfoCours">Prix : <span class="lignePrix"> CHF. {{ cours.prix}}.- </span> </div>
                         </div>
-                        <div class="aboOffert" v-if="cours.typeCours === 'regulier' "> ( Abonnemnt. annuel offert ! )
+                        <div class="aboOffert" 
+                            v-if="cours.nomCours === 'Mini-Spider' || cours.nomCours === 'Gecko' || cours.nomCours === 'Monkey'"> ( Abonnemnt annuel offert ! )
+                        </div>
+                        <!-- si cours Big-Monkey seulement abo de 6 mois -->
+                        <div class="aboOffert" 
+                            v-if="cours.nomCours === 'Big-Monkey'"> ( Abonnement semestriel offert ! )
                         </div>
                             <i @click="schowOneBox($event,cours.nomCours,'.boxPrix')" class="fas fa-info-circle iconeInfo"></i>
                     
@@ -86,7 +91,9 @@
                             </div>
                             <i @click="closeOneBox($event,cours.nomCours,'.boxPrix')"  class="fas fa-times iconeCloseSmall "></i>
                             <p>L'encadrement, le matériel et l'entrée à la salle sont compris dans le prix du cours !</p>
-                            <p v-if="cours.typeCous === 'regulier'" class="PrixAboOffert"> * L'abonnement annuel d'une valeur de {{cours.valeurAbo}} est offert !!</p>
+                            <p v-if="cours.nomCours === 'Mini-Spider' || cours.nomCours === 'Gecko' || cours.nomCours === 'Monkey'" class="PrixAboOffert"> * L'abonnement annuel d'une valeur de {{cours.valeurAbo}} est offert !!</p>
+                            <!-- si cours Big-Monkey -->
+                            <p v-if="cours.nomCours === 'Big-Monkey' " class="PrixAboOffert"> * L'abonnement semestriel d'une valeur de {{cours.valeurAbo}} est offert !!</p>
                            
                            <!-- RABAIS -->
                             <h4 class="titleRabais">Rabais :</h4>

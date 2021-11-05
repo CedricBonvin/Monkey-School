@@ -9,17 +9,15 @@ exports.inscription =  (req,res,next) => {
     for (let item of req.body){
         // REGULIER 
         if (item.infoCours.typeCours ==='regulier'){
-            let key = ""
-            item.infoCours.nomCours === "Mini-Spider" ? key = "Mini-Spider" : null
-            item.infoCours.nomCours === "Gecko" ? key = "Gecko" : null
-            item.infoCours.nomCours === "Monkey" ? key = "Monkey" : null
-
             Regulier.updateOne(
-                {clef : key},
+                {clef : item.infoCours.nomCours},
                 {  
+                    $inc : {nbr_participants : +1},
                     $push: { participants: item },
-                },     
+                },
+                {upsert : true}     
             )
+            .then(() => console.log("cours régulier updater ou créer"))
             .catch(err => console.log(err))     
         }
 
@@ -41,8 +39,8 @@ exports.inscription =  (req,res,next) => {
         }
     }
     // ! attention a changer pour envoyer le mail...
-   // next()
-     res.status(200).json({ message : "ok pour la route inscription..."})  
+    //next()
+      res.status(200).json({ message : "ok pour la route inscription..."})  
    
 }
 
@@ -64,7 +62,7 @@ exports.checkPlace = (req,res,next) => {
     if (isEvent){
         Events.find()
         .then(CoursEvent => {
-            // comparaison des dates voulu avec les nombres de place restante
+            // comparaison des dates voulu avec le nombres de place restante
             let valid = true
             for (let coursBdd of CoursEvent){
                 let NbrParticipants = coursBdd.nbr_participants

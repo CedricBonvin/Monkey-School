@@ -3,7 +3,6 @@
 FRONTEND
 -----------------------------
 
-- Sur la page acceuil, je rajoute une photo si window est au-dessus de 1020px avec une fonction dans "mounted", je dois la gèrer au rezize de window et au chargement de la page, je sais pas si c'est une bonne chose... 
 
 - mette la photo sur l'onglet de google... 
 
@@ -16,11 +15,10 @@ FRONTEND
     -locale storage faille (possibilité de me niquer le truc en rentrant directement les infos dedans)
     - blinder le test formulaire inscription du frontend..
 
---VUEX 13 vulnerbility hight
+- taille des images
 
-chsnger les hosts en variable d'environnement
+-valeur abo super-Monkey // + créer fichier téléchargement des dates.
 
-- finir les places restantes dans le formulaire et vérifier les place lors du rajout d'un élève dans le panier ...
 
 ------------------------------
 BACKEND

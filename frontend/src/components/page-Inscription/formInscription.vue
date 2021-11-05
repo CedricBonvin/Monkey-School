@@ -96,8 +96,7 @@
                 <div 
                     v-if="  formulaire.infoCours.nomCours === 'Mini-Spider' ||
                             formulaire.infoCours.nomCours === 'Gecko' ||
-                            formulaire.infoCours.nomCours === 'Monkey' ||
-                            formulaire.infoCours.nomCours === 'Big-Monkey'"
+                            formulaire.infoCours.nomCours === 'Monkey'"
                      class="boxInput boxAge">
                     <label class="requis labelAge" for="age "> Age :</label>
                     <select name="age" id="age" v-model="formulaire.eleve.ageEleve" >
@@ -114,7 +113,7 @@
                 </div>
 
                 <!-- CHOIX DATE DE eleve si il y en a // SAUF NOEL -->
-                <div class="boxInput" 
+                <!-- <div class="boxInput" 
                     v-if="formulaire.infoCours.typeCours === 'initiation' ||
                           formulaire.infoCours.typeCours === 'autonomie'">
 
@@ -127,7 +126,7 @@
                             </option>                   
                     </select>        
                     <p v-if="error.choiceDateCours" class="error">{{ error.choiceDateCours }}</p>                 
-                </div>
+                </div> -->
 
                 <!-- NOM -->
                 <div class="boxInput ">

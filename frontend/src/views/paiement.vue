@@ -61,10 +61,10 @@
                 <section v-if="paiementChoice === 'virement'">
                     <sectionvirement
                         :coordonneePaiement="coordonneePaiement"
-                        :formError="formError"
-                
+                        :formError="formError"                
                     />
                 </section>
+                <div v-if="formError.paiementChoice" class="error">{{formError.paiementChoice }}</div>
              <div class="boxButton">
                  <router-link class="rouerLink" to="/panier"><button class="button backPanier" >RETOUR PANIER</button></router-link>
                  <button @click="validation" class="button">VALIDER L'INSCRIPTION !</button>
@@ -102,6 +102,7 @@ export default {
                 adresse : "",
                 mail : "",
                 phone : "",
+                paiementChoice : ""
             },
             coordonneePaiement :{},
             displayLoader : false
@@ -198,6 +199,10 @@ export default {
             if (!this.coordonneePaiement.phone){
                 valid = false
                 this.formError.phone = " ! Veuillez saisir le champ"
+            }
+            if (!this.paiementChoice){
+                valid = false
+                this.formError.paiementChoice = " ! Veuillez choisir un moyen de paiment..."
             }
 
             if(valid){

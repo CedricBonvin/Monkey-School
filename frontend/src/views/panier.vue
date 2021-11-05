@@ -136,14 +136,16 @@ export default {
                 // INJECTION DE LA FRATERIE DANS LES ITEMS DU PANIER
                 if (this.fraterie.length > 1){
                     for (let item of this.panier){
-                        for(let frere of this.fraterie){
-                            if ( frere.eleve.nomEleve === item.eleve.nomEleve){
-                                for (let b of this.fraterie){
-                                    let frereSoeur = {
-                                        nom : b.eleve.nomEleve,
-                                        prenom : b.eleve.prenomEleve
+                        if( item.infoCours.typeCours === 'regulier'){
+                            for(let frere of this.fraterie){
+                                if ( frere.eleve.nomEleve === item.eleve.nomEleve){
+                                    for (let b of this.fraterie){
+                                        let frereSoeur = {
+                                            nom : b.eleve.nomEleve,
+                                            prenom : b.eleve.prenomEleve
+                                        }
+                                        item.infoCours.fraterie.push(frereSoeur)
                                     }
-                                    item.infoCours.fraterie.push(frereSoeur)
                                 }
                             }
                         }

@@ -88,20 +88,21 @@ const bddCours = {
             infoCarte : " 16 à 99 ans",
             jour : "Jeudi",
             heure : "19h30 à 21h",
-            nbrCours : 30,
+            nbrCours : 15,
             dureeCours : "1h30",
             lieux : "Crans-Montana, salle d'escalade de la Moubra ",
-            prix :840,
-            valeurAbo : "CHF 590.-",
-            datesCours2020 : "06-09 / 13-09 / 20-09 / 27-09 / 04-10 / 11-10 / 08-11 / 15-11 / 22-11 / 29-11 / 06-12 / 13-12 / 20-12",
-            datesCours2021 : "10-01 / 17-01 / 24-01 / 31-01 / 07-02 / 14-02 / 21-02 / 07-03 / 14-03 / 21-03 / 28-03 / 04-04 / 11-04 / 25-04 / 02-05",
-            descriptionCour : "Ce cours est fait pour les Adultes",
+            prix :420,
+            prixAPaye : 0,
+            valeurAbo : "CHF 390.-",
+            // datesCours2020 : "06-09 / 13-09 / 20-09 / 27-09 / 04-10 / 11-10 / 08-11 / 15-11 / 22-11 / 29-11 / 06-12 / 13-12 / 20-12",
+            datesCours2021 : "13-01 / 20-01 / 27-01 / 03-02 / 10-02 / 17-02 / 24-02 / 10-03 / 17-03 / 24-03 / 31-03 / 07-04 / 14-04 / 28-04 / 05-05",
+            descriptionCour : "Dès le 13 Janvier 2022, Monkey-School ouvre une classe de cours régulier adulte. Novice, avancé ou expert, partageons ensemble un moment convivial tout en évoluant dans ce magnifique sport... ",
             isDateCours : true,
          
         },
    
    
-       privee : {
+        privee : {
             typeCours : "prive",
             nomCours : "Privée",
             image : require("@/assets/images/header.jpg"),
@@ -120,7 +121,7 @@ const bddCours = {
         },
    
    
-       cb1 : {
+        cb1 : {
             typeCours : "autonomie",
             nomCours : "CB1",
             image : require("@/assets/images/header.jpg"),
@@ -143,7 +144,7 @@ const bddCours = {
             isDateCours : true,
            
         },
-      cb2 :  {
+        cb2 :  {
             typeCours : "autonomie",
             nomCours : "CB2",
             image : require("@/assets/images/header.jpg"),
@@ -161,10 +162,8 @@ const bddCours = {
             descriptionCour : "Ceci est le cours prvée...",
             afficheDate : false,
         
-        },
-    
-    
-      famille :  {
+        },   
+        famille :  {
             typeCours : "famille",
             nomCours : "Famille",
             image : require("@/assets/images/header.jpg"),
@@ -181,9 +180,7 @@ const bddCours = {
             isDateCours : false,
      
         },
-   
-   
-       noel : {
+        noel : {
             typeCours : "Event",
             nomCours : "Noel",
             image : require("@/assets/images/header.jpg"),

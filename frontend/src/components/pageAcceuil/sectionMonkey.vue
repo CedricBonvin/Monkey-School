@@ -6,7 +6,7 @@
                     <div class="boxBlock1 box">
                         <p>
                             <i class="fas fa-comment-dots"></i>
-                            Face à une demande croissante, Monkey-school à été crée afin de promouvoir l’escalade au près des jeunes et des moins jeunes.<br>
+                            Face à une demande croissante, Monkey-school a été créée afin de promouvoir l’escalade auprès des jeunes et des moins jeunes.<br>
                           <br>  D’initier, d’accompagner et d’entrainer en toute sécurité de nouveaux grimpeurs afin que ce sport soit accessible au plus grand nombre.
                         </p>
                     </div>
