@@ -80,6 +80,15 @@ function sendMail(req, res){
             }
             mailToClient.attachments.push(attach)
         }
+        if (item.infoCours.nomCours === "Big-Monkey"){
+            let attach = {
+                filename: 'date-Big-Monkey.pdf',
+                path: __dirname +'/images-mail/date-Big-Monkey.pdf',
+                content: 'Date cours Big-Monkey',
+                contentType: 'text/plain' 
+            }
+            mailToClient.attachments.push(attach)
+        }
     }
     // MAIL TO ME
     // let mailToMe = {

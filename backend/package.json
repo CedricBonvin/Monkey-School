@@ -16,6 +16,6 @@
     "node-mailer": "^0.1.1",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.12",
-    "stripe": "^8.184.0"
+    "stripe": "^8.186.1"
   }
 }

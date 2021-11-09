@@ -433,8 +433,8 @@ data(){
                 }
 
                 function testDateNoel(){
-                    if(data.formulaire.infoCours.typeCours === 'Noel'){
-                        if(data.formulaire.infoCours.dateChoisieNoel.length === 0){
+                    if(data.formulaire.infoCours.typeCours === 'Event'){
+                        if(data.formulaire.infoCours.dateChoisie.length === 0){
                             data.error.dateNoel = "Veuillez choisir une date.",
                             valid = false   
                         } 

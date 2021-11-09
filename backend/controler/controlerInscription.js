@@ -1,4 +1,6 @@
 
+const stripe = require('stripe')('sk_test_51JqGu2L33Mz5kFdVoWUg0J2iKIhKWx97Li7iEZxuLndKggKlvoBmfyB42voQzOIWg0D3uBrEMiyWb5qZ5qLBbBOh00QBRuoWfB');
+
 const Regulier = require("../model/modelRegulier")
 const Events = require("../model/modelEvent")
 const mongoose = require("mongoose")
@@ -40,7 +42,7 @@ exports.inscription =  (req,res,next) => {
     }
     // ! attention a changer pour envoyer le mail...
     //next()
-      res.status(200).json({ message : "ok pour la route inscription..."})  
+    res.status(200).json({ message : "ok pour la route inscription..."})  
    
 }
 
@@ -48,7 +50,7 @@ exports.checkPlace = (req,res,next) => {
     let isEvent = false
     let tabDatesDesire = []
 
-    // check si cours Events
+    // création d'un tableau avec toutes les datesChoisie de tous les items du panier ( si cours Event )
     for (let item of req.body){
         if (item.infoCours.typeCours === "Event"){
             isEvent = true
@@ -62,7 +64,7 @@ exports.checkPlace = (req,res,next) => {
     if (isEvent){
         Events.find()
         .then(CoursEvent => {
-            // comparaison des dates voulu avec le nombres de place restante
+            // comparaison des dates voulu avec le nombres de place restante des cours de la BDD
             let valid = true
             for (let coursBdd of CoursEvent){
                 let NbrParticipants = coursBdd.nbr_participants
@@ -87,4 +89,44 @@ exports.checkPlace = (req,res,next) => {
         })
         .catch(err =>res.status(500).json({error : err, message : "erreur dans findAll Events"}))
     } else next()
+}
+
+exports.paiementCarte = async (req,res,next) => {
+    console.log(req.body)
+    let tabLine = []
+    for (let item of req.body){
+        // Price
+        let price = null
+        item.infoCours.rabais === 0 ? price = item.infoCours.prixNormal : null
+        item.infoCours.rabais === 10 ? price = item.infoCours.prixRabais_10 : null
+        item.infoCours.rabais === 15 ? price = item.infoCours.prixRabais_15 : null
+        item.infoCours.rabais === 20? price = item.infoCours.prixRabais_20 : null
+
+        //quantite
+        let quant = 1
+        item.infoCours.dateChoisie ? quant = item.infoCours.dateChoisie.length : null
+
+        const line = {
+            price : price,
+            quantity : quant
+        }
+        tabLine.push(line)
+    }
+    const session = await stripe.checkout.sessions.create({
+        line_items: tabLine,
+        payment_method_types: [
+          'card',
+        ],
+        mode: 'payment',
+        success_url: `http://localhost:8080/succes`,
+        cancel_url: `http://localhost:8080/paiement`,
+        // success_url: `${process.env.HOST}/success.html`,
+        // cancel_url: `${YOUR_DOMAIN}/cancel.html`,
+        });
+
+    res.status(200).json({
+        message : "ok pour la route paiemnt par carte", 
+        session : session.url,
+        payment_intent : session.payment_intent
+    })
 }

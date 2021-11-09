@@ -75,12 +75,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "cours" */ '../views/paiement')
   },
   {
-    path: '/checkout',
-    name: 'checkout',
+    path: '/succes',
+    name: 'succes',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "cours" */ '../views/checkout')
+    component: () => import(/* webpackChunkName: "cours" */ '../views/succes')
+  },
+  {
+    path: '/cancel',
+    name: 'cancel',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "cours" */ '../views/cancel')
   },
   
 ]

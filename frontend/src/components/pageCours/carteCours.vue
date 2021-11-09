@@ -153,26 +153,27 @@ export default {
                 contact : {},
                 eleve : {},
                 infoCours : {
-                    typeCours : cours.typeCours,
-                    nomCours : cours.nomCours,
-                    ageCours : cours.ageCours,
-                    ageString : cours.ageString,
-                    jour : cours.jour,
-                    heure : cours.heure,
-                    nbrCours : cours.nbrCours,
-                    dureeCours : cours.dureeCours,
-                    lieux : cours.lieux,
-                    valeurAbo : cours.valeurAbo,
-                    datesCours2020 : cours.datesCours2020,
-                    datesCours2021 :cours.datesCours2021,
-                    prix : null,
-                    rabais : null,
-                    prixAPaye : 0,
-                    choiceDateCours : cours.choiceDateCours,
-                    dateChoisie : [],
+                     ...cours
+                    // typeCours : cours.typeCours,
+                    // nomCours : cours.nomCours,
+                    // ageCours : cours.ageCours,
+                    // ageString : cours.ageString,
+                    // jour : cours.jour,
+                    // heure : cours.heure,
+                    // nbrCours : cours.nbrCours,
+                    // dureeCours : cours.dureeCours,
+                    // lieux : cours.lieux,
+                    // valeurAbo : cours.valeurAbo,
+                    // datesCours2020 : cours.datesCours2020,
+                    // datesCours2021 :cours.datesCours2021,
+                    // prix : null,
+                    // rabais : null,
+                    // prixAPaye : 0,
+                    // choiceDateCours : cours.choiceDateCours,
+                    // dateChoisie : [],
                 },
             }
-
+            console.log(obj)
             if (cours.typeCours === "prive"){
                 this.displayInscriptionPrive = true
             }else {

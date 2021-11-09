@@ -19,6 +19,8 @@ FRONTEND
 
 -valeur abo super-Monkey // + créer fichier téléchargement des dates.
 
+changer le swift dans les mail-template et vérifier les données de paiements ainsi que les adresses
+
 
 ------------------------------
 BACKEND

@@ -45,26 +45,33 @@
                     <div class="boxPaiement">
                         <p class="modePaiement">Mode de paiement :</p>
                         <div class="virement">
+                            <i class="fas fa-coins"></i>
+                            <label for="cash" class="titleCarte">Cash</label>
+                            <input @click="effaceError" id="cash" class="inputCheckPaiement" type="radio" value="cash" name="paiement" v-model="paiementChoice">
+                        </div>
+                        <div class="virement">
                             <i class="fas fa-university"></i>
-                            <label for="banque" class="titleCarte">Virement bancaire</label>
-                            <input id="banque" class="inputCheckPaiement" type="radio" value="virement" name="paiement" v-model="paiementChoice">
+                            <label for="banque" class="titleCarte">Virement</label>
+                            <input @click="effaceError" id="banque" class="inputCheckPaiement" type="radio" value="virement" name="paiement" v-model="paiementChoice">
                         </div>
                         <div class="virement">
                             <i class="fas fa-money-check-alt"></i>
                             <label for="carte" class="titleCarte">Carte</label>
-                            <input id="carte" class="inputCheckPaiement" type="radio" value="carte" name="paiement" v-model="paiementChoice">
+                            <input @click="effaceError" id="carte" class="inputCheckPaiement" type="radio" value="carte" name="paiement" v-model="paiementChoice">
                         </div>
+                        
                     </div>
-                        <p class="error" v-if="error.choicePaiement"> {{error.choicePaiement }}</p>
+                        <div v-if="formError.paiementChoice" class="error errorPaiementChoice">{{formError.paiementChoice }}</div>
                 </section>
                 <!-- VIREMENT -->
-                <section v-if="paiementChoice === 'virement'">
+                <section v-if="paiementChoice === 'virement' || paiementChoice === 'cash'">
                     <sectionvirement
                         :coordonneePaiement="coordonneePaiement"
-                        :formError="formError"                
+                        :formError="formError"  
+                        :paiementChoice="paiementChoice"              
                     />
+                    <div v-if="formError.paiementChoice">{{ formError.paiementChoice}}</div>
                 </section>
-                <div v-if="formError.paiementChoice" class="error">{{formError.paiementChoice }}</div>
              <div class="boxButton">
                  <router-link class="rouerLink" to="/panier"><button class="button backPanier" >RETOUR PANIER</button></router-link>
                  <button @click="validation" class="button">VALIDER L'INSCRIPTION !</button>
@@ -109,49 +116,78 @@ export default {
         }
     },
     methods : {
-        validation(){          
-            if (this.testFormulaire()){
-                for ( let item of this.panier){
-                    item.paiement = { ...this.coordonneePaiement, modePaiement : this.paiementChoice, totalAPaye : this.totalPrice}
-                    if (item.infoCours.typeCours === "Event"){
-                        item.infoCours.dateChoisieString = []
-                        for (let date of item.infoCours.dateChoisie){
-                            let dateString = new Date(date).toLocaleDateString("fr-FR",{day : "numeric", month : "long"})
-                            item.infoCours.dateChoisieString.push(dateString)
+        effaceError(){
+            for (let error in this.formError){
+                this.formError[error] = ""
+            }
+        },
+        validation(){   
+            this.displayLoader = true
+            if (this.paiementChoice !== "carte"){
+                if (this.testFormulaire()){
+                    for ( let item of this.panier){
+                        item.paiement = { ...this.coordonneePaiement, modePaiement : this.paiementChoice, totalAPaye : this.totalPrice}
+                        if (item.infoCours.typeCours === "Event"){
+                            item.infoCours.dateChoisieString = []
+                            for (let date of item.infoCours.dateChoisie){
+                                let dateString = new Date(date).toLocaleDateString("fr-FR",{day : "numeric", month : "long"})
+                                item.infoCours.dateChoisieString.push(dateString)
+                            }
                         }
                     }
+                    // ENVOIE  
+                    this.displayLoader = true     
+                    fetch(`${this.$store.state.HOST}/new-inscription`,{
+                        method : "POST",
+                        body : JSON.stringify(this.panier),
+                        headers: {"Content-type": "application/json; charset=UTF-8",}
+                    })
+                    .then( response => {
+                        if (response.status === 200){
+                            this.displayLoader = false
+                            this.modal.displayModal = true
+                            this.modal.modalText = "Merci beaucoup pour votre inscription, nous vous avons envoyé un mail de confirmation..!!"
+                        } else {
+                            this.displayLoader = false
+                            this.modal.displayModal = true
+                            this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+                        }
+                        return response.json()
+                    })
+                    .then(res => {
+                        if (res.error === "nbrPlaceRestante"){
+                            this.modal.modalText = res.messageError
+                        }
+                    })
+                    .catch(() => {
+                        this.modal.displayModal = true
+                        this.modal.modalText = " Veuillez réeassayer !"
+                    })
                 }
-                 // ENVOIE  
-                this.displayLoader = true     
-                fetch(`${this.$store.state.HOST}/new-inscription`,{
+            }
+
+            if (this.paiementChoice === "carte" ){
+                console.log(this.panier)
+                fetch(this.$store.state.HOST+"/paiement",{
                     method : "POST",
                     body : JSON.stringify(this.panier),
-                    headers: {"Content-type": "application/json; charset=UTF-8",}
+                    headers: {"Content-type" : "application/json; charset=UTF-8"}
                 })
-                .then( response => {
-                    if (response.status === 200){
-                        this.displayLoader = false
-                        this.modal.displayModal = true
-                        this.modal.modalText = "Merci beaucoup pour votre inscription, nous vous avons envoyé un mail de confirmation..!!"
-                    } else {
-                        this.displayLoader = false
-                        this.modal.displayModal = true
-                        this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+                .then(res => res.json())
+                .then(response => {
+                    this.displayLoader = false
+                    if (response.error === "nbrPlaceRestante"){
+                            this.modal.displayModal = true
+                            this.modal.modalText = response.messageError
                     }
-                    return response.json()
-                })
-                .then(res => {
-                    if (res.error === "nbrPlaceRestante"){
-                         this.modal.modalText = res.messageError
+                    if (response.payment_intent && response.session){
+                        localStorage.setItem("payment_intent",JSON.stringify(response.payment_intent))
+                        window.location.assign(response.session)
                     }
+                    
                 })
-                
-              
-                .catch(() => {
-                    this.modal.displayModal = true
-                    this.modal.modalText = " Veuillez réeassayer !"
-                })
-            }
+                .catch(err => console.log(err))
+            }  
         },
         totalAmount(){
             for (let item of this.panier){
@@ -164,7 +200,11 @@ export default {
             for (let item in this.formError){
                 this.formError[item] = ""
             }
-
+            // PAIEMENT CHOICE
+                if (!this.paiementChoice){
+                valid = false
+                this.formError.paiementChoice = " ! Veuillez choisir un mode de paiement"
+            }
             // NOM
             if (!this.coordonneePaiement.nom){
                 valid = false
@@ -394,6 +434,9 @@ export default {
     }
     .rouerLink{
         display: inline-block;
+    }
+    .errorPaiementChoice{
+        font-size: 16px;
     }
 
 

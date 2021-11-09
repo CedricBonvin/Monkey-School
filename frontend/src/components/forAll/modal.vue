@@ -41,5 +41,7 @@ export default {
         margin-top: 20px;
         width: 150px;
         border-radius: 0;
+        font-size: 18px;
+        padding: 10px 20px;
     }
 </style>

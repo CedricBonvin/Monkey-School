@@ -30,11 +30,11 @@
                         <h2 class="underLine">Y'a-t-il une fraterie ?</h2>
                         <div class="boxRadio">
                             <div>
-                                <input @click="yesFraterie"  type="radio" name="fraterie" id="yesFraterie" value="true" v-model="isFraterie">
+                                <input @change="yesFraterie"  type="radio" name="fraterie" id="yesFraterie" value="true" v-model="isFraterie">
                                 <label for="noFraterie">OUI</label>
                             </div>
                             <div>
-                                <input @click="noFraterie"  type="radio" name="fraterie" id="noFraterie" value="false" v-model="isFraterie">
+                                <input @change="noFraterie"  type="radio" name="fraterie" id="noFraterie" value="false" v-model="isFraterie">
                                 <label for="noFraterie">NON</label>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             <h3 class="titleSelectionFraterie">Qui est de la même Famille...</h3>
                             <div class="boxFraterie">
                                 <div v-for="eleve in panier" :key="eleve.id" >
-                                    <div v-if="eleve.infoCours.typeCours === 'regulier'">
+                                    <div v-if="eleve.infoCours.typeCours === 'regulier' && eleve.infoCours.nomCours !=='Big-Monkey'">
                                         <input @change="checkRabaisRegulier" type="checkbox" name="isEleve" :value="eleve" v-model="fraterie"   >
                                         <label for=""> {{eleve.eleve.nomEleve}} {{eleve.eleve.prenomEleve}}</label>
                                     </div>
@@ -105,7 +105,8 @@ export default {
             panier :  [],
             displaySectionFraterie : false,
             displayPaiment : true,
-            isFraterie : undefined,     
+            isFraterie : undefined,   
+            clickFraterieChoice : false,  
             error : {
                 fraterie : "",
                 selectFraterie : ""
@@ -152,21 +153,32 @@ export default {
                     }
                 }
                 localStorage.setItem("panier", JSON.stringify(this.panier))
-                this.$router.push({path : "/paiement"})
+                if(this.displaySectionFraterie === true){
+                    this.clickFraterieChoice ? this.$router.push({path : "/paiement"}) : this.error.selectFraterie = " ! Y a-t-il une fraterie ?"
+                }else if( this.displaySectionFraterie === false){
+                    this.$router.push({path : "/paiement"})
+                }
             }
             // ajout de la clef fraterie et de la date d'inscription dans les items du panier si REGULIER
         },
         noFraterie(){
+            // clean rabais
             for (let item of this.panier){
                 if(item.infoCours.typeCours === 'regulier'){
-                    item.infoCours.rabais = null
+                    item.infoCours.rabais = 0
                 }
             }
+            // clean error
+            this.error.selectFraterie = ""
+            this.clickFraterieChoice = true
             this.displayPaiment = true   
         },
-        yesFraterie(){         
-             this.displayPaiment = true
-             this.fraterie = []          
+        yesFraterie(){  
+            console.log("allo") 
+            this.error.selectFraterie = ""      
+            this.displayPaiment = true
+            this.clickFraterieChoice = true
+            this.fraterie = []          
         },      
         deleteCard(index){
             this.panier.splice(index,1)  
@@ -176,7 +188,7 @@ export default {
             for (let item of this.panier){
                 if (item.infoCours.typeCours === 'regulier'){
                     nbrCoursRegulier += 1
-                    item.infoCours.rabais = null
+                    item.infoCours.rabais = 0
                 }
             }        
             nbrCoursRegulier < 2 ? this.displaySectionFraterie = false : this.displaySectionFraterie = true
@@ -228,13 +240,10 @@ export default {
                     })
                 }
                 // REGULIER
-                if(item.infoCours.typeCours === 'regulier'){
-                    
-                    Object.defineProperty(item.infoCours, "prix", { value : 840})
-                    Object.defineProperty(item.infoCours, "rabais", { value : null, writable : true }) 
+                if(item.infoCours.typeCours === 'regulier'){ 
                     Object.defineProperty(item.infoCours, 'prixAPaye', {
                         get : function () {
-                            if (this.rabais !== null && item.infoCours.typeCours){
+                            if (this.rabais !== 0){
                                 return  this.prix - ( this.prix * this.rabais / 100)
                             } else return this.prix        
                         }

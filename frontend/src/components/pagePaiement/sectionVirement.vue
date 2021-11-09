@@ -41,7 +41,9 @@
               <input id="phone" type="text" v-model="coordonneePaiement.phone">
               <p class="errorForm" v-if="formError.phone"> {{formError.phone}}</p>
           </div>
-          <p class="paraInfoPaiement">* Les informations pour le paiement vous serons envoyés par E-mail</p>
+
+          <p v-if="paiementChoice === 'virement'" class="paraInfoPaiement">* Les informations pour le paiement vous serons envoyés par E-mail</p>
+          <p v-if="paiementChoice === 'cash'" class="paraInfoPaiement">* Tous les paiements cash devrons être réglés juste avant le début du cours</p>
       </form>
   </section>
 </template>
@@ -49,7 +51,7 @@
 <script>
 export default {
     name : "sectionVirement",
-    props : ["coordonneePaiement", "formError"],
+    props : ["coordonneePaiement", "formError", "paiementChoice"],
     data(){
         return {
             
