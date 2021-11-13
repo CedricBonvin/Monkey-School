@@ -7,7 +7,7 @@
                         <p>
                             <i class="fas fa-comment-dots"></i>
                             Face à une demande croissante, Monkey-school a été créée afin de promouvoir l’escalade auprès des jeunes et des moins jeunes.<br>
-                          <br>  D’initier, d’accompagner et d’entrainer en toute sécurité de nouveaux grimpeurs afin que ce sport soit accessible au plus grand nombre.
+                          <br>  D’initier, d’accompagner et d’entraîner en toute sécurité de nouveaux grimpeurs afin que ce sport soit accessible au plus grand nombre.
                         </p>
                     </div>
                 </div>
@@ -17,9 +17,7 @@
                 <div class="block3">
                     <div class="boxBlock3 box">
                         <i class="fas fa-user"></i>
-                        <p>Face à une demande croissante, Monkey-school à été crée afin de promouvoir l’escalade au près des jeunes et des moins jeunes.<br>
-                          <br>  D’initier, d’accompagner et d’entrainer en toute sécurité de nouveaux grimpeurs afin que ce sport soit accessible au plus grand nombre.
-                        </p>
+                        <p>Monkey-School a été fondé en 2018 par Cédric Bonvin. <br><br> Depuis, l'école n'a cessé de grandir, nous accueillons plus de 40 élèves toutes les semaines, Nous organisons des stages extérieurs, ainsi que des événements pour des dates ponctuelles. <br><br> REJOIGNEZ-NOUS !!</p>
                     </div>
                 </div>
             </div>
@@ -67,12 +65,13 @@ export default {
         color: white;
         background: var(--color-primary);
         padding:calc(var(--gutter) *2) ;
-        text-align: center;
+        
         box-shadow: 10px 10px 0px 0px rgb(121, 121, 121);
     }
     .boxBlock3{
         background: rgba(0, 0, 0, 0.548);
         padding: calc( var(--gutter)*2) ;
+        text-align: center;
     }
 
 /* //////////////////////////////////////////////////////////////////////////////*/

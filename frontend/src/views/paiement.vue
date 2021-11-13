@@ -64,7 +64,7 @@
                         <div v-if="formError.paiementChoice" class="error errorPaiementChoice">{{formError.paiementChoice }}</div>
                 </section>
                 <!-- VIREMENT -->
-                <section v-if="paiementChoice === 'virement' || paiementChoice === 'cash'">
+                <section v-if="paiementChoice">
                     <sectionvirement
                         :coordonneePaiement="coordonneePaiement"
                         :formError="formError"  
@@ -112,7 +112,8 @@ export default {
                 paiementChoice : ""
             },
             coordonneePaiement :{},
-            displayLoader : false
+            displayLoader : false,
+            paiementStatus : null
         }
     },
     methods : {
@@ -122,9 +123,9 @@ export default {
             }
         },
         validation(){   
-            this.displayLoader = true
             if (this.paiementChoice !== "carte"){
                 if (this.testFormulaire()){
+                    this.displayLoader = true
                     for ( let item of this.panier){
                         item.paiement = { ...this.coordonneePaiement, modePaiement : this.paiementChoice, totalAPaye : this.totalPrice}
                         if (item.infoCours.typeCours === "Event"){
@@ -136,7 +137,6 @@ export default {
                         }
                     }
                     // ENVOIE  
-                    this.displayLoader = true     
                     fetch(`${this.$store.state.HOST}/new-inscription`,{
                         method : "POST",
                         body : JSON.stringify(this.panier),
@@ -144,13 +144,17 @@ export default {
                     })
                     .then( response => {
                         if (response.status === 200){
+                            localStorage.removeItem("panier")
+                            this.$store.commit('checkPanier')
+                            this.paiementStatus = true
                             this.displayLoader = false
                             this.modal.displayModal = true
-                            this.modal.modalText = "Merci beaucoup pour votre inscription, nous vous avons envoyé un mail de confirmation..!!"
+                            this.modal.modalText = "Merci beaucoup pour votre inscription, nous vous avons envoyé un mail de confirmation. Pensez à regarder vos spams !" 
                         } else {
                             this.displayLoader = false
                             this.modal.displayModal = true
-                            this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réeassayer !"
+                            this.paiementStatus = false
+                            this.modal.modalText = "Désolé ! Nous rencontrons des problèmes.. Veuillez réessayer !"
                         }
                         return response.json()
                     })
@@ -161,32 +165,50 @@ export default {
                     })
                     .catch(() => {
                         this.modal.displayModal = true
+                        this.displayLoader = false
                         this.modal.modalText = " Veuillez réeassayer !"
                     })
                 }
             }
 
             if (this.paiementChoice === "carte" ){
-                console.log(this.panier)
-                fetch(this.$store.state.HOST+"/paiement",{
-                    method : "POST",
-                    body : JSON.stringify(this.panier),
-                    headers: {"Content-type" : "application/json; charset=UTF-8"}
-                })
-                .then(res => res.json())
-                .then(response => {
-                    this.displayLoader = false
-                    if (response.error === "nbrPlaceRestante"){
-                            this.modal.displayModal = true
-                            this.modal.modalText = response.messageError
+                if(this.testFormulaire()){
+                    this.displayLoader = true
+                    for ( let item of this.panier){
+                        item.paiement = { ...this.coordonneePaiement, modePaiement : this.paiementChoice, totalAPaye : this.totalPrice}
+                        if (item.infoCours.typeCours === "Event"){
+                            item.infoCours.dateChoisieString = []
+                            for (let date of item.infoCours.dateChoisie){
+                                let dateString = new Date(date).toLocaleDateString("fr-FR",{day : "numeric", month : "long"})
+                                item.infoCours.dateChoisieString.push(dateString)
+                            }
+                        }
                     }
-                    if (response.payment_intent && response.session){
-                        localStorage.setItem("payment_intent",JSON.stringify(response.payment_intent))
-                        window.location.assign(response.session)
-                    }
-                    
-                })
-                .catch(err => console.log(err))
+                    localStorage.setItem("panier",JSON.stringify(this.panier))
+                    fetch(this.$store.state.HOST+"/paiement",{
+                        method : "POST",
+                        body : JSON.stringify(this.panier),
+                        headers: {"Content-type" : "application/json; charset=UTF-8"}
+                    })
+                    .then(res => res.json())
+                    .then(response => {
+                        this.displayLoader = false
+                        if (response.error === "nbrPlaceRestante"){
+                                this.modal.displayModal = true
+                                this.modal.modalText = response.messageError
+                        }
+                        if (response.payment_intent && response.session){
+                            localStorage.setItem("payment_intent",JSON.stringify(response.payment_intent))
+                            window.location.assign(response.session)
+                        }
+                        
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        this.displayLoader = false
+                    })
+                }
+                
             }  
         },
         totalAmount(){
@@ -206,39 +228,42 @@ export default {
                 this.formError.paiementChoice = " ! Veuillez choisir un mode de paiement"
             }
             // NOM
-            if (!this.coordonneePaiement.nom){
+            if (!this.coordonneePaiement.nom || this.coordonneePaiement.nom.length > 50 ){
                 valid = false
                 this.formError.nom = " ! Veuillez saisir le champ"
             }
             // PRENOM
-            if (!this.coordonneePaiement.prenom){
+            if (!this.coordonneePaiement.prenom || this.coordonneePaiement.prenom.length > 50){
                 valid = false
                 this.formError.prenom = " ! Veuillez saisir le champ"
             }
             // NPA
-            if (!this.coordonneePaiement.npa){
+            let regexNPA = new RegExp('^[0-9]{3,6}$')
+            if (!this.coordonneePaiement.npa || !regexNPA.test(this.coordonneePaiement.npa)){
                 valid = false
                 this.formError.npa = " ! NPA"
             }
             // VILLE
-            if (!this.coordonneePaiement.ville){
+            if (!this.coordonneePaiement.ville || this.coordonneePaiement.ville.length > 50){
                 valid = false
                 this.formError.ville = " ! Veuillez saisir le champ"
             }
             // ADRESSE
-            if (!this.coordonneePaiement.adresse){
+            if (!this.coordonneePaiement.adresse || this.coordonneePaiement.adresse.length >50){
                 valid = false
                 this.formError.adresse = " ! Veuillez saisir le champ"
             }
             // MAIL
-            if (!this.coordonneePaiement.mail){
+            const regexMAIL = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$')  //eslint-disable-line
+            if (!this.coordonneePaiement.mail || !regexMAIL.test(this.coordonneePaiement.mail)){
                 valid = false
-                this.formError.mail = " ! Veuillez saisir le champ"
+                this.formError.mail = " ! Vérifiez votre E-mail"
             }
             // PHONE
-            if (!this.coordonneePaiement.phone){
+            const regexPHONE = new RegExp("^[0-9 ]{10,20}$") //eslint-disable-line
+            if (!this.coordonneePaiement.phone || !regexPHONE.test(this.coordonneePaiement.phone)){
                 valid = false
-                this.formError.phone = " ! Veuillez saisir le champ"
+                this.formError.phone = " ! ex. 0041 79 123 12 12"
             }
             if (!this.paiementChoice){
                 valid = false
@@ -250,7 +275,11 @@ export default {
             }else return false
         },
         closemodal(){
-            this.modal.displayModal = false
+            if (this.paiementStatus === true){
+                this.$router.push({path : "/"})
+                
+                this.modal.displayModal = false
+            } else this.modal.displayModal = false
         },
     },
     beforeMount(){

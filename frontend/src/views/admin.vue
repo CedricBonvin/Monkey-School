@@ -5,137 +5,58 @@
             <h2>Rechercher des participants :</h2>
             <!-- RECHERCHE -->
             <div class="boxRecherche">
+                <!-- type de cours -->
                 <div>
-                    <label for="nomCours">Nom du cours</label>
-                    <select name="nomCours" id="nomCours" v-model="query.typeCours">
+                    <label for="typeCours">TYPE COURS</label>
+                    <select name="typeCours" id="typeCours" v-model="query.typeCours">
                         <option value="null">Tous</option>
-                        <option value="regulier">regulier</option>
-                        <option value="Noel">Noel</option>
+                        <option value="regulier">Regulier</option>
+                        <option value="Event">Event</option>
                     </select>
                 </div>
-                <!--RECHERCHE Nom Eleve -->
+                <!-- Nom du cours -->
                 <div>
+                    <label for="nomCours">Nom du cours</label>
+                    <select name="nomCours" id="nomCours" v-model="query.nomCours">
+                        <option v-if="query.typeCours === 'Event'" value="null">Tous</option>
+                        <option v-if="query.typeCours === 'Event'" value="Noel">Noel</option>
+                        <option v-if="query.typeCours === 'Event'" value="Fevrier">Février</option>
+
+                        <option v-if="query.typeCours === 'regulier'" value="null">Tous</option>
+                        <option v-if="query.typeCours === 'regulier'" value="Mini-Spider">Mini-Spider</option>
+                        <option v-if="query.typeCours === 'regulier'" value="Gecko">Gecko</option>
+                        <option v-if="query.typeCours === 'regulier'" value="Monkey">Monkey</option>
+                        <option v-if="query.typeCours === 'regulier'" value="Big-Monkey">Big-Monkey</option>
+                    </select>
+                </div>
+
+
+                <!--RECHERCHE Nom Eleve -->
+                <!-- <div>
                     <label for="nomEleve">Nom Eleve</label>
                     <input type="text" name="nomEleve" id="nomEleve" value="null" placeholder="ex.: De la tour" v-model="query.nomEleve">
-                </div>
+                </div> -->
             </div>
         <button class="buttonChercher" @click="recherche">CHECHER</button>
         </section>
 
-         <!-- DONNEE -->
-        <!-- donnees ä afficher  -->
-        <div class="titleQuery">{{titleQuery}}</div>
-        <div class="row" v-for="item in cours" :key="item.nom">
-            <div :id="item._id" >
-                <!-- BASE ELEVE -->
-                <div class="eleve">
-                    <div class="col">
-                        <div class="clefEleve">Nom</div>
-                        <div>{{item.eleve.nomEleve}}</div>
-                    </div>
-                    <div class="col">
-                        <div class="clefEleve">Prenom </div>
-                        <div>{{item.eleve.prenomEleve}}</div>
-                    </div>
-                    <div class="col">
-                        <div class="clefEleve">Age </div>
-                        <div>{{item.eleve.ageEleve}}</div>
-                    </div>
-                    <div class="col">
-                        <div class="clefEleve">Npa </div>
-                        <div>{{item.eleve.npaEleve}}</div>
-                    </div>
-                    <div class="col">
-                        <div class="clefEleve">ville </div>
-                        <div>{{item.eleve.villeEleve}}</div>
-                    </div>
-                    <div class="col">
-                        <div class="clefEleve">Adresse </div>
-                        <div>{{item.eleve.adresseEleve}}</div>
-                    </div>
-                </div>
-                <div class="boxButton">
-                    <button class="button" @click="afficherInfoCours(item, '.boxInfo',$event)">INFO COURS</button>
-                    <button class="button" @click="afficherInfoCours(item ,'.boxContact',$event)">CONTACT ELEVE</button>
-                </div>
-                
-                <!-- INFO COURS -->
-                <div class=" box boxInfo" style="display : none">
-                    <h2>INFO DU COURS :</h2>
-                    <div class="ligne">
-                        <p class="clef">Type de cours :</p>
-                        <p> {{ item.infoCours.typeCours}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Nom du cours :</p>
-                        <p> {{ item.infoCours.nomCours}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Prix du cours :</p>
-                        <p> {{ item.infoCours.prix}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Prix à Payer :</p>
-                        <p> {{ item.infoCours.prixAPaye}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Dates Choisie :</p>
-                        <div v-for="date in item.infoCours.dateChoisieNoel" :key="date.id">
-                            {{ new Date(date).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}                   
-                         </div>
-
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Date d'inscription :</p>
-                        <p>{{ new Date(item.infoCours.dateInscription).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}  </p>                 
-
-                    </div>
-
-                </div>
-
-                <!-- CONTACT ELEVE -->
-              <div class=" box boxContact" style="display : none">
-                    <h2>CONTACT DE L'ELEVE</h2>
-                    <div class="ligne">
-                        <p class="clef">Nom :</p>
-                        <p> {{ item.contact.nomContact}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Prénom :</p>
-                        <p> {{ item.contact.prenomContact}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Npa :</p>
-                        <p> {{ item.contact.npaContact}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">Adresse :</p>
-                        <p> {{ item.contact.adresseContact}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">ville :</p>
-                        <p> {{ item.contact.villeContact}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">téléphonne :</p>
-                        <p> {{ item.contact.phoneContact}}</p>
-                    </div>
-                    <div class="ligne">
-                        <p class="clef">E-mail :</p>
-                        <p> {{ item.contact.mailContact}}</p>
-                    </div>
-                
-
-                </div>
-
+        <section>
+            <div v-for="item in cours" :key="item.id">
+                <carte 
+                    :item="item"
+                />
             </div>
-        </div>
+        </section>
     </div>
 </template>
 
 <script>
+
+import carte from "../components/pageAdmin/carte.vue"
+
 export default {
     name : "admin",
+    components : { carte},
     data(){
         return{
             cours : [],
@@ -146,14 +67,9 @@ export default {
     },
     methods : {
         recherche(){
-            let obj = {
-                ...this.query
-            }
-            this.titleQuery = obj
-            
-            fetch("http://localhost:3000/recherche",{
+                fetch("http://localhost:3000/recherche",{
                 method : "POST",
-                body : JSON.stringify(obj),
+                body : JSON.stringify({...this.query}),
                 headers: {"Content-type": "application/json; charset=UTF-8",}
 
             })
@@ -163,18 +79,6 @@ export default {
                 console.log(this.cours)
             })
         },
-        afficherInfoCours(item,target,event){
-        let parent =  document.getElementById(item._id)
-        let cible = parent.querySelector(target)
-            if(cible.style.display === "block"){
-                cible.style.display = "none"
-                event.target.style.background = "green"
-            }else{
-                cible.style.display = "block"
-                event.target.style.background = "gray"
-            }
-            
-        }
     }
 }
 </script>

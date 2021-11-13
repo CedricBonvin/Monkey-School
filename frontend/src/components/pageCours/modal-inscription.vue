@@ -1,10 +1,10 @@
 <template>
     <div class="container">
-        <h2>Cours {{data.cours.typeCours}}..!</h2>
+        <h2>Cours privé..!</h2>
         <i class="fas fa-thumbs-up like"></i>
-        <p class="sousTitre">Afin de trouver une date qui convienne et selon nos disponibilité, veuillez nous contacter directement : </p>
+        <p class="sousTitre">Afin de trouver une date qui convienne et selon nos disponibilités, veuillez nous contacter directement : </p>
         <div class="box">
-            <p>tél.: +41 519 04 84</p>
+            <p>Tél.: +41 519 04 84</p>
             <p>ou par</p>
             <router-link to="/contact"> Formulaire de Contact</router-link>
         </div>
@@ -75,6 +75,7 @@ export default {
         display:inline-block;
         margin-right: 0;
         border-radius: 2px;
-        margin-top: 30px;      
+        margin-top: 30px;  
+        padding: 10px 20px;    
     }
 </style>

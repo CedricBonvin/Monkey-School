@@ -5,7 +5,7 @@
 
                 <card-event class="cardEvent"             
                     titleEvent="NOEL :"
-                    text="Durant la période de Noël, de 15h à 18h, un prof d'escalade est à votre disposition  !! "     
+                    text="Durant la période de Noël, de 15h à 18h, un prof d'escalade est à votre disposition !! Nombre de place limitées à 8 personnes ( 3 h. / CHF. 80.- ) "     
                     >
                     <template v-slot:imageEvent >
                          <img :src="require('@/assets/images/chapeau-Noel.png')" alt="chapeau-Noel" class="chapeau">
@@ -14,7 +14,7 @@
 
                 <card-event class="cardEvent"
                     titleEvent="REGULIER ADULTE :"
-                    text="Début 2022, Monkey-school ouvre une classe Régulier Adulte, tous les Jeudis de 19h30 à 21h."
+                    text="Début 2022, Monkey-school ouvre une classe régulier adulte, tous les jeudis de 19h30 à 21h. Les cours auront lieu de janvier à mai. ( abo. semestriel offert !! )"
                 />
 
             </div>

@@ -1,9 +1,9 @@
 <template>
   <section class="header">
-        <img class="headerImage" src="@/assets/images/header.jpg" alt="image singe ">
+        <img class="headerImage" src="@/assets/images/header-min.jpg" alt="image singe ">
         <div class="headerTitleBox">
             <h1>Monkey-school</h1>
-            <div class="sous-titre">Climbing is our Lif-style...</div>
+            <div class="sous-titre">Climbing is our Life-style...</div>
         </div>
     </section>
 </template>

@@ -8,6 +8,7 @@ const RouteMessage = require("./router/routeMessage")
 const RouteLivre = require("./router/routeLivre")
 const RouteInscription = require("./router/routeNewInscription")
 const RoutePlaceRestante = require("./router/routePlaceRestante")
+const routeAdmin= require("./router/routeAdmin")
 
 
 const port = 3000
@@ -57,6 +58,7 @@ app.use("/", RouteMessage)
 app.use("/", RouteLivre)
 app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
+app.use("/", routeAdmin)
 
 
 

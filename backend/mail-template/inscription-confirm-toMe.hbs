@@ -1,16 +1,15 @@
 
 
-<div style="font-family: roboto, sans-serif; background-color: rgb(231, 231, 231); width: 90%; max-width: 650px; margin: auto;">
+<div style="font-family: roboto, sans-serif; background-color: rgb(231, 231, 231); width: 90%;max-width: 650px; margin: auto;">
         <div style="background-color: rgb(185, 82, 185); color: white; padding: 20px;">
-            <h1 style=" margin: 0; padding: 0;">Monkey-school</h1>
+            <h1 style="margin: 0; padding: 0;">Monkey-school</h1>
         </div>
-        <div style="font-size: 2rem; padding: 10px; padding-top: 20px; font-weight: bold; opacity: 60%;">M. {{nomClient}} {{prenomClient}}</div>
-        <h2 style="font-weight: bold; opacity: 60%; font-size: 1.5rem; padding-left: 5px;">Merci pour votre inscription !</h2>
-        <p style="font-size: 16px; padding: 10px; opacity: 80%; color: rgb(44, 43, 43); ">Nous nous réjouissons de vous compter parmis notre famille ! vous trouverez ci-joint toutes les infomations concernant vos cours réservés ainsi que celles pour le règlement.</p>
-        <div>
+        <h2 style="font-weight: bold; opacity: 60%; font-size: 1.5rem; padding-left: 5px; text-align: center; font-size: 30px;">Nouvelle inscription !</h2>
+        <div style="font-size: 1.2rem; padding: 10px; padding-top: 20px; font-weight: bold; opacity: 60%;">Réservé par : {{nomClient}} {{prenomClient}}</div>
+        <div style="margin: 0;padding: 0;">
             <!-- recap -->
             <div>
-                <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline; font-size: 22px;">Récaptitulatif :</h3>
+                <h3 style="padding-left: 20px;">Récaptitulatif :</h3>
                 <div style="width: 90%; margin: auto; background-color: white;">
                     <div style=" display: flex; background-color:rgb(185, 82, 185); color: white; font-weight: bold;">
                         <div style="width: 30%; padding: 5px;">Eleve :</div>
@@ -25,12 +24,12 @@
                         </div>         
                     {{/each}}
                 </div> 
-
+                {{!-- DATE --}}
                 <div style="width: 90%; margin: 20px auto;">
                     {{#each item}}
                         {{#if infoCours.dateChoisieString}}                        
                             <div style="font-weight: bold; opacity: 60%; text-decoration: underline; font-size: 14px; padding-bottom: 5px;">DATE : </div>
-                            <div style="padding: 10px 20px; font-size: 18px; font-weight: 400; opacity: 60%;">{{eleve.nomEleve}} {{eleve.prenomEleve}} : 
+                            <div style="padding: 0 20px; font-size: 16px; opacity: 60%;">{{eleve.nomEleve}} {{eleve.prenomEleve}} : 
                                 <span style="font-size: 14px; font-style: italic;">
                                     {{#each infoCours.dateChoisieString}}
                                         {{this}} //
@@ -42,32 +41,28 @@
                 </div>              
             </div>
 
-            <p style="font-size: 16px; font-size: 25px; width: 90%; margin: 30px  auto; font-weight: 500; text-align: center; opacity: 60%; text-decoration: underline 3px rgb(172, 103, 172);" >Montant Total : CHF. <span style="font-size: 30px;">{{totalPrice}}</span>.-</p>
+            <p style="font-size: 16px; padding-left: 20px">Montant Total : CHF. <span style="font-size: 30px;">{{totalPrice}}</span>.-</p>
 
             <!-- INFO PAIEMENT -->
 
             {{!-- virement --}}
             {{#if paiementVirement}}
                 <div style="margin-top: 50px;">
-                    <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline; font-size: 22px;">Virement bancaire :</h3>
-                    <p style="font-size: 16px; margin: 0 15px ; padding: 20px 10px; font-size: 14px; background-color: white;" ><span style="color: rgb(187, 41, 41); font-weight: 500;">! IMPORTANT :</span> Pour les virements bancaire veuillez indiquer le nom et prénom de l'élève, ainsi que le cours dans le message.</p>
-                    <p style="font-size: 16px; padding: 10px; padding: 30px 20px; opacity: 60%; line-height: 1.4;"> IBAN : CH 04 8080 8006 7944 3108 9 <br> SWIFT : RAIFCH22 <br> Banque : Raiffeisen des communes du haut-plateuu <br>Nom : Bonvin<br> Prénom : Cédric <br>Addresse : Rue Saint-michel 25 <br>Npa / Ville : 1966 Ayent</p>
+                    <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline; font-size: 22px;">MODE DE PAIEMENT : VIREMENT </h3>   
                 </div>
             {{/if}}
+
             {{!-- cash --}}
             {{#if paiementCash}}
                 <div style="margin-top: 50px;">
-                        <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline; font-size: 22px;">Paiement cash:</h3>
-                        <p style="font-size: 16px; margin: 0 15px ; padding: 20px 10px; font-size: 14px; background-color: white;" ><span style="color: rgb(187, 41, 41); font-weight: 500;">! IMPORTANT :</span> Pour les paiements par cash, Veuillez noter que le paiement doit se faire impérativement avant le début du cours ! </p>
-
+                    <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline;  font-size: 22px;">MODE DE PAIEMENT : CASH </h3>   
                 </div>
             {{/if}}
 
              {{!-- carte --}}
             {{#if paiementCarte}}
                 <div style="margin-top: 50px;">
-                        <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline; font-size: 22px;">Paiement carte:</h3>
-                        <p style="font-size: 16px; font-size: 25px; width: 90%; margin: 30px  auto; font-weight: 500; text-align: center; opacity: 60%; text-decoration: underline 3px rgb(172, 103, 172);">Solde : CHF. <span style="font-size: 30px;">0</span>.-</p>
+                    <h3 style="padding-left: 10px; opacity: 60%; text-decoration: underline; font-size: 22px;">MODE DE PAIEMENT : CARTE </h3>   
                 </div>
             {{/if}}
 
@@ -84,19 +79,19 @@
        /* body, h1{
             margin: 0;
             padding: 0;
-        } 
-        p{
+        } */
+       /* p{
             font-size: 16px;
-        } 
-        .page{
+        }*/
+       /* .page{
             font-family: roboto, sans-serif;
             background-color: rgb(231, 231, 231);
             width: 90%;
             max-width: 650px;
             margin: auto;
-        } 
+        }*/
        
-        .header{
+       /* .header{
             background-color: rgb(185, 82, 185);
             color: white;
             padding: 20px;
@@ -106,7 +101,7 @@
             color: white;
             padding: 20px;
             margin-top: 20px;
-        }  
+        } 
         h2{
             font-weight: bold;
             opacity: 60%;
@@ -136,22 +131,22 @@
         .col{
             width: 30%;
             padding: 5px;
-        } 
+        }
         .adresse{
             text-align: center;
-        } 
+        }
         .monsieur{
-            font-size: 2rem;
+            font-size: 1.2rem;
             padding: 10px;
             padding-top: 20px;
             font-weight: bold;
             opacity: 60%;
-        } 
+        }
         .paraIntro {
             padding: 10px;
             opacity: 80%;
             color: rgb(44, 43, 43);
-        } 
+        }
         .containerPaiment{
             margin-top: 50px;
         } 
@@ -189,20 +184,23 @@
 
         } 
         .ligneDate{
-            padding: 10px 20px;
-            font-size: 18px;
-            font-weight: 400;
+            padding: 0 20px;
+            font-size: 16px;
             opacity: 60%;
         } 
         .dateString{
             font-size: 14px;
             font-style: italic;
-        } */
+        } 
         .titleDate{
             font-weight: bold;
             opacity: 60%;
             text-decoration: underline;
             font-size: 14px;
             padding-bottom: 5px;
+        } */
+        .newInscription{
+            text-align: center;
+            font-size: 30px;
         }
     </style>

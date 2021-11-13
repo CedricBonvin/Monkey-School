@@ -27,7 +27,7 @@
         </div>
 
 
-        <!-- SI NOEL -->
+        <!-- SI Event -->
         <div v-if="cours.infoCours.typeCours === 'Event'">
             <p> {{cours.infoCours.dateChoisie.length}} cours <span @click="afficherDateNoel" class="afficherCours">afficher</span></p>
             <div class="boxDate" v-if="afficheDate">
@@ -44,16 +44,24 @@
                 <div class="boxInfoNewEleve">
                     <div class="col">
                         <label for="nomNewEleve"> Nom :</label>
-                        <input type="text" id="nomNewEleve" v-model="NewEleveNoel.nomEleve">
+                        <input type="text" id="nomNewEleve" v-model="NewEleve.nomEleve">
+                        <p class="errorNewEleve" v-if="errorNewEleve.nom"> {{ errorNewEleve.nom }}</p>
                     </div>
                     <div class="col">
                         <label for="prenomNewEleve"> Prénom :</label>
-                        <input type="text" id="prenomNewEleve" v-model="NewEleveNoel.prenomEleve">
+                        <input type="text" id="prenomNewEleve" v-model="NewEleve.prenomEleve">
+                        <p class="errorNewEleve" v-if="errorNewEleve.prenom"> {{ errorNewEleve.prenom }}</p>
+                    </div>
+                    <div class="col">
+                        <label for="ageNewEleve"> Age :</label>
+                        <input type="text" id="ageNewEleve" v-model="NewEleve.ageEleve">
+                        <p class="errorNewEleve" v-if="errorNewEleve.age"> {{ errorNewEleve.age }}</p>
+                        
                     </div>
                 </div>
                 <div class="boxButton">
                     <button @click="displayAjoutEleve" class="button danger">ANNULER</button>
-                    <button @click="ajouterNewEleveNoel(cours)" class="button">AJOUTER L'ELEVE</button>
+                    <button @click="ajouterNewEleve(cours)" class="button">AJOUTER L'ELEVE</button>
                 </div>
             </div>   
         </div>  
@@ -69,10 +77,16 @@ export default {
             nbrCours : null,
             afficheDate : false,
             displayBoxAjoutEleve :false,
-            NewEleveNoel : {
+            NewEleve : {
                 nomEleve : "",
-                prenomEleve : ""
-            } 
+                prenomEleve : "",
+                ageEleve : "",
+            },
+            errorNewEleve : {
+                nom : "",
+                prenom : "",
+                age : "",
+            }
         }
     },
     methods : {
@@ -87,22 +101,55 @@ export default {
             }else this.afficheDate = true
         },
         displayAjoutEleve(){
+            for (let i in this.errorNewEleve){
+                this.errorNewEleve[i] = ""
+            }
             if (this.displayBoxAjoutEleve ===false){
                 this.displayBoxAjoutEleve = true
             }else this.displayBoxAjoutEleve = false
         },
-        ajouterNewEleveNoel(cours){
-            let newEleve = {
+        ajouterNewEleve(cours){
+            // clean
+            for (let i in this.errorNewEleve){
+                this.errorNewEleve[i] = ""
+            }
+
+            if(newEleveValid(this)){
+                let newEleve = {
                 ...cours,
+                }
+                newEleve.eleve = {
+                    ...cours.eleve,
+                    ...this.NewEleve
+                }
+
+                this.panier.push(newEleve)
+                localStorage.setItem("panier",JSON.stringify(this.panier))
+                this.$store.commit('checkPanier')
+                this.displayBoxAjoutEleve = false
+                console.log(this.panier)
             }
-            newEleve.eleve = {
-                ...cours.eleve,
-                ...this.NewEleveNoel
+
+            function newEleveValid(data){
+                let valid = true
+                if (!data.NewEleve.nomEleve || data.NewEleve.nomEleve.length > 50 ){
+                    valid = false
+                    data.errorNewEleve.nom = "Veuillez saisir le champ"
+                }
+                if (!data.NewEleve.prenomEleve || data.NewEleve.prenomEleve.length > 50){
+                    valid = false
+                    data.errorNewEleve.prenom = "Veuillez saisir le champ"
+                }
+                const regex = new RegExp("^[0-9]{1,2}$")
+                if (!data.NewEleve.ageEleve || !regex.test(data.NewEleve.ageEleve)){
+                    valid = false
+                    data.errorNewEleve.age = "! Vérifier l'age.."
+                }
+
+                if(valid){
+                    return true
+                }else return false
             }
-            this.panier.push(newEleve)
-            localStorage.setItem("panier",JSON.stringify(this.panier))
-            this.$store.commit('checkPanier')
-            this.displayBoxAjoutEleve = false
         }    
     },
 }
@@ -218,13 +265,14 @@ export default {
     }
     .boxInfoNewEleve{
         display: flex;
-        flex-flow: wrap;
+        flex-flow: column wrap;
         justify-content: space-evenly;
     }
     .col{
         display: flex;
         flex-flow: column;
         margin-top: 10px;
+        
     }
     .ajouterEleve{
         background: var(--color-primary);
@@ -264,6 +312,24 @@ export default {
         font-weight: bold;
         opacity: 80%;
         padding-bottom: 20px;
+    }
+    #ageNewEleve{
+        width: 50px;
+    }
+    .errorNewEleve{
+        color: red;
+        font-size: 14px;
+    }
+    #nomNewEleve, #prenomNewEleve{
+        max-width: 200px;
+    }
+    input{
+        border: none;
+        background: rgb(243, 243, 243);
+        padding: 3px;
+    }
+    label{
+        font-weight: 400;
     }
 
 

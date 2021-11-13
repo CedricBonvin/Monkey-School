@@ -52,7 +52,7 @@
                     <div class="boxDate">
                         <i class="fas fa-calendar-alt iconeCalendrier"></i>
                         <i @click="closeOneBox($event,cours.nomCours,'.boxDate')"  class="fas fa-times iconeCloseSmall "></i>
-                        <p v-if="cours.typeCours === 'regulier'" class="periodeScolaire">* Tous nos cours régulier suivent les périodes scolaires.</p>
+                        <p v-if="cours.typeCours === 'regulier'" class="periodeScolaire">* Tous nos cours réguliers suivent les périodes scolaires.</p>
                         <div class="boxDateDeCours">
                             <h4>2020</h4>
                             <div>{{ cours.datesCours2020}}</div>
@@ -75,7 +75,7 @@
                             <div class="clefInfoCours">Prix : <span class="lignePrix"> CHF. {{ cours.prix}}.- </span> </div>
                         </div>
                         <div class="aboOffert" 
-                            v-if="cours.nomCours === 'Mini-Spider' || cours.nomCours === 'Gecko' || cours.nomCours === 'Monkey'"> ( Abonnemnt annuel offert ! )
+                            v-if="cours.nomCours === 'Mini-Spider' || cours.nomCours === 'Gecko' || cours.nomCours === 'Monkey'"> ( Abonnement annuel offert ! )
                         </div>
                         <!-- si cours Big-Monkey seulement abo de 6 mois -->
                         <div class="aboOffert" 
@@ -84,6 +84,7 @@
                             <i @click="schowOneBox($event,cours.nomCours,'.boxPrix')" class="fas fa-info-circle iconeInfo"></i>
                     
                     </div>
+                    <!-- INFO PRIX -->
                     <div class="containerInfoPrix">
                         <div class="boxPrix">
                             <div class="headerBoxPrix">
@@ -154,23 +155,6 @@ export default {
                 eleve : {},
                 infoCours : {
                      ...cours
-                    // typeCours : cours.typeCours,
-                    // nomCours : cours.nomCours,
-                    // ageCours : cours.ageCours,
-                    // ageString : cours.ageString,
-                    // jour : cours.jour,
-                    // heure : cours.heure,
-                    // nbrCours : cours.nbrCours,
-                    // dureeCours : cours.dureeCours,
-                    // lieux : cours.lieux,
-                    // valeurAbo : cours.valeurAbo,
-                    // datesCours2020 : cours.datesCours2020,
-                    // datesCours2021 :cours.datesCours2021,
-                    // prix : null,
-                    // rabais : null,
-                    // prixAPaye : 0,
-                    // choiceDateCours : cours.choiceDateCours,
-                    // dateChoisie : [],
                 },
             }
             console.log(obj)

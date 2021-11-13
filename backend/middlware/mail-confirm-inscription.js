@@ -6,7 +6,6 @@ exports.sendMail = (req,res) => {
     sendMail(req, res)
 }
 
-
 function sendMail(req, res){
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
@@ -28,7 +27,10 @@ function sendMail(req, res){
         extName: ".hbs"
         })
     )
-    // Message client
+
+// ******************************************************************
+
+    // MAIL TO CLIENT
     const messageFrom = "testdemalade@adf.com"
     const messageTo = req.body[0].paiement.mail
 
@@ -41,16 +43,19 @@ function sendMail(req, res){
                 item : req.body,  
                 nomClient : req.body[0].paiement.nom,                                                  
                 prenomClient : req.body[0].paiement.prenom,
-                totalPrice : req.body[0].paiement.totalAPaye                                                
+                totalPrice : req.body[0].paiement.totalAPaye,                                              
+                paiementVirement : false,                                             
+                paiementCash : false,                                             
+                paiementCarte : false,                                             
         },
-        attachments: [
-            // {           
-            //     filename: 'monkey-logo.jpeg',
-            //     path: __dirname +'/images-mail/monkey-logo.jpeg',
-            //     cid: 'monkey-logo',
-            // },
-        ],
+        attachments: [],
     };
+
+     //check mode de paiement
+     req.body[0].paiement.modePaiement === "virement" ? mailToClient.context.paiementVirement = true : null
+     req.body[0].paiement.modePaiement === "cash" ? mailToClient.context.paiementCash = true : null
+     req.body[0].paiement.modePaiement === "carte" ? mailToClient.context.paiementCarte = true : null
+
     // INJECTION DES ATTACHEMENTS
     for ( let item of req.body){        
         if (item.infoCours.nomCours === "Mini-Spider"){
@@ -90,43 +95,59 @@ function sendMail(req, res){
             mailToClient.attachments.push(attach)
         }
     }
+
+// **********************************************************************
+
     // MAIL TO ME
-    // let mailToMe = {
-    //     from: messageFrom,
-    //     to: "cedric.bonv@gmail.com",
-    //     subject: "Demande de renseignement",
-    //     template : "contact-confirm-to-me",
-    //     context: {          
-    //             nom : req.body.nom,                   
-    //             prenom: req.body.prenom,                   
-    //             message : req.body.message,                      
-    //         },
-    //     attachments: [{
-    //             filename: 'monkey-logo.jpeg',
-    //             path: __dirname +'/images-mail/monkey-logo.jpeg',
-    //             cid: 'monkey-logo',
-    //         },
-    //         {
-    //             filename: 'monkey-logo.jpeg',
-    //             path: __dirname +'/images-mail/monkey-logo.jpeg',
-    //             content: 'le super logo',
-    //             contentType: 'text/plain' 
-    //         }
-    //     ],    
-    // };
+    let mailToMe = {
+        from: messageFrom,
+        to: "monkeystyle.school@gmail.com",
+        subject: "Nouvelle inscription",
+        template : "inscription-confirm-toMe",
+        context: {          
+            item : req.body,  
+            nomClient : req.body[0].paiement.nom,                                                  
+            prenomClient : req.body[0].paiement.prenom,
+            totalPrice : req.body[0].paiement.totalAPaye,                                              
+            paiementVirement : false,                                             
+            paiementCash : false,                                             
+            paiementCarte : false,                      
+            },
+        attachments: [],    
+    };
+
+     //check mode de paiement
+     req.body[0].paiement.modePaiement === "virement" ? mailToMe.context.paiementVirement = true : null
+     req.body[0].paiement.modePaiement === "cash" ? mailToMe.context.paiementCash = true : null
+     req.body[0].paiement.modePaiement === "carte" ? mailToMe.context.paiementCarte = true : null
+
+// ***************************************************************
+
+    //ENVOIE DU MAIL AU CLIENT
     try {
           // envoie du mail
-          transporter.sendMail(mailToClient, (err, info) => {
+        transporter.sendMail(mailToClient, (err, info) => {
             if (err) {
                 console.log('Error occurred. ' + err.message);
                 res.status(500).json( {mesage : "impossible d'envoyer le mail au client", error : err})
-                // return process.exit(1);
+            } else{
+                console.log("mail envoyé" + info)
+                // res.status(200).json("les mails ont été envoyé avec succès")
+            }                
+        })
+    } catch (error) {res.status(500).json(error)}  
+
+    //ENVOIE DU MAIL A MOI
+    try {
+        // envoie du mail
+        transporter.sendMail(mailToMe, (err, info) => {
+            if (err) {
+                console.log('Error occurred. ' + err.message);
+                res.status(500).json( {mesage : "impossible d'envoyer le mail à moi", error : err})
             } else{
                 console.log("mail envoyé" + info)
                 res.status(200).json("les mails ont été envoyé avec succès")
             }                
         })
-    } catch (error) {
-         res.status(500).json(error)
-    }  
+    } catch (error) {res.status(500).json(error)}  
 }

@@ -1,5 +1,5 @@
 
-const stripe = require('stripe')('sk_test_51JqGu2L33Mz5kFdVoWUg0J2iKIhKWx97Li7iEZxuLndKggKlvoBmfyB42voQzOIWg0D3uBrEMiyWb5qZ5qLBbBOh00QBRuoWfB');
+const stripe = require('stripe')(`${process.env.STRIPE_KEY}`);
 
 const Regulier = require("../model/modelRegulier")
 const Events = require("../model/modelEvent")
@@ -11,11 +11,15 @@ exports.inscription =  (req,res,next) => {
     for (let item of req.body){
         // REGULIER 
         if (item.infoCours.typeCours ==='regulier'){
+            let newEleve = {
+                _id : mongoose.Types.ObjectId(),
+                ...item,
+            } 
             Regulier.updateOne(
                 {clef : item.infoCours.nomCours},
                 {  
                     $inc : {nbr_participants : +1},
-                    $push: { participants: item },
+                    $push: { participants: newEleve },
                 },
                 {upsert : true}     
             )
@@ -24,13 +28,18 @@ exports.inscription =  (req,res,next) => {
         }
 
         // EVENT 
-        if (item.infoCours.typeCours ==='Event'){        
+        if (item.infoCours.typeCours ==='Event'){  
+                 
             for (let date of item.infoCours.dateChoisie){ 
+                let newEleve = {
+                    _id : mongoose.Types.ObjectId(),
+                    ...item,
+                } 
                 Events.updateOne(
                     { clef : item.infoCours.nomCours,  dateTypeDate : date },
                     {   
                         $inc : { nbr_participants : +1},
-                        $push : { participants : item},                      
+                        $push : { participants : newEleve},                      
                     },
                     // {$set : { nbr_participants : 201}},
                     {upsert : true}
@@ -41,8 +50,8 @@ exports.inscription =  (req,res,next) => {
         }
     }
     // ! attention a changer pour envoyer le mail...
-    //next()
-    res.status(200).json({ message : "ok pour la route inscription..."})  
+    next()
+   // res.status(200).json({ message : "ok pour la route inscription..."})  
    
 }
 

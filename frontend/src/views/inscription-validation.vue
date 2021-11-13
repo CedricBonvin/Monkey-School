@@ -118,6 +118,9 @@ export default {
         font-size: 30px;
         margin-bottom: 20px;
     }
+    .buttonFull{
+        font-size: 20px;
+    }
     .section{
         padding: 20px;
         margin: auto;

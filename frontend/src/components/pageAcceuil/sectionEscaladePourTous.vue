@@ -8,10 +8,10 @@
                 <div class="box2">
                     <i class="fas fa-check-circle"></i>
                     <div class="box2Para">
-                        <p>Enfant, Adulte, débutant ou expert, l’escalade apporte bon  nombres de bien-fait !<br/>
-                            Apprendre à dépacer ses limites, ou simplement passer un bon moment.<br>
-                            Travailler sa condition phiysique, ou juste regarder les copains grimper ! <br>
-                            Ce sport est ouvert et accessibe à toute personne  qui le désire !
+                        <p>Enfant, Adulte, débutant ou expert, l’escalade apporte bon nombre de bienfaits !<br/>
+                            Apprendre à dépasser ses limites, ou simplement passer un bon moment.<br>
+                            Travailler sa condition physique, ou juste regarder les copains grimper ! <br>
+                            Ce sport est ouvert et accessible à toute personne  qui le désire !
                         </p>
                     </div>   
                 </div>

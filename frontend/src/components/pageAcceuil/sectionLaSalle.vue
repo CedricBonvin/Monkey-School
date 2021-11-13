@@ -5,7 +5,7 @@
   <section class="section sectionLaSalle">
     <h2 class="titleSection">La salle</h2>
     <p class="paraTousNosCours">
-        Tous nos cours intérieurs sont donnés<br> dans la salle d’escalade la ...
+        Tous nos cours intérieurs sont donnés<br> dans la salle d’escalade de la ...
     </p>
     <div class="sectionMur">
         <div class="paraTitre">
@@ -28,11 +28,11 @@
             <img  src="@/assets/images/bloc-enfant.png" alt="">
         </div>
     </div>
-    <div class="boxButton">
+    <!-- <div class="boxButton">
         <button>
             <router-link to="#" class="buttonFull">DECOUVREZ LA SALLE..</router-link>
         </button>
-    </div>
+    </div> -->
   </section>
 </template>
 

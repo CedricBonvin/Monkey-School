@@ -19,7 +19,7 @@
                 <!-- PRENOM CONATACT -->
                 <div class="boxInput ">
                     <label class="requis" for="prenomContact"> Prénom :</label>
-                    <input type="text" id="prenomContact" name="prenomContact" placeholder="Carron"  v-model="formulaire.contact.prenomContact"  >
+                    <input type="text" id="prenomContact" name="prenomContact" placeholder="Louis"  v-model="formulaire.contact.prenomContact"  >
                     <p v-if="error.prenomContact" class="error">{{ error.prenomContact }}</p>
                 </div>               
                 <!-- NPA / VILLE -->
@@ -40,7 +40,7 @@
                 <!-- ADRESSE -->
                 <div class="boxInput ">
                     <label class="requis" for="adresseContact"> Adresse :</label>
-                    <input type="text" id="adresseContact" name="adresse" v-model="formulaire.contact.adresseContact"   placeholder="Rue de la soif 27">
+                    <input type="text" id="adresseContact" name="adresse" v-model="formulaire.contact.adresseContact"   placeholder="Rue du coin 27">
                     <p v-if="error.adresseContact" class="error">{{ error.adresseContact }}</p>
                 </div> 
                 <!-- TELEPHONNE CONTACT -->
@@ -169,7 +169,7 @@
             <label for="remarqueEleve" class="labelRemarque">Remarque :</label>
             <textarea name="remarqueEleve" id="remarqueEleve" v-model="formulaire.eleve.remarqueEleve"  placeholder="Votre message : "> </textarea>
            
-            <p class="errorForm" v-if="error.form" >! Veuillez vérifier les données du formulaire.!</p>
+            <p class="errorForm errForm" v-if="error.form" >! Veuillez vérifier les données du formulaire.!</p>
             <div class="boxbuton">
                  <router-link class="buttonFull goCours" to="/cours">RETOUR AUX COURS..</router-link>
                 <button @click="send($event)" id="sendInfo" class="buttonFull valid" > CONFIRMER</button>              
@@ -232,6 +232,9 @@ data(){
             e.stopImmediatePropagation()
             e.preventDefault()
 
+            this.trieDates()
+
+            console.log(this.formulaire)
             //  CLEAN ERROR
             for (let i in this.error){
                     this.error[i] =  ""
@@ -274,24 +277,20 @@ data(){
                 // *************************************
 
                 function testMailContact() {
+                 
+                    const regex = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$')  //eslint-disable-line
                     if( data.formulaire.contact.mailContact){
-                        if( data.formulaire.contact.mailContact.length > 50){
-                            data.error.mailContact ="Max. 15 caractères.",
+                        if( !regex.test(data.formulaire.contact.mailContact) ){
+                            data.error.mailContact ="Votre mail ne semble pas être correct.",
                             valid = false   
                         }
-                    } else{
-                        data.error.mailContact = "Veuillez saisir le champ !" 
-                        valid = false
+                        
                     } 
                 }            
                 function testPrenomContact(){
                     if (data.formulaire.contact.prenomContact){
-                        if ( data.formulaire.contact.prenomContact.length < 2){
-                            data.error.prenomContact ="Min. 2 caractères.",
-                            valid = false   
-                        }
-                        if( data.formulaire.contact.prenomContact.length > 15){
-                            data.error.prenomContact ="Max. 15 caractères.",
+                        if ( data.formulaire.contact.prenomContact.length < 2 || data.formulaire.contact.prenomContact.length > 50){
+                            data.error.prenomContact ="Entre 2 et 50 carctères.",
                             valid = false   
                         }
                     } else {
@@ -301,12 +300,8 @@ data(){
                 }                
                 function testNomContact(){
                     if(data.formulaire.contact.nomContact){
-                        if ( data.formulaire.contact.nomContact.length < 2){
-                            data.error.nomContact ="Min. 2 caractères.",
-                            valid = false   
-                        }
-                        if( data.formulaire.contact.nomContact.length > 15){
-                            data.error.nomContact ="Max. 15 caractères.",
+                        if ( data.formulaire.contact.nomContact.length < 2 || data.formulaire.contact.nomContact.length > 50){
+                            data.error.nomContact ="Entre 2 et 50 caractères.",
                             valid = false   
                         }
                     } else {
@@ -316,13 +311,17 @@ data(){
                 }                           
                 function testNpaContact(){
                     if(data.formulaire.contact.npaContact){
-                        if( data.formulaire.contact.npaContact.length > 4){
-                            data.error.npaContact = "! Npa",
-                            valid = false   
+                        let regex = new RegExp('^[0-9]{3,6}$')
+                        if (data.formulaire.contact.npaContact){
+                            if( !regex.test(data.formulaire.contact.npaContact)){
+                                data.error.npaContact = "! Npa",
+                                valid = false   
+                            }
                         }
-                    } else {
-                        data.error.npaContact = "! Npa",
-                        valid = false 
+                    } 
+                    else {
+                        data.error.npaContact = " ! NPA!"
+                        valid = false
                     }
                 }       
                 function testVilleContact(){
@@ -338,9 +337,10 @@ data(){
                     
                 }
                 function testPhoneContact() {
-                    if( data.formulaire.contact.phoneContact){
-                        if( data.formulaire.contact.phoneContact.length > 50){
-                            data.error.phoneContact ="Votre numéro ne semble pas correct !",
+                    let regex = new RegExp("^[0-9 ]{12,20}$")
+                    if(  data.formulaire.contact.phoneContact){
+                        if( !regex.test(data.formulaire.contact.phoneContact)){
+                            data.error.phoneContact ="ex.: 0041 79 123 12 12 !",
                             valid = false   
                         }
                     } else{
@@ -363,14 +363,11 @@ data(){
                 // ELEVE
                 function testNomEleve(){
                     if(data.formulaire.eleve.nomEleve){
-                        if ( data.formulaire.eleve.nomEleve.length < 2){
-                            data.error.nomEleve ="Min. 2 caractères.",
+                        if (data.formulaire.eleve.nomEleve.length < 2 || data.formulaire.eleve.nomEleve.length > 50  ){
+                            data.error.nomEleve ="Entre 2 et 30 caractères.",
                             valid = false   
                         }
-                        if( data.formulaire.eleve.nomEleve.length > 15){
-                            data.error.nomEleve ="Max. 15 caractères.",
-                            valid = false   
-                        }
+                       
                     } else {
                         data.error.nomEleve = "Veuillez saisir le champ !"
                         valid = false
@@ -378,21 +375,20 @@ data(){
                 } 
                 function testPrenomEleve(){
                     if (data.formulaire.eleve.prenomEleve){
-                        if ( data.formulaire.eleve.prenomEleve.length < 2){
+                      
+                        if (data.formulaire.eleve.prenomEleve.length < 2 || data.formulaire.eleve.prenomEleve.length > 50 ){
                             data.error.prenomEleve ="Min. 2 caractères.",
                             valid = false   
                         }
-                        if( data.formulaire.eleve.prenomEleve.length > 15){
-                            data.error.prenomEleve ="Max. 15 caractères.",
-                            valid = false   
-                        }
+                       
                     } else {
                         data.error.prenomEleve = "Veuillez saisir le champ"
                         valid = false
                     }
                 } 
                 function testAgeEleve(){
-                    if ( !data.formulaire.eleve.ageEleve){
+                    const regex = new RegExp("^[0-9]{1,2}$")
+                    if ( !regex.test(data.formulaire.eleve.ageEleve)){
                         data.error.ageEleve = "Choisir l'age de l'élève",
                         valid = false   
                     }
@@ -422,7 +418,9 @@ data(){
                 }             
                 function testNpaEleve(){
                     if(data.formulaire.eleve.npaEleve){
-                        if(data.formulaire.eleve.npaEleve.length > 4){
+                        let regex = new RegExp('^[0-9]{3,6}$')
+                        console.log(data.formulaire.eleve.npaEleve)
+                        if( !regex.test(data.formulaire.eleve.npaEleve)){
                             data.error.npaEleve = "! Npa",
                             valid = false   
                         }
@@ -431,7 +429,6 @@ data(){
                         valid = false 
                     }
                 }
-
                 function testDateNoel(){
                     if(data.formulaire.infoCours.typeCours === 'Event'){
                         if(data.formulaire.infoCours.dateChoisie.length === 0){
@@ -474,7 +471,14 @@ data(){
                     }                    
             })
             .catch(err => { console.log(err)})
-        }  
+        },
+        trieDates(){
+            if(this.formulaire.infoCours.dateChoisie){
+                this.formulaire.infoCours.dateChoisie.sort(function(a,b){
+               return Number(new Date(a)) - Number(new Date(b));
+               });
+            }
+        }
     },
   
     beforeMount(){  
@@ -651,6 +655,8 @@ data(){
    }
    .buttonFull{
         border-radius: 2px;
+        font-size: 18px;
+        font-weight: 400;
     }
     .goCours{
         background: rgb(230, 53, 53);
@@ -747,6 +753,10 @@ data(){
        }
        .boxNpaVille{
            width: 50%;
+       }
+       .errForm{
+           font-size: 18px;
+           color: rgb(211, 26, 26);
        }
        
        

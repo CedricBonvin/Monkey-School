@@ -11,7 +11,7 @@
                 <h3 class="titleColCours">Enfants </h3>
                 <ul>
                     <li>- De 4 à 18 ans</li>
-                    <li>- En groupe ou en privée</li>
+                    <li>- En groupe ou en privé</li>
                 </ul>
             </div>
         </div>   
@@ -25,7 +25,7 @@
                 <h3 class="titleColCours">Adultes </h3>
                 <ul>
                     <li>- De 18 à 172 ans</li>
-                    <li>- En groupe ou en privée</li>
+                    <li>- En groupe ou en privé</li>
                 </ul>
             </div>
         </div>
@@ -36,8 +36,8 @@
     </div>
         
     <div class=" boxButtonCours">         
-         <button >
-             <router-link to="/cours" class="buttonFull">DECOUVREZ TOUS NOS COURS..</router-link>  
+         <button  >
+             <router-link to="/cours" class="buttonFull"> NOS COURS..</router-link>  
          </button>      
     </div>
     
@@ -82,10 +82,13 @@ export default {
         display: block;
         margin: auto;
         height: auto !important;
-        background: red;
+        border-radius: 3px;
+        background: none;
+        margin-top: 50px;
     }
     .buttonFull{
         margin: 0;
+        font-weight: 400;
     }
     a{
      color: white;

@@ -4,22 +4,20 @@ FRONTEND
 -----------------------------
 
 
-- mette la photo sur l'onglet de google... 
+    QUESTIONS :
+    **********
 
-- Télécharger les dates de cours depuis les cartes, ok mais de base elles sont on png et quand je les télécharges je met l'extention pdf et sa marche .. ( truc de dingue ..) COMMENT GERER LES PDF
+        - Télécharger les dates de cours depuis les cartes, ok mais de base elles sont on png et quand je les télécharges je met l'extention pdf et sa marche .. ( truc de dingue ..) COMMENT GERER LES PDF
 
-- bug sur les cartes de cours si je resize la fenetre
-- vérifier le lien sur google Map dans la page contact et sur les cartes de cours.. ( !!!! connexion a mon compte google !!!!!!!)
- 
+        - bug sur les cartes de cours si je resize la fenetre
+        
+        - locale storage faille (possibilité de me niquer le truc en rentrant directement les infos dedans)
 
-    -locale storage faille (possibilité de me niquer le truc en rentrant directement les infos dedans)
-    - blinder le test formulaire inscription du frontend..
+    ISSUE
+    ******
 
-- taille des images
+        -- light-House pas top!!!
 
--valeur abo super-Monkey // + créer fichier téléchargement des dates.
-
-changer le swift dans les mail-template et vérifier les données de paiements ainsi que les adresses
 
 
 ------------------------------
@@ -28,6 +26,27 @@ BACKEND
 
 
 
--mettre le css dans les balises pour les template de mail
+______________
 
--checker la structure de la base de donnée.... ( ma bdd vient du front et pas de la BD ) => si elle vient de la BD j'ai un probleme sur les cartes, les données sont injectées après avoir calculé la hauteur des infos donc les infos ne sont pas totalement cachée !!!
+NE PAS OUBLIER
+
+-- ADRESSE MAIL => si je change d'adresse mail à changer dans le footer des pages => dans le contact => et dans tous les footer des mail template
+-- La page admin est commenté !
+
+
+
+PRODUCTION :
+------------
+
+-- ALLOW ORIGIN
+
+-- VARIABEL D'ENVIRONNEMENT
+
+-- ARCHITECTURE DES DOSSIERS ( 1 seul package Json )
+
+-- bulid le front => servir les dossiers sur le serveur => rajouter le truc pour la réactualisation des pages ( cf patrice )
+
+-- vérifier l'envoie des mails
+
+-- changer la clef de stripe
+

@@ -4,46 +4,47 @@
           <h2>Coordonnées de paiement :</h2>
           <div class="boxInput">
               <label for="nom"> Nom :</label>
-              <input id="nom" type="text" v-model="coordonneePaiement.nom">
+              <input id="nom" type="text" placeholder="Dupont" v-model="coordonneePaiement.nom">
               <p class="errorForm" v-if="formError.nom"> {{formError.nom}}</p>
           </div>
           <div class="boxInput">
               <label for="prenom">Prénom :</label>
-              <input id="prenom" type="text" v-model="coordonneePaiement.prenom">
+              <input id="prenom" type="text" placeholder="Albert" v-model="coordonneePaiement.prenom">
               <p class="errorForm" v-if="formError.prenom"> {{formError.prenom}}</p>
           </div>
           <div class=" boxNpaVille">
               <div class="boxNpa">
                   <label for="npa">NPA :</label>
-                  <input id="npa" type="text" v-model="coordonneePaiement.npa">
+                  <input id="npa" type="text" placeholder="1234" v-model="coordonneePaiement.npa">
                   <p class="errorForm" v-if="formError.npa"> {{formError.npa}}</p>
               </div>
               <div class="boxVille">
                     <label for="ville">Ville :</label>
-                    <input id="ville" type="text" v-model="coordonneePaiement.ville">
+                    <input id="ville" type="text" placeholder="Crans-Montana" v-model="coordonneePaiement.ville">
                     <p class="errorForm" v-if="formError.ville"> {{formError.ville}}</p>
               </div>
           </div>
           <div class="boxInput">
               <label for="adresse">Adresse :</label>
-              <input id="adresse" type="text" v-model="coordonneePaiement.adresse">
+              <input id="adresse" type="text" placeholder="rue du coin 23" v-model="coordonneePaiement.adresse">
               <p class="errorForm" v-if="formError.adresse"> {{formError.adresse}}</p>
           </div>
           
           
           <div class="boxInput">
               <label for="mail">E-mail :</label>
-              <input id="mail" type="text" v-model="coordonneePaiement.mail">
+              <input id="mail" type="text" placeholder="votreMail@host.com" v-model="coordonneePaiement.mail">
               <p class="errorForm" v-if="formError.mail"> {{formError.mail}}</p>
           </div>
           <div class="boxInput">
               <label for="phone">téléphone :</label>
-              <input id="phone" type="text" v-model="coordonneePaiement.phone">
+              <input id="phone" type="text" placeholder="0041 79 234 12 12" v-model="coordonneePaiement.phone">
               <p class="errorForm" v-if="formError.phone"> {{formError.phone}}</p>
           </div>
 
-          <p v-if="paiementChoice === 'virement'" class="paraInfoPaiement">* Les informations pour le paiement vous serons envoyés par E-mail</p>
-          <p v-if="paiementChoice === 'cash'" class="paraInfoPaiement">* Tous les paiements cash devrons être réglés juste avant le début du cours</p>
+          <p v-if="paiementChoice === 'virement'" class="paraInfoPaiement">* Les informations pour le paiement serons envoyées par E-mail.</p>
+          <p v-if="paiementChoice === 'cash'" class="paraInfoPaiement">* Tous les paiements cash devront être réglés juste avant le début du cours.</p>
+          <p v-if="paiementChoice === 'carte'" class="paraInfoPaiement">* Pour le paiement par carte, vous serez redirigé afin d'indiquer les informations concernant votre carte. </p>
       </form>
   </section>
 </template>

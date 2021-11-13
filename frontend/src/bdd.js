@@ -32,7 +32,7 @@ const bddCours = {
             valeurAbo : "CHF 290.-",
             datesCours2020 : "06-09 / 13-09 / 20-09 / 27-09 / 04-10 / 11-10 / 25-10 / 08-11 / 15-11 / 22-11 / 29-11 / 06-12 / 13-12 / 20-12",
             datesCours2021 : "10-01 / 17-01 / 24-01 / 31-01 / 07-02 / 14-02 / 21-02 / 07-03 / 14-03 / 21-03 / 28-03 / 04-04 / 11-04 / 25-04 / 02-05 / 09-05",
-            descriptionCour : "Ce cours se doit d'être ludique et axé sur des jeux, développement de l'équilibre, coordination, souplesse. Leurs donné tous les atouts pour qu'il puisse s'épanouire dans les meilleurs conditions qu'il soit !  ",          
+            descriptionCour : "Ce cours est ludique et axé sur des jeux, développement de l'équilibre, coordination, souplesse. Leurs données tous les atouts pour qu'ils puissent s'épanouir dans les meilleures conditions qu'il soit !  ",          
         },
         //  GECKO
       gecko :  {
@@ -58,7 +58,7 @@ const bddCours = {
             valeurAbo : "CHF 290.-",
             datesCours2020 : "07-09 / 14-09 / 21-09 / 28-09 / 05-10  / 12-10 / 26-10 / 02-11 / 09-11 / 16-11 / 23-11 / 30-11 / 07-12 / 14-12 / 21-12",
             datesCours2021 : "11-01 / 18-01 / 25-01 / 01-02 / 08-02 / 15-02 / 22-02 / 08-03 / 15-03 / 22-03 / 29-03 / 05-04 / 12-04 / 26-04 / 03-05",
-            descriptionCour : "Ce cours est fait pour les Geckos ",
+            descriptionCour : "Dans ce cours, entre l'enfance et l'adolescence. Nous commencerons à diriger l'enfant vers une certaine autonomie. Nous apprendrons les différentes techniques d'assurage, nous développerons la gestuel de l'escalade, le dynamisme, la coordination et bien plus encore !!",
             isDateCours : true,
        
         },
@@ -86,7 +86,7 @@ const bddCours = {
             valeurAbo : "CHF 290.-",
             datesCours2020 : "02-09 / 09-09 / 16-09 / 23-09 / 30-09 / 07-10 / 28-10 / 04-11 / 11-11 / 18-11 / 25-11 / 02-12 / 09-12 / 16-12 / 23-12",
             datesCours2021 : "13-01 / 20-01 / 27-01 / 03-02 / 10-02 / 17-02 / 24-02 / 10-03 / 17-03 / 24-03 / 31-03 / 07-04 / 14-04 / 28-04 / 05-05",
-            descriptionCour : "Ce cours est fait pour les MONKEY ",
+            descriptionCour : "Dans ce cours pour les adolescents. Nous pratiquerons toutes les disciplines de l'escalade indoor ( bloc , voie , vitesse ). Nous chercherons à perfectionner les placements du corps dans l'espace, nous développerons le rapport poids puissance tout en travaillant la souplesse, l'équilibre et la coordination. ",
             isDateCours : true,
        
         },
@@ -107,10 +107,10 @@ const bddCours = {
             rabais : 0,
             prixAPaye : 0,
             prixNormal : "price_1JtbqiL33Mz5kFdVUyaY8qGr",
-            valeurAbo : "CHF 390.-",
+            valeurAbo : "CHF 370.-",
             // datesCours2020 : "06-09 / 13-09 / 20-09 / 27-09 / 04-10 / 11-10 / 08-11 / 15-11 / 22-11 / 29-11 / 06-12 / 13-12 / 20-12",
             datesCours2021 : "13-01 / 20-01 / 27-01 / 03-02 / 10-02 / 17-02 / 24-02 / 10-03 / 17-03 / 24-03 / 31-03 / 07-04 / 14-04 / 28-04 / 05-05",
-            descriptionCour : "Dès le 13 Janvier 2022, Monkey-School ouvre une classe de cours régulier adulte. Novice, avancé ou expert, partageons ensemble un moment convivial tout en évoluant dans ce magnifique sport... ",
+            descriptionCour : "Dès le 13 janvier 2022, Monkey-School ouvre une classe de cours réguliers adultes. Novice, avancé ou expert, partageons ensemble un moment convivial tout en évoluant dans ce magnifique sport... ",
             isDateCours : true,
          
         },
@@ -118,7 +118,7 @@ const bddCours = {
    
         privee : {
             typeCours : "prive",
-            nomCours : "Privée",
+            nomCours : "Privé",
             image : require("@/assets/images/header.jpg"),
             ageCours  : "4 à 99 ans",
             ageString : "4 à 99 ans",
@@ -129,7 +129,7 @@ const bddCours = {
             dureeCours : "min. 1 heure",
             lieux : "Crans-Montana, salle d'escalade de la Moubra ",
             prix : "80.- / heure",
-            descriptionCour : "Ceci est le cours prvée...",
+            descriptionCour : "Cours à la carte !! Débutant, avancé ou expert. Vous voulez grimper à votre rythme, sans vous soucier du jour ou de l'heure et avoir un prof rien que pour vous ? Ce cours est fait pour vous !! Nous nous adapterons à votre niveau et travaillerons ensemble afin que vous puissiez être meilleur que la veille. ",
             isDateCours : false,
            
         },
@@ -199,15 +199,14 @@ const bddCours = {
             typeCours : "Event",
             nomCours : "Noel",
             image : require("@/assets/images/header.jpg"),
-            ageCours  : "4 à 16 ans",
-            ageString : "4 à 16 ans",
-            infoCarte : " 4 à 16 ans",
+            ageCours  : "6 à 16 ans",
+            ageString : "6 à 16 ans",
+            infoCarte : "6 à 16 ans",
             jour : "Période de Noël",
             datesCours2021 : "01.01 / 02.02 / 03.01 / 04.01 / 05.01 / 06.01 / 07.01",
             datesCours2020 : "23.12 / 24.12 / 25.12 / 26.12 / 27.12 / 28.12 / 29.12 / 30.12 / 31.12",
             choiceDateCours : [
-                new Date("2021/2/3"),
-                new Date("2021,10,19"),
+             
                 new Date(2021,11,23,6),
                 new Date(2021,11,24,6),
                 new Date(2021,11,25,6),
@@ -234,7 +233,7 @@ const bddCours = {
             rabais : 0,
             prixNormal : "price_1JtEDnL33Mz5kFdVI8STS75P",
             prixAPaye : 0,     
-            descriptionCour : "Durant la périodes de Noël un professeur d'escalade est à disposition",
+            descriptionCour : "Pour tous niveaux. Durant la période de Noël un professeur d'escalade sera présent de 15h à 18h pour encadrer le groupe ( 8 personnes maximum ). La présence d'un adulte n'est pas obligatoire ( 3 heures de grimpe avec prof. pour seulement CHF. 80.- )",
             isDateCours : false,           
         },
 }

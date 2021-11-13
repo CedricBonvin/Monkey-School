@@ -1,6 +1,9 @@
 <template>
     <div class="topBar">
-        <router-link to="/"> <div class="logo">Monkey-school</div></router-link>
+        <div class="col1">
+            <img class="logoImage" src="@/assets/images/gorille-blanc.png" width="20px" alt="">
+            <router-link to="/"> <div class="logo">Monkey-school</div></router-link>
+        </div>
        
        
         <div class="itemRight">
@@ -79,6 +82,19 @@ export default {
         color: white;
         padding: 0;
         margin: 0;
+    }
+    .logoImage{
+        width: 40px;
+    }
+    .col1{
+        display: flex;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 500px){
+        .topBar{
+            padding: 0;
+        }
     }
  
 </style>

@@ -11,7 +11,7 @@
     <!-- enfant  -->
   <div class="section" id="regulierEnfant">
         <h2 class="titleSection">Régulier Enfant</h2>
-        <p class="phraseType">Cours régulier pour les Jeunes et les enfants .!</p>
+        <p class="phraseType">Cours régulier pour les jeunes et les enfants .!</p>
         <div class="sectionCard">
             <carte-cours :cours="miniSpider" />
             <carte-cours :cours="gecko" />
@@ -22,21 +22,21 @@
     <!-- Adulte -->
     <div class="section" id="regulierAdulte">
         <h2 class="titleSection">Régulier Adulte</h2>
-        <p class="phraseType">Cours régulier pour Adultes.!</p>
+        <p class="phraseType">Cours régulier pour les adultes.!</p>
          <carte-cours :cours="superMonkey" /> 
     </div> 
 
     <!-- PRIVEE -->
     <div class="section" id="privee">
-        <h2 class="titleSection">Cours Privée</h2>
-        <p class="phraseType">Pour ce qu'ils veulent apprendre à leur ryhtme.!</p>
+        <h2 class="titleSection">Cours Privé</h2>
+        <p class="phraseType">Pour ce qu'ils veulent apprendre à leur rythme.!</p>
         <carte-cours :cours="privee" />
     </div>
 
     <!-- NOEL -->
     <div class="section" id="noel">
         <h2 class="titleSection">Noël</h2>
-        <p class="phraseType">Après le ski, vebez grimper 3 heures en toutes sécurité avec un professionnel de l'escalade... </p>
+        <p class="phraseType">Après le ski, venez grimper 3 heures en toutes sécurités avec un professionnel de l'escalade... </p>
         <carte-cours :cours="noel" />
     </div> 
   </main>

@@ -3,9 +3,10 @@
       <div class="container">
           <h1>Paiement accepté !</h1>
           <h2>Merci pour votre paiement !!!  </h2>
-          <p class="para">Vous recevrez un mail récapitulatif de vos dates de cours, ainsi que la facture si reportant. </p>
+          <p class="para">Vous recevrez un mail récapitulatif de vos dates de cours. <br>Pensez à regarder vos spams </p>
+          
           <button>
-              <router-link to="/paiement">Retour au paiement</router-link>
+              <router-link to="/">Retour à l'acceuil</router-link>
           </button>
       </div>
   </div>
@@ -26,7 +27,13 @@ export default {
                 body : JSON.stringify(panier),
                 headers : {"content-type" : "application/json; charset=UTF-8"}
             })
-            .then(res => res.json())
+            .then(res => {
+                if (res.status === 200)
+                localStorage.removeItem("panier")
+                localStorage.removeItem("payment_intent")
+                this.$store.commit('checkPanier')
+                return  res.json()
+            })
             .then(response => console.log(response))
             .catch(err => console.log(err))
         }

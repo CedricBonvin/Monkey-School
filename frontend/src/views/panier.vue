@@ -83,7 +83,6 @@
                             <p class="accepte">NOUS ACCEPTONS :</p>
                             <img class="carteBanquaire" src="@/assets/images/visa.jpeg" alt="carte Visa">
                             <img class="carteBanquaire" src="@/assets/images/master-card.png" alt=" logo master card">
-                            <img class="carteBanquaire" src="@/assets/images/twint.png" alt=" logo twint">
                         </div>
                     </section>
                 </div>

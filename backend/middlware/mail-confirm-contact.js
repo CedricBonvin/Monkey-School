@@ -6,13 +6,6 @@ exports.sendMail = (req,res) => {
     sendMail(req, res)
 }
 
-
-
-
-
-
-
-
 function sendMail(req, res){
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
@@ -38,7 +31,7 @@ function sendMail(req, res){
    
 
     // Message object
-    const messageFrom = "<testdemalade@adf.com>"
+    const messageFrom = "testdemalade@adf.com"
     const messageTo = req.body.mail
 
     let mailToClient = {
@@ -68,7 +61,7 @@ function sendMail(req, res){
 
     let mailToMe = {
         from: messageFrom,
-        to: "cedric.bonv@gmail.com",
+        to: "monkeystyle.school@gmail.com",
         subject: "Demande de renseignement",
         template : "contact-confirm-to-me",
         context: {          
@@ -96,14 +89,12 @@ function sendMail(req, res){
             if (err) {
                 console.log('Error occurred. ' + err.message);
                 res.status(500).json({ message : "impossible d'envoyer m'envoyer le mail de confimation..!", error : err})
-                return process.exit(1);
             } else{
                 console.log("mail envoyé" + info)               
                 transporter.sendMail(mailToClient, (err, info) => {
                     if (err) {
                         console.log('Error occurred. ' + err.message);
                         res.status(500).json( {mesage : "impossible d'envoyer le mail au client", error : err})
-                        return process.exit(1);
                     } else{
                         console.log("mail envoyé" + info)
                         res.status(200).json("les mails ont été envoyé avec succès")
