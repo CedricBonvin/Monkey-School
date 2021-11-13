@@ -6,8 +6,7 @@
                     <div class="boxBlock1 box">
                         <p>
                             <i class="fas fa-comment-dots"></i>
-                            Face à une demande croissante, Monkey-school a été créée afin de promouvoir l’escalade auprès des jeunes et des moins jeunes.<br>
-                          <br>  D’initier, d’accompagner et d’entraîner en toute sécurité de nouveaux grimpeurs afin que ce sport soit accessible au plus grand nombre.
+                           Monkey-School a été créée pour faire face à une demande croissante. <br><br> Sa mission est de rendre ce sport accessible au plus grand nombre en initiant, accompagnant et entraînant toute personne, quelle que soit son âge ou son niveau
                         </p>
                     </div>
                 </div>
@@ -17,7 +16,7 @@
                 <div class="block3">
                     <div class="boxBlock3 box">
                         <i class="fas fa-user"></i>
-                        <p>Monkey-School a été fondé en 2018 par Cédric Bonvin. <br><br> Depuis, l'école n'a cessé de grandir, nous accueillons plus de 40 élèves toutes les semaines, Nous organisons des stages extérieurs, ainsi que des événements pour des dates ponctuelles. <br><br> REJOIGNEZ-NOUS !!</p>
+                        <p>Monkey-School, fondée en 2018 par Cédric Bonvin, n'a cessé de s'agrandir. <br><br> Aujourd'hui, nous accueillons plus de 40 élèves par semaine. Nous organisons également des stages d'escalade en nature ainsi que des événements ponctuels (cours de Noël, anniversaire, etc..,</p>
                     </div>
                 </div>
             </div>

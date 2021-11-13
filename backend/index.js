@@ -11,7 +11,7 @@ const RoutePlaceRestante = require("./router/routePlaceRestante")
 const routeAdmin= require("./router/routeAdmin")
 
 
-const port = 3000
+// const port = 2000
 //***************************************
 // CONNECTION A MONGO ATLAS   ***********
 //***************************************
@@ -30,7 +30,8 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-// app.use(express.static('public'));
+ //app.use(express.static('public'));
+
 
 
 //***************************************
@@ -41,17 +42,25 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()) // To parse the incoming requests with JSON payloads
 
+
 //***************************************
 // ECOUTE   *****************************
 //***************************************
 
-app.listen(port, () => {
-    console.log("serveur en écoute sur le port 3000")
-})
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
+
+// app.listen(port, () => {
+//     console.log("serveur en écoute sur le port :" + port)
+// })
 
 //***************************************
 // ROUTES UTILISES  *********************
 //***************************************
+
 
 
 app.use("/", RouteMessage)
@@ -59,6 +68,9 @@ app.use("/", RouteLivre)
 app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
+
+// app.use(express.static(__dirname + "/backend"));
+//   app.use(express.static(__dirname + "/frontend"));
 
 
 

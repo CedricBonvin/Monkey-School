@@ -7,7 +7,7 @@ const mongoose = require("mongoose")
 
 // ! pour l'envoie du mail activer next() et désactiver la réponse...!
 exports.inscription =  (req,res,next) => {
-    
+    console.log("salut")
     for (let item of req.body){
         // REGULIER 
         if (item.infoCours.typeCours ==='regulier'){

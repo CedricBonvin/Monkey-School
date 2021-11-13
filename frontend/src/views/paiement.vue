@@ -136,6 +136,7 @@ export default {
                             }
                         }
                     }
+                    
                     // ENVOIE  
                     fetch(`${this.$store.state.HOST}/new-inscription`,{
                         method : "POST",
@@ -143,6 +144,7 @@ export default {
                         headers: {"Content-type": "application/json; charset=UTF-8",}
                     })
                     .then( response => {
+                        console.log("envoi3")
                         if (response.status === 200){
                             localStorage.removeItem("panier")
                             this.$store.commit('checkPanier')

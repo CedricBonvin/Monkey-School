@@ -1,3 +1,4 @@
+// const Message = require("../model/modelLivreMessage")
 const Message = require("../model/modelLivreMessage")
 const nodemailer = require("nodemailer")
 const hbs = require("nodemailer-express-handlebars")
@@ -11,10 +12,12 @@ exports.postMessage =  (req,res) => {
         sendMail(req)
         res.status(200).json({message : "message enrengistré avec succès...!"})
     })
-    .catch( error => res.status(500).json({error : error, message : "impossible d'enregistré le message dans la base de données..!"}))
+    .catch( err => res.status(500).json({error : err}))
 }
 
 exports.getMessage =  (req,res) => {
+    console.log("sal")
+   
    Message.find()
    .then(response => res.status(200).json(response))
    .catch(error => res.status(500).json(error))
