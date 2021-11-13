@@ -69,8 +69,8 @@ app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
-// app.use(express.static(__dirname + "/backend"));
-//   app.use(express.static(__dirname + "/frontend"));
+ app.use(express.static(__dirname + "/backend"));
+app.use(express.static(__dirname + "/frontend/dist"));
 
 
 
