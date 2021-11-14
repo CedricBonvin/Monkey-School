@@ -63,7 +63,7 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 //***************************************
 
 app.use(express.static(__dirname + "/dist"));
-app.use(express.static(__dirname));
+app.use(express.static(__dirname + "/backend/mail-template/livre-confirm-to-me.hbs"));
 
 
 
