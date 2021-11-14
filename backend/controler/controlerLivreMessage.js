@@ -53,7 +53,7 @@ function sendMail(req){
     // POUR LE TEMPLATE
     transporter.use("compile", hbs({
         viewEngine : "express-handlebars",
-        viewPath : "mail-template",
+        viewPath : "./mail-template",
         extName: ".hbs"
         })
     )
@@ -66,7 +66,7 @@ function sendMail(req){
         from: messageFrom,
         to: messageTo,
         subject: "Livre d'or -- nouveau message",
-        template : "livre-confirm-to-me",
+        template : "./mail-template/livre-confirm-to-me",
         context: {          
                 nom : req.body.nom,                   
                 message : req.body.message,
