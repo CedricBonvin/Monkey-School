@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 });
  //app.use(express.static('public'));
 
- app.use(history())
+//  app.use(history())
 
 //***************************************
 // PARSE DU BODY REQUEST   **************
