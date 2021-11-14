@@ -53,7 +53,7 @@ function sendMail(req){
     // POUR LE TEMPLATE
     transporter.use("compile", hbs({
         viewEngine : "express-handlebars",
-        viewPath : "./backend/mail-template",
+        viewPath : "mail-template",
         extName: ".hbs"
         })
     )

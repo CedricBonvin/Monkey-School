@@ -62,6 +62,13 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 // ROUTES UTILISES  *********************
 //***************************************
 
+app.use(express.static(__dirname + "/dist"));
+ app.use(express.static(__dirname + "/backend"));
+ app.use(express.static(__dirname + "/controler"));
+ app.use(express.static(__dirname + "/mail-template"));
+ app.use(express.static(__dirname + "/middlware"));
+ app.use(express.static(__dirname + "/model"));
+ app.use(express.static(__dirname + "/router"));
 
 
 app.use("/", RouteMessage)
@@ -70,13 +77,7 @@ app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
-app.use(express.static(__dirname + "/dist"));
- app.use(express.static(__dirname + "/backend"));
- app.use(express.static(__dirname + "/controler"));
- app.use(express.static(__dirname + "/mail-template"));
- app.use(express.static(__dirname + "/middlware"));
- app.use(express.static(__dirname + "/model"));
- app.use(express.static(__dirname + "/router"));
+
 
 
 
