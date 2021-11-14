@@ -11,8 +11,6 @@ const RouteInscription = require("./router/routeNewInscription")
 const RoutePlaceRestante = require("./router/routePlaceRestante")
 const routeAdmin= require("./router/routeAdmin")
 
-
-// const port = 2000
 //***************************************
 // CONNECTION A MONGO ATLAS   ***********
 //***************************************
@@ -31,9 +29,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
- //app.use(express.static('public'));
-
-//  app.use(history())
 
 //***************************************
 // PARSE DU BODY REQUEST   **************
@@ -54,9 +49,6 @@ if (port == null || port == "") {
 }
 app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 
-// app.listen(port, () => {
-//     console.log("serveur en écoute sur le port :" + port)
-// })
 
 //***************************************
 // ROUTES UTILISES  *********************
@@ -71,6 +63,8 @@ app.use("/", RouteLivre)
 app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
+
+app.use(history()) // pour le refresh
 
 
 

@@ -30,7 +30,7 @@
                 <div class="contact">
                     <div class="mail">
                         <i class="fas fa-envelope"></i>
-                        <span>monkeystyle.school@gmail.com</span>
+                        <span>info@monkey-school.ch</span>
                     </div>
                     <div class="phone">
                         <i class="fas fa-phone-alt"></i>

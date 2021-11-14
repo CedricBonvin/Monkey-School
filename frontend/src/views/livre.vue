@@ -14,7 +14,7 @@
         <!-- carte sous header -->
         <!--****************-->
         <div class="carte">
-            <h3>Vous avez aimez nos Cours... !!</h3>
+            <h3>Vous avez aimeé nos cours... !!</h3>
             <p>Partagez-nous votre ressenti et laissez nous un petit message. <br> <span class="plaisir">Ca fait toujours plaisir !!</span></p>
         </div>
       
@@ -341,6 +341,10 @@ export default {
     }
     .captcha{
         margin-right: 10px;
+    }
+    .buttonFull{
+        font-size: 20px;
+        padding : 10px 20px
     }
 
     @media screen and (min-width: 900px){

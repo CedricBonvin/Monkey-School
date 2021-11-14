@@ -24,13 +24,13 @@ FRONTEND
 BACKEND
 -----------------------------
 
-
+-- MODE DEV => Lancer le serveur depuis la racine du projet (monkey-school pas depuis le back)
 
 ______________
 
 NE PAS OUBLIER
+**************
 
--- ADRESSE MAIL => si je change d'adresse mail à changer dans le footer des pages => dans le contact => et dans tous les footer des mail template
 -- La page admin est commenté !
 
 
@@ -38,13 +38,15 @@ NE PAS OUBLIER
 PRODUCTION :
 ------------
 
--- si le mail fonctionne ... changer touts les mails du front
+-- changer la valeur du host dans le store de Vue
+
+-- mettre le dossier dist après l'avoir builer à la racine du dossier backend
+
+-- si le mail fonctionne ... changer touts les mails du front (footer, contact) et sur tout les templates
 
 -- ALLOW ORIGIN
 
 -- VARIABEL D'ENVIRONNEMENT
-
--- ARCHITECTURE DES DOSSIERS ( 1 seul package Json )
 
 -- bulid le front => servir les dossiers sur le serveur => rajouter le truc pour la réactualisation des pages ( cf patrice )
 
