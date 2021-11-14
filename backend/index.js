@@ -65,7 +65,7 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 app.use(express.static(__dirname + "/dist"));
  app.use(express.static(__dirname + "/backend"));
  app.use(express.static(__dirname + "/controler"));
- app.use(express.static(__dirname + "/mail-template"));
+ app.use(express.static(__dirname + "/bakend//mail-template"));
  app.use(express.static(__dirname + "/middlware"));
  app.use(express.static(__dirname + "/model"));
  app.use(express.static(__dirname + "/router"));
