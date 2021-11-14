@@ -318,7 +318,7 @@ export default {
        position: relative;
        display: inline-block;
        font-weight: bold;
-       opacity: 70%;
+       opacity: .7;
        font-style: italic;
        margin-bottom: 10px;
        padding-bottom: 5px;
@@ -421,7 +421,7 @@ export default {
     }
     .titleCarte{
         font-weight: bold;
-        opacity: 70%;
+        opacity: .7;
         font-size: 20px;
         text-align: center;
         padding: 0 10px;

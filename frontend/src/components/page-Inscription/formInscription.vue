@@ -283,9 +283,11 @@ data(){
                         if( !regex.test(data.formulaire.contact.mailContact) ){
                             data.error.mailContact ="Votre mail ne semble pas être correct.",
                             valid = false   
-                        }
-                        
-                    } 
+                        }      
+                    } else {
+                        data.error.mailContact = "Veuillez saisir le champ"
+                        valid = false
+                    }
                 }            
                 function testPrenomContact(){
                     if (data.formulaire.contact.prenomContact){
@@ -337,7 +339,7 @@ data(){
                     
                 }
                 function testPhoneContact() {
-                    let regex = new RegExp("^[0-9 ]{12,20}$")
+                    let regex = new RegExp("^[0-9 ]{10,20}$")
                     if(  data.formulaire.contact.phoneContact){
                         if( !regex.test(data.formulaire.contact.phoneContact)){
                             data.error.phoneContact ="ex.: 0041 79 123 12 12 !",

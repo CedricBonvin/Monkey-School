@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     nbrItemPanier : 0,
-    // HOST : "http://localhost:8000",
+  //  HOST : "http://localhost:8000",
     HOST : "https://monkey-school.herokuapp.com"
   },
   mutations: {

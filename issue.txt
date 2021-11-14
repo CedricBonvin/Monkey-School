@@ -38,6 +38,8 @@ NE PAS OUBLIER
 PRODUCTION :
 ------------
 
+-- si le mail fonctionne ... changer touts les mails du front
+
 -- ALLOW ORIGIN
 
 -- VARIABEL D'ENVIRONNEMENT

@@ -33,13 +33,19 @@ function sendMail(req){
     
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
-        host: "smtp-relay.gmail.com",
+        // host: "smtp-relay.gmail.com",
+         host: "mail.infomaniak.com",
+        //  port: 465,
         port: 587,
         secure: false,
-        service: "gmail",
+         service: "infomaniak",
         auth: {
-            user: "mailtestmonkey@gmail.com",
+            
+            user: "info@monkey-school.ch",
             pass: process.env.MAIL_PW
+            // pass: process.env.MAIL_PW
+            // user: "mailtestmonkey@gmail.com",
+            // pass: process.env.MAIL_PW
         },
         debug: false,
         logger: true 
@@ -53,8 +59,8 @@ function sendMail(req){
     )
 
     // Message object
-    const messageFrom = "<testdemalade@adf.com>"
-    const messageTo = "c.bonvin@yahoo.fr"
+    const messageFrom = "info@monkey-school.ch"
+    const messageTo = "info@monkey-school.ch"
 
     let message = {
         from: messageFrom,

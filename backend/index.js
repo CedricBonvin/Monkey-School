@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
+const history = require("connect-history-api-fallback")
 
 require('dotenv').config();
 
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
 });
  //app.use(express.static('public'));
 
-
+ app.use(history())
 
 //***************************************
 // PARSE DU BODY REQUEST   **************

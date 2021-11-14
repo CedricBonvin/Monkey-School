@@ -9,12 +9,12 @@ exports.sendMail = (req,res) => {
 function sendMail(req, res){
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
-        host: "smtp-relay.gmail.com",
+        host: "mail.infomaniak.com",
         port: 587,
         secure: false,
-        service: "gmail",
+        service: "infomaniak",
         auth: {
-            user: "mailtestmonkey@gmail.com",
+            user: "info@monkey-school.ch",
             pass: process.env.MAIL_PW
         },
         debug: false,
@@ -31,7 +31,7 @@ function sendMail(req, res){
    
 
     // Message object
-    const messageFrom = "testdemalade@adf.com"
+    const messageFrom = "info@monkey-school.ch"
     const messageTo = req.body.mail
 
     let mailToClient = {
@@ -61,7 +61,7 @@ function sendMail(req, res){
 
     let mailToMe = {
         from: messageFrom,
-        to: "monkeystyle.school@gmail.com",
+        to: "info@monkey-school.ch",
         subject: "Demande de renseignement",
         template : "contact-confirm-to-me",
         context: {          

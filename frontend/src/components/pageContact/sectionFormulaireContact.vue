@@ -127,6 +127,7 @@
                 testMail(mail,this)
                 testMessage(message,this)
                 testCaptcha(null,this)
+                testPhoneContact(phone,this)
                 
                 // check de ValidForm
                 if (this.validForm === true){
@@ -139,7 +140,7 @@
                         phone : phone,
                     }
                 
-                        fetch("http://localhost:3000/postMessage",{
+                        fetch(`${this.$store.state.HOST}/postMessage`,{
                             method: "POST",
                             body: JSON.stringify(obj),
                             headers: {"Content-type": "application/json; charset=UTF-8",}      
@@ -162,14 +163,16 @@
                     }
                 }
                 function testMail( value, data) {
-                    if ( value.length < 2){
-                        data.error.mail ="Votre E-mail ne semble pas être correct..!",
-                        data.validForm = false   
-                    }
-                    if( value.length > 55){
-                        data.error.mail ="Max. 55 caractères.",
-                        data.validForm = false   
-                    }
+                    const regex = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$')  //eslint-disable-line
+                    if( value){
+                        if( !regex.test(value) ){
+                            data.error.mail ="Votre mail ne semble pas être correct.",
+                            data.validForm = false   
+                        }   
+                    }  else{
+                        data.error.mail = "Veuillez saisir le champ !" 
+                        data.validForm = false
+                    } 
                 }
                 function testPrenom(value, data) {
                     if ( value.length < 2){
@@ -200,6 +203,18 @@
                         data.error.message ="Max. 1000 caractères.",
                         data.validForm = false   
                     }
+                }
+                function testPhoneContact(value,data) {
+                    let regex = new RegExp("^[0-9 ]{10,20}$")
+                    if(  value){
+                        if( !regex.test(value)){
+                            data.error.phone ="ex.: 0041 79 123 12 12 ",
+                            data.validForm = false   
+                        }
+                    } else{
+                        data.error.phone = "Veuillez saisir le champ !" 
+                        data.validForm = false
+                    } 
                 }
             },
             captchaCreate(){
