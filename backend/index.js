@@ -55,7 +55,6 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 //***************************************
 
 app.use(express.static(__dirname + "/dist"));
-app.use(history()) // pour le refresh
 
 
 
@@ -65,6 +64,7 @@ app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
+app.use(history()) // pour le refresh 
 
 
 
