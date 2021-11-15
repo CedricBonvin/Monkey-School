@@ -56,10 +56,7 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 // ROUTES UTILISES  *********************
 //***************************************
 
-app.use(history({
-  disableDotRule: true,
-  verbose: true
-}));
+
 
 app.use(express.static(__dirname + "/dist"));
 
@@ -72,6 +69,11 @@ app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
 // app.use(history()) // pour le refresh 
+
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
 
 
 
