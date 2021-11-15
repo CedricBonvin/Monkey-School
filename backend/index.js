@@ -74,6 +74,8 @@ app.use(history({
   disableDotRule: true,
   verbose: true
 }));
+app.use(express.static(__dirname + "/dist"));
+
 
 
 
