@@ -56,11 +56,13 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 // ROUTES UTILISES  *********************
 //***************************************
 
-app.use(express.static(__dirname + "/dist"));
 app.use(history({
   disableDotRule: true,
   verbose: true
 }));
+
+app.use(express.static(__dirname + "/dist"));
+
 
 
 app.use("/", RouteMessage)
