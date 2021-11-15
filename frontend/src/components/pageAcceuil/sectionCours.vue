@@ -4,7 +4,7 @@
     <!-- SECTION ENFANT /////////////////////////////////////////////-->
     <div class="col1">
         <div class="boxMael">
-            <img class="mael" src="@/assets/images/Mael.png" alt="">
+            <img class="mael" src="@/assets/images/Mael-min.png" alt="">
         </div>
          <div class="enfantCol2">
             <div class="boxCol2">

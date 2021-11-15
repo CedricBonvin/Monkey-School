@@ -10,7 +10,7 @@
         <article :id="cours.nomCours" > 
             <div class="carte" @click="schowOneBox($event,cours.nomCours,'.containerInformation',true)"  >  
                 <img v-if="cours.nomCours === 'Noel'" class="chapeau-noel"  src='@/assets/images/chapeau-Noel.png' alt="">     
-                <img class="imgCarte" src='@/assets/images/header.jpg' alt="">     
+                <img class="imgCarte" src='@/assets/images/header-min.jpg' alt="">     
                 <div class="col2Carte">
                     <div class="titleNomCours"> {{ cours.nomCours}}</div>
                     <div class="ageCarte">{{cours.ageString}}</div>

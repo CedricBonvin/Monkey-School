@@ -12,7 +12,7 @@ const bddCours = {
       miniSpider :  {   
             typeCours : "regulier",
             nomCours : "Mini-Spider",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             coursPdf : require("@/assets/fichier/date-Mini-Spider.png"),
             ageCours : [4,5,6,7],
             ageString : "4 à 7 ans",
@@ -38,7 +38,7 @@ const bddCours = {
       gecko :  {
             typeCours : "regulier",
             nomCours : "Gecko",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             coursPdf : require("@/assets/fichier/date-Gecko.png"),
             ageCours  : [7,8,9,10,11],
             ageString : "7 à 11 ans",
@@ -66,7 +66,7 @@ const bddCours = {
        monkey : {
             typeCours: "regulier",
             nomCours : "Monkey",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             coursPdf : require("@/assets/fichier/date-Monkey.png"),
             ageCours : [11,12,13,14,15,16],
             ageString : "11 à 16 ans",
@@ -95,7 +95,7 @@ const bddCours = {
       superMonkey :  {
             typeCours : "regulier",
             nomCours : "Big-Monkey",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             ageString : "16 à 99 ans",
             infoCarte : " 16 à 99 ans",
             jour : "Jeudi",
@@ -119,7 +119,7 @@ const bddCours = {
         privee : {
             typeCours : "prive",
             nomCours : "Privé",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             ageCours  : "4 à 99 ans",
             ageString : "4 à 99 ans",
             infoCarte : " 4 à 99 ans",
@@ -138,7 +138,7 @@ const bddCours = {
         cb1 : {
             typeCours : "autonomie",
             nomCours : "CB1",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             ageCours  : "7 à 99 ans",
             ageString : "7 à 99 ans",
             infoCarte : "Assurage en moulinette !",
@@ -161,7 +161,7 @@ const bddCours = {
         cb2 :  {
             typeCours : "autonomie",
             nomCours : "CB2",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             ageCours  : "4 à 99 ans",
             ageString : "7 à 99 ans",
             infoCarte : "Assurage en tête !",
@@ -180,7 +180,7 @@ const bddCours = {
         famille :  {
             typeCours : "famille",
             nomCours : "Famille",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             ageCours  : "7 à 99ans",
             ageString : "famille",
             infoCarte : "Toute la famille",
@@ -198,7 +198,7 @@ const bddCours = {
         noel : {
             typeCours : "Event",
             nomCours : "Noel",
-            image : require("@/assets/images/header.jpg"),
+            image : require("@/assets/images/header-min.jpg"),
             ageCours  : "6 à 16 ans",
             ageString : "6 à 16 ans",
             infoCarte : "6 à 16 ans",

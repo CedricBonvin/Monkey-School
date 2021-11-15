@@ -42,9 +42,6 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 //***************************************
 // ECOUTE   *****************************
 //***************************************
-
-
-
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
@@ -56,11 +53,7 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 // ROUTES UTILISES  *********************
 //***************************************
 
-
-
 app.use(express.static(__dirname + "/dist"));
-
-
 
 app.use("/", RouteMessage)
 app.use("/", RouteLivre)
@@ -68,10 +61,9 @@ app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
-// app.use(history()) // pour le refresh 
 
 app.use(history({
-  disableDotRule: true,
+  disableDotRule: true,  // pour le reload !!! important de servir le dossier static avant ce middleware et après !!!!!!!
   verbose: true
 }));
 app.use(express.static(__dirname + "/dist"));

@@ -2,7 +2,7 @@
   <section class="sectionQui section">
             <h2 class="titleSection">Monkey-school ?</h2>
             <div class="contentQui">
-                <div :style="{'background-image': 'url(' + require('@/assets/images/header.jpg') + ')'}"  class="block1">
+                <div :style="{'background-image': 'url(' + require('@/assets/images/header-min.jpg') + ')'}"  class="block1">
                     <div class="boxBlock1 box">
                         <p>
                             <i class="fas fa-comment-dots"></i>

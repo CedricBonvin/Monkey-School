@@ -256,7 +256,7 @@ export default {
                 this.formError.adresse = " ! Veuillez saisir le champ"
             }
             // MAIL
-            const regexMAIL = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$')  //eslint-disable-line
+            const regexMAIL = new RegExp('^[^\@]+@[^\@]+\.[^\@]+$')  //eslint-disable-line
             if (!this.coordonneePaiement.mail || !regexMAIL.test(this.coordonneePaiement.mail)){
                 valid = false
                 this.formError.mail = " ! Vérifiez votre E-mail"

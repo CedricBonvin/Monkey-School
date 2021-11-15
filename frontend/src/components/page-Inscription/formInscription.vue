@@ -278,7 +278,7 @@ data(){
 
                 function testMailContact() {
                  
-                    const regex = new RegExp('^[^\s@]+@[^\s@]+\.[^\s@]+$')  //eslint-disable-line
+                    const regex = new RegExp('^[^\@]+@[^\@]+\.[^\@]+$')  //eslint-disable-line
                     if( data.formulaire.contact.mailContact){
                         if( !regex.test(data.formulaire.contact.mailContact) ){
                             data.error.mailContact ="Votre mail ne semble pas être correct.",
