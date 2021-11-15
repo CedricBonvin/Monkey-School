@@ -43,6 +43,11 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 // ECOUTE   *****************************
 //***************************************
 
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
+
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8000;
@@ -64,7 +69,7 @@ app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
-app.use(history()) // pour le refresh 
+// app.use(history()) // pour le refresh 
 
 
 
