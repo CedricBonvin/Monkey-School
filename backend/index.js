@@ -43,10 +43,7 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 // ECOUTE   *****************************
 //***************************************
 
-app.use(history({
-  disableDotRule: true,
-  verbose: true
-}));
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
@@ -60,7 +57,10 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 //***************************************
 
 app.use(express.static(__dirname + "/dist"));
-
+app.use(history({
+  disableDotRule: true,
+  verbose: true
+}));
 
 
 app.use("/", RouteMessage)
