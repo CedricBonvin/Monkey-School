@@ -9,10 +9,10 @@ exports.sendMail = (req,res) => {
 function sendMail(req, res){
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
-        host: "mail.infomaniak.com",
+        host: "devise.o2switch.net",
         port: 587,
         secure: false,
-        service: "infomaniak",
+        service: "o2switch",
         auth: {
             user: "info@monkey-school.ch",
             pass: process.env.MAIL_PW
@@ -55,14 +55,14 @@ function sendMail(req, res){
             content: 'le super logo',
             contentType: 'text/plain' 
         }
-    ],
+        ],
         
     };
 
     let mailToMe = {
         from: messageFrom,
         to: "info@monkey-school.ch",
-        subject: "Demande de renseignement",
+        subject: "Nouvelle demande de renseignement",
         template : "contact-confirm-to-me",
         context: {          
                 nom : req.body.nom,                   
@@ -80,8 +80,7 @@ function sendMail(req, res){
                 content: 'le super logo',
                 contentType: 'text/plain' 
             }
-        ],
-       
+        ],     
     };
     try {
           // envoie du mail

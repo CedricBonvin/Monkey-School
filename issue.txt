@@ -38,7 +38,7 @@ NE PAS OUBLIER
 PRODUCTION :
 ------------
 
--- changer la valeur du host dans le store de Vue
+
 
 -- mettre le dossier dist après l'avoir builer à la racine du dossier backend
 
@@ -46,11 +46,21 @@ PRODUCTION :
 
 -- ALLOW ORIGIN
 
--- VARIABEL D'ENVIRONNEMENT
+-- VARIABEL D'ENVIRONNEMENT => changer le HOST dans le store et changer dans le back .env ( ) à la racine et dans le dossier backend
 
 -- bulid le front => servir les dossiers sur le serveur => rajouter le truc pour la réactualisation des pages ( cf patrice )
 
 -- vérifier l'envoie des mails
 
 -- changer la clef de stripe
+
+
+
+**********
+o2switch
+**********
+
+-- base de donées mongoAtlas
+
+-- puis-je garder info@monkey-school
 

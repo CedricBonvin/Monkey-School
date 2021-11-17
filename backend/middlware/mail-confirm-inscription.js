@@ -9,16 +9,17 @@ exports.sendMail = (req,res) => {
 function sendMail(req, res){
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
-        host: "mail.infomaniak.com",
+        host: "devise.o2switch.net",
         port: 587,
         secure: false,
-        service: "infomaniak",
+        service: "o2switch",
         auth: {
             user: "info@monkey-school.ch",
             pass: process.env.MAIL_PW
         },
         debug: false,
-        logger: true 
+        logger: true,
+       // rejectUnauthorized: false pour contourner gmail
     });
     // POUR LE TEMPLATE
     transporter.use("compile", hbs({

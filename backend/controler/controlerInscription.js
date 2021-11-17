@@ -7,7 +7,6 @@ const mongoose = require("mongoose")
 
 // ! pour l'envoie du mail activer next() et désactiver la réponse...!
 exports.inscription =  (req,res,next) => {
-    console.log("salut")
     for (let item of req.body){
         // REGULIER 
         if (item.infoCours.typeCours ==='regulier'){
@@ -101,7 +100,6 @@ exports.checkPlace = (req,res,next) => {
 }
 
 exports.paiementCarte = async (req,res,next) => {
-    console.log(req.body)
     let tabLine = []
     for (let item of req.body){
         // Price
@@ -127,8 +125,8 @@ exports.paiementCarte = async (req,res,next) => {
           'card',
         ],
         mode: 'payment',
-        success_url: `http://localhost:8080/succes`,
-        cancel_url: `http://localhost:8080/paiement`,
+        success_url: `${process.env.HOST}/succes`,
+        cancel_url: `${process.env.HOST}/paiement`,
         // success_url: `${process.env.HOST}/success.html`,
         // cancel_url: `${YOUR_DOMAIN}/cancel.html`,
         });

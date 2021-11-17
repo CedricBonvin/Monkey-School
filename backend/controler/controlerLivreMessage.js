@@ -34,11 +34,11 @@ function sendMail(req){
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport({
         // host: "smtp-relay.gmail.com",
-         host: "mail.infomaniak.com",
+         host: "devise.o2switch.net",
         //  port: 465,
         port: 587,
         secure: false,
-         service: "infomaniak",
+         service: "o2switch",
         auth: {
             
             user: "info@monkey-school.ch",

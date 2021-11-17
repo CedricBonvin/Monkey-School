@@ -100,7 +100,7 @@
                             <h4 class="titleRabais">Rabais :</h4>
 
                             <!-- Si Regulier -->
-                            <div v-if="cours.typeCours === 'regulier'">
+                            <div v-if="cours.typeCours === 'regulier' && cours.nomCours !== 'Big-Monkey'">
                                 <p class="paraRabais">- 2 pers. de la même famille = 10% sur la 2ème inscription</p>
                                 <p class="paraRabais">- 3 pers. de la même famille = 15% sur la 3ème inscription</p>
                                 <p class="paraRabais">- 4 pers. de la même famille = 20% sur la 4ème inscription</p>
@@ -114,9 +114,7 @@
                             </div>
 
                             <!-- si Noël -->
-                            <div v-if="cours.typeCours === 'Noel'">
-                                <p class="paraRabais">* Pour l'instant pas de rabais en vue !!!</p>           
-                            </div>
+                            
 
                         </div>
                     </div>
