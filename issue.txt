@@ -39,18 +39,13 @@ PRODUCTION :
 ------------
 
 
+-- bulid le front => servir les dossiers sur le serveur => rajouter le truc pour la réactualisation des pages ( cf patrice )
 
 -- mettre le dossier dist après l'avoir builer à la racine du dossier backend
 
--- si le mail fonctionne ... changer touts les mails du front (footer, contact) et sur tout les templates
-
 -- ALLOW ORIGIN
 
--- VARIABEL D'ENVIRONNEMENT => changer le HOST dans le store et changer dans le back .env ( ) à la racine et dans le dossier backend
-
--- bulid le front => servir les dossiers sur le serveur => rajouter le truc pour la réactualisation des pages ( cf patrice )
-
--- vérifier l'envoie des mails
+-- VARIABEL D'ENVIRONNEMENT => changer le HOST dans le store 
 
 -- changer la clef de stripe
 
@@ -60,7 +55,5 @@ PRODUCTION :
 o2switch
 **********
 
--- base de donées mongoAtlas
 
--- puis-je garder info@monkey-school
 
