@@ -58,14 +58,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "cours" */ '../views/panier')
   },
-  // {
-  //   path: '/admin',
-  //   name: 'admin',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "cours" */ '../views/admin')
-  // },
+  {
+    path: '/admin',
+    name: 'admin',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "cours" */ '../views/admin')
+  },
   {
     path: '/paiement',
     name: 'paiement',
@@ -95,13 +95,10 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  scrollBehavior () {
-    
-      return { x: 0, y: 0 }
-    
+  scrollBehavior () {   
+      return { x: 0, y: 0 }  
   },
   routes,
 })
-
 
 export default router

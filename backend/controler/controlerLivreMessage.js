@@ -1,5 +1,5 @@
 // const Message = require("../model/modelLivreMessage")
-const Message = require("../model/modelLivreMessage")
+ const Message = require("../model/modelLivreMessage")
 const nodemailer = require("nodemailer")
 const hbs = require("nodemailer-express-handlebars")
 
@@ -16,7 +16,6 @@ exports.postMessage =  (req,res) => {
 }
 
 exports.getMessage =  (req,res) => {
-    console.log("sal")
    
    Message.find()
    .then(response => res.status(200).json(response))
@@ -53,7 +52,7 @@ function sendMail(req){
     // POUR LE TEMPLATE
     transporter.use("compile", hbs({
         viewEngine : "express-handlebars",
-        viewPath : "backend/mail-template",
+        viewPath : "mail-template",
         extName: ".hbs"
         })
     )

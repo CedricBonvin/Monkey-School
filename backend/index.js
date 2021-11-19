@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
 const history = require("connect-history-api-fallback")
+const path = require('path')
 
 require('dotenv').config();
 
@@ -20,7 +21,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PW}@clus
   .then(() => {
     console.log('Connexion à MongoDB réussie !')
   })
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch(() => console.log('Connexion à MongoDB échouée et oui c est la merde !'));
 
 
 app.use((req, res, next) => {                              
@@ -38,6 +39,8 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({extended: true}));
 app.use(express.json()) // To parse the incoming requests with JSON payloads
 
+app.use(express.static(__dirname))
+
 
 //***************************************
 // ECOUTE   *****************************
@@ -53,7 +56,11 @@ app.listen(port,()=>console.log("serveur écoute sur le port : " + port));
 // ROUTES UTILISES  *********************
 //***************************************
 
-app.use(express.static(__dirname + "/dist"));
+
+// app.use(express.static(__dirname + "/public_html"));
+app.use(express.static(path.join(__dirname, '..', 'public_html'))); 
+
+app.use(express.static(__dirname + "/router"));
 
 app.use("/", RouteMessage)
 app.use("/", RouteLivre)
@@ -61,13 +68,18 @@ app.use("/", RouteInscription)
 app.use("/", RoutePlaceRestante)
 app.use("/", routeAdmin)
 
+app.use(express.static(__dirname))
+
 
 app.use(history({
   disableDotRule: true,  // pour le reload !!! important de servir le dossier static avant ce middleware et après !!!!!!!
   verbose: true
 }));
-app.use(express.static(__dirname + "/dist"));
+//  app.use(express.static(__dirname + "/public_html"));
 
+
+
+ app.use(express.static(path.join(__dirname, '..', 'public_html'))); 
 
 
 

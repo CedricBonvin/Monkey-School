@@ -67,7 +67,7 @@ export default {
     },
     methods : {
         recherche(){
-                fetch("http://localhost:3000/recherche",{
+                fetch(`${this.$store.state.HOST}/recherche`,{
                 method : "POST",
                 body : JSON.stringify({...this.query}),
                 headers: {"Content-type": "application/json; charset=UTF-8",}
@@ -145,14 +145,13 @@ export default {
         box-shadow: 0 0 15px 2px rgb(133, 133, 133);
     }
     .sectionRecherche{
-        background: rgb(243, 176, 252);
+        background: rgb(163, 202, 238);
         padding: 20px ;
         margin-top: 30px;
     }
     .boxRecherche{
         display: flex;
         justify-content: space-evenly;
-        background: rgb(210, 141, 216);
         padding: 30px 0;
     }
     .eleve{

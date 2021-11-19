@@ -10,7 +10,7 @@
         </div>
         <Header 
         title="Contact"
-        :image="require('@/assets/images/header-Contact.png')"
+        :image="require('@/assets/images/header-Contact-min.png')"
         />
         <card-contact />
         <section-formulaire-contact

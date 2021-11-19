@@ -63,7 +63,8 @@
                         <div>
                             <a v-if="cours.nomCours === 'Mini-Spider'" :href="require('@/assets/fichier/date-Mini-Spider.png')" download= "date-MiniSpider.pdf">Télécharger les dates de cours</a>
                             <a v-if="cours.nomCours === 'Gecko'" :href="require('@/assets/fichier/date-Gecko.png')" download= "date-Gecko.pdf">Télécharger les dates de cours</a>
-                            <a v-if="cours.nomCours === 'Big-Monkey'" :href="require('@/assets/fichier/date-Big-Monkey.png')" download= "date-Monkey.pdf">Télécharger les dates de cours</a>
+                            <a v-if="cours.nomCours === 'Big-Monkey'" :href="require('@/assets/fichier/date-Big-Monkey.png')" download= "date-Big-Monkey.pdf">Télécharger les dates de cours</a>
+                            <a v-if="cours.nomCours === 'Monkey'" :href="require('@/assets/fichier/date-Monkey.png')" download= "date-Big-Monkey.pdf">Télécharger les dates de cours</a>
                         </div>
                     </div>
                 </div>
@@ -122,7 +123,7 @@
 
                 <!-- information -->
                 <div class="boxDescription">
-                    <h3 class="titleBoxInfo">Déscription :</h3>
+                    <h3 class="titleBoxInfo">Description :</h3>
                     <p class="paraDescription">{{ cours.descriptionCour }}</p>
                 </div>
 

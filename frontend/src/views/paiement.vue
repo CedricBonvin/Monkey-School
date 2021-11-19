@@ -177,7 +177,12 @@ export default {
                 if(this.testFormulaire()){
                     this.displayLoader = true
                     for ( let item of this.panier){
-                        item.paiement = { ...this.coordonneePaiement, modePaiement : this.paiementChoice, totalAPaye : this.totalPrice}
+                        item.paiement = {   
+                                             ...this.coordonneePaiement,
+                                             modePaiement : this.paiementChoice,
+                                             totalAPaye : this.totalPrice,
+                                             solde : this.totalPrice                           
+                                        }
                         if (item.infoCours.typeCours === "Event"){
                             item.infoCours.dateChoisieString = []
                             for (let date of item.infoCours.dateChoisie){

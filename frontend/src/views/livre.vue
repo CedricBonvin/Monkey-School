@@ -8,14 +8,14 @@
         <Header
             class="test"
             title="Livre d'or..!"
-            :image="require('@/assets/images/header-Contact.png')"
+            :image="require('@/assets/images/header-Contact-min.png')"
         />
         <!--****************-->
         <!-- carte sous header -->
         <!--****************-->
         <div class="carte">
-            <h3>Vous avez aimeé nos cours... !!</h3>
-            <p>Partagez-nous votre ressenti et laissez nous un petit message. <br> <span class="plaisir">Ca fait toujours plaisir !!</span></p>
+            <h3>Vous avez aimé nos cours... !!</h3>
+            <p>Partagez-nous votre ressenti et laissez-nous un petit message. <br> <span class="plaisir">a fait toujours plaisir !!</span></p>
         </div>
       
         <!--****************-->
@@ -142,7 +142,7 @@ export default {
                 .then( response => {                    
                     this.afterSend(response, obj)
                 })
-                .catch( response => {         
+                .catch( response => { 
                     this.afterSend(response,null)
                 })
             }

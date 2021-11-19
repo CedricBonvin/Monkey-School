@@ -2,7 +2,7 @@
   <main>
     <Header 
         title="Nos cours"
-        :image="require('@/assets/images/header-cours.jpg')"
+        :image="require('@/assets/images/header-cours-min.jpg')"
     />
     <!-- RECHERCHE -->
     <section-recherche />   
