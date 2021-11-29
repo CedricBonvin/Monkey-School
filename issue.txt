@@ -54,7 +54,6 @@ PRODUCTION :
 
 -- changer la clef de stripe
 
--- secrete key stripe production = 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
 
 
 
