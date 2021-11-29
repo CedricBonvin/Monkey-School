@@ -4,7 +4,7 @@
         <i class="fas fa-thumbs-up like"></i>
         <p class="sousTitre">Afin de trouver une date qui convienne et selon nos disponibilités, veuillez nous contacter directement : </p>
         <div class="box">
-            <p>Tél.: +41 519 04 84</p>
+            <p>Tél.: +41 79 519 04 84</p>
             <p>ou par</p>
             <router-link to="/contact"> Formulaire de Contact</router-link>
         </div>

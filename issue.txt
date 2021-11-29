@@ -37,21 +37,24 @@ NE PAS OUBLIER
 
 -- Allow origin
 
+-- redirection dans App.vue 
+
 
 
 PRODUCTION :
 ------------
 
+-- redirection dans App.vue 
 
 -- bulid le front => servir les dossiers sur le serveur => rajouter le truc pour la réactualisation des pages ( cf patrice )
-
--- mettre le dossier dist après l'avoir builer à la racine du dossier backend
 
 -- ALLOW ORIGIN
 
 -- VARIABEL D'ENVIRONNEMENT => changer le HOST dans le store 
 
 -- changer la clef de stripe
+
+-- secrete key stripe production = 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
 
 
 

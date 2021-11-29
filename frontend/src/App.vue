@@ -13,7 +13,10 @@ import Topbar from './components/template/topbar.vue'
 export default {
   name: "app",
   components : {Topbar, Footer},
-  mounted(){
+  beforeMount(){
+    if(window.location.protocol === "http:" || window.location.href === "https://www.monkey-school.ch/"){
+				window.location.href=`${this.$store.state.HOST}`
+			}
     const itemPanierLocal = JSON.parse(localStorage.getItem("panier"))
     if (itemPanierLocal){
       this.$store.state.nbrItemPanier = itemPanierLocal.length
@@ -22,5 +25,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+ 
+</style>
 
 

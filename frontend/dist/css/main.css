@@ -184,19 +184,23 @@ i{
 @keyframes slideIN {
 
   0%{
-      right: -150px;
+      right: -127px;
+      opacity: 0;
   }
   100%{
      right:0px;
+     opacity: 1;
   }  
 }
 @keyframes menuSlideOut {
 
   0%{
       right: 0px;
+      opacity: 1;
   }
   
   100%{
-     right: -150px;
+     right: -127x;
+     opacity: 0;
   }  
 }

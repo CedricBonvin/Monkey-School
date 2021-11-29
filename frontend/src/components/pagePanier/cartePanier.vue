@@ -305,12 +305,12 @@ export default {
         display: inline-block;
         font-weight: bold;
         font-size: 18px;
-        opacity: 80%;
+        opacity: .8;
     }
     .titleBoxAjouterCours{
         font-size: 20px;
         font-weight: bold;
-        opacity: 80%;
+        opacity: .8;
         padding-bottom: 20px;
     }
     #ageNewEleve{

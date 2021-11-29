@@ -14,8 +14,8 @@
         <!-- carte sous header -->
         <!--****************-->
         <div class="carte">
-            <h3>Vous avez aimé nos cours... !!</h3>
-            <p>Partagez-nous votre ressenti et laissez-nous un petit message. <br> <span class="plaisir">a fait toujours plaisir !!</span></p>
+            <h3>Vous avez aimé nos cours !!</h3>
+            <p>Partagez-nous votre ressenti et laissez-nous un petit message. <br> <span class="plaisir">Ça fait toujours plaisir !!</span></p>
         </div>
       
         <!--****************-->
@@ -23,7 +23,7 @@
         <!--****************-->       
         <div class="main">  
             <div class="section">
-                <h2 id="boxMessage" class="underLine">Un petit bonjour..!</h2>
+                <h2 id="boxMessage" class="underLine">Un petit bonjour !</h2>
                 <i class="fas fa-user-edit"></i>
                 <form>
                     <div class="row">

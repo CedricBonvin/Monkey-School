@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="col">
+    <div class="col colNav">
         <h3>Naviguation</h3>
         <ul>
             <li><router-link to="/">Accueil</router-link></li>
@@ -9,14 +9,14 @@
             <li><router-link to="/contact">Contact</router-link></li>
         </ul>
     </div>
-    <div class="col">
+    <div class="col colPartenaire">
         <h3>Partenaires</h3>
         <a href="https://www.cransmontana.ch/fr/accueil/" target="_blank">
-            <img class="logoAccm" src="@/assets/images/accm-logo.jpeg" alt="logo de l'accm">
+            <img class="logoAccm" src="@/assets/images/logo-accm.jpg" alt="logo de l'accm">
         </a>
         
     </div>
-    <div class="col">
+    <div class="col colAdress">
         <h3>Contact</h3>
         <address class="adress">
             Monkey-School <br> Route de la Moubra 73 <br> 3963 Crans-Montana <br> tél. +41 79 519 04 84 <br>info@monkey-school.ch
@@ -70,9 +70,24 @@ export default {
         font-size: 2em;
     }
     .logoAccm{
-        width: 80px;
+        width: 100px;
     }
     .col:nth-child(2){
         text-align: center;
+    }
+    @media screen and (max-width: 450px){
+        .adress, a{
+            font-size: 12px !important;
+        }
+        .colNav{
+            order: 1;
+            width: 50%;
+        }
+        .colPartenaire{
+            order: 3;
+        }
+        .colAdress{
+            order: 2;
+        }
     }
 </style>

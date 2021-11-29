@@ -1,6 +1,6 @@
 <template>
   <section class="sectionQui section">
-            <h2 class="titleSection">Monkey-school ?</h2>
+            <h2 class="titleSection">Monkey-School ?</h2>
             <div class="contentQui">
                 <div :style="{'background-image': 'url(' + require('@/assets/images/header-min.jpg') + ')'}"  class="block1">
                     <div class="boxBlock1 box">
@@ -16,7 +16,7 @@
                 <div class="block3">
                     <div class="boxBlock3 box">
                         <i class="fas fa-user"></i>
-                        <p>Monkey-School, fondée en 2018 par Cédric Bonvin, n'a cessé de s'agrandir. <br><br> Aujourd'hui, nous accueillons plus de 40 élèves par semaine. Nous organisons également des stages d'escalade en nature ainsi que des événements ponctuels (cours de Noël, anniversaire, etc..,</p>
+                        <p>Monkey-School, <strong class="bold">fondée en 2018</strong> par Cédric Bonvin, n'a cessé de s'agrandir. <br><br> Aujourd'hui, nous accueillons <strong class="bold">plus de 40 élèves par semaine</strong>. Nous organisons également des stages d'escalade en nature ainsi que des événements ponctuels (cours de Noël, anniversaire, etc..,</p>
                     </div>
                 </div>
             </div>
@@ -71,6 +71,9 @@ export default {
         background: rgba(0, 0, 0, 0.548);
         padding: calc( var(--gutter)*2) ;
         text-align: center;
+    }
+    .bold{
+        font-weight: bold;
     }
 
 /* //////////////////////////////////////////////////////////////////////////////*/
@@ -143,8 +146,8 @@ export default {
        .boxBlock1 p{
            width: 40%;
            text-align: left;
-       }
-       
+       } 
+           
     } 
 
     @media screen and (max-width : 500px){

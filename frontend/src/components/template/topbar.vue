@@ -2,7 +2,7 @@
     <div class="topBar">
         <div class="col1">
             <img class="logoImage" src="@/assets/images/gorille-blanc.png" width="20px" alt="">
-            <router-link to="/"> <div class="logo">Monkey-school</div></router-link>
+            <router-link to="/"> <div class="logo">Monkey-School</div></router-link>
         </div>
        
        
@@ -43,6 +43,7 @@ export default {
         align-items: center;
         padding: 0 20px;
         width: 100%;
+        max-width: 1500px;
         height: 50px;
         background-color: black;
         color: white;

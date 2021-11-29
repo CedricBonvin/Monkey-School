@@ -2,7 +2,7 @@
     <div>
         <i id="burger" class="fas fa-bars"></i>
         <ul id="topbarMenu" >
-            <li><router-link to="/">Acceuil</router-link> </li>
+            <li><router-link to="/">Accueil</router-link> </li>
             <li><router-link to="/cours">Cours</router-link> </li>
             <li><router-link to="/livreDor">Livre d'or</router-link> </li>
             <li><router-link to="/contact">Contact</router-link> </li>
@@ -43,19 +43,21 @@ export default {
 
 
 <style scoped>
+
     .fa-bars{
         font-size: 2em;
         cursor: pointer;
     }
     ul{
-        position: fixed;
+        position: absolute;
         padding: 20px;
         height: 100vh;
         z-index: 3;
-        right: -150px;
+        right: -125px;
         top: 50px;
         background-color: rgb(32, 32, 32);
         list-style-type: none;
+        opacity: 0;
     }
     .menuSlideIn{
         animation: slideIN 1s forwards;

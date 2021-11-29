@@ -210,10 +210,10 @@
                         if( !regex.test(value)){
                             data.error.phone ="ex.: 0041 79 123 12 12 ",
                             data.validForm = false   
-                        }
-                    } else{
-                        data.error.phone = "Veuillez saisir le champ !" 
-                        data.validForm = false
+                        // } else{
+                        // data.error.phone = "Veuillez saisir le champ !" 
+                        // data.validForm = false
+                         } 
                     } 
                 }
             },

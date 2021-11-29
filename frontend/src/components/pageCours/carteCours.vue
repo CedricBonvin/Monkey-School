@@ -98,20 +98,23 @@
                             <p v-if="cours.nomCours === 'Big-Monkey' " class="PrixAboOffert"> * L'abonnement semestriel d'une valeur de {{cours.valeurAbo}} est offert !!</p>
                            
                            <!-- RABAIS -->
-                            <h4 class="titleRabais">Rabais :</h4>
-
-                            <!-- Si Regulier -->
-                            <div v-if="cours.typeCours === 'regulier' && cours.nomCours !== 'Big-Monkey'">
-                                <p class="paraRabais">- 2 pers. de la même famille = 10% sur la 2ème inscription</p>
-                                <p class="paraRabais">- 3 pers. de la même famille = 15% sur la 3ème inscription</p>
-                                <p class="paraRabais">- 4 pers. de la même famille = 20% sur la 4ème inscription</p>
-                            </div>
-
-                            <!-- Si Privée -->
-                            <div v-if="cours.typeCours === 'prive'">
-                                <p class="paraRabais">* 1 pers. = CHF. 80.- / heure</p>
-                                <p class="paraRabais">* CHF. 10.- / heure par personne supplémentaire.</p>
+                            <div v-if="cours.nomCours === 'Mini-Spider' || 
+                                        cours.nomCours === 'Gecko' || 
+                                        cours.nomCours === 'Monkey' ||
+                                        cours.nomCours === 'Privé' ">
+                                <h4 class="titleRabais">Rabais :</h4>
+                                <!-- Si Regulier -->
+                                <div v-if="cours.typeCours === 'regulier' && cours.nomCours !== 'Big-Monkey'">
+                                    <p class="paraRabais">- 2 pers. de la même famille = 10% sur la 2ème inscription</p>
+                                    <p class="paraRabais">- 3 pers. de la même famille = 15% sur la 3ème inscription</p>
+                                    <p class="paraRabais">- 4 pers. de la même famille = 20% sur la 4ème inscription</p>
+                                </div>
+                                <!-- Si Privée -->
+                                <div v-if="cours.typeCours === 'prive'">
+                                    <p class="paraRabais">* 1 pers. = CHF. 80.- / heure</p>
+                                    <p class="paraRabais">* CHF. 10.- / heure par personne supplémentaire.</p>
                                 
+                                </div>
                             </div>
 
                             <!-- si Noël -->

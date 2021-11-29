@@ -36,8 +36,7 @@ export default {
         width: 100%;
         color: white;
         font-size: 6vw;
-        padding: 3px;
-        
+        padding: 3px;       
     }
     .sous-titre{
         font-style: italic;
@@ -62,5 +61,13 @@ export default {
         .headerTitleBox{
             background: rgba(179, 179, 179, 0.219);
         }
+    }
+     @media screen and (min-width : 1500px) {
+       
+        h1{
+            font-size: 150px;
+            padding: 0;
+        }
+       
     }
 </style>

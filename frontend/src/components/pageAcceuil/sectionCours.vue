@@ -233,4 +233,10 @@ export default {
             font-size: 3em;
         } 
     }
+     @media screen and (min-width:1500px){
+       
+        .titleColCours{
+            font-size: 100px;
+        }
+    }
 </style>
